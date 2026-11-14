@@ -1,0 +1,11 @@
+---
+date: 2026-11-14 21:31:17 +0100
+log: a-court-of-silver-flames
+chapter: 53
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2cdqojkcs2n
+videos:
+  - src: "/assets/images/entries/3n2cdqojkcs2n-1.mp4"
+    alt: "Lotr Lord Of The Rings"
+    gif: true
+---
+Chapter 53:

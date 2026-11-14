@@ -1,0 +1,11 @@
+---
+date: 2026-11-14 20:45:30 +0100
+log: a-court-of-silver-flames
+chapter: 52
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2cb6skcts2n
+videos:
+  - src: "/assets/images/entries/3n2cb6skcts2n-1.mp4"
+    alt: "Jon Hamm Jonhamm"
+    gif: true
+---
+Chapter 52: Nesta going all John Ham
