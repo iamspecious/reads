@@ -1,93 +1,112 @@
-# Reads
+# Books by Spec · Tech by Spec
 
-Live reading and playing logs: short reactions, chapter by chapter, as they happen.
-Live site: **https://iamspecious.github.io/reads/**
+Live logs of what Spec is reading and playing: short reactions, chapter by chapter, as they happen.
 
-- **Home** shows the newest entries from every log.
-- **Each log** (book, game or show) has its own page, oldest entry first, so it reads like the journey.
-- Tap an entry's **timestamp** to get a link to that one reaction.
-- **All logs** can be filtered by type and status. **Search** looks through everything.
-- RSS feed at `/reads/feed.xml`. No tracking, no cookies.
+- **Books by Spec:** https://iamspecious.github.io/reads/
+- **Tech by Spec** (games): https://iamspecious.github.io/reads/games/
+- **Post something:** https://iamspecious.github.io/reads/new/
 
-It's a plain Jekyll site built by GitHub Pages. No server, no paid services, no tokens stored anywhere.
+It's a plain Jekyll site built by GitHub Pages. No server, no paid services, no tracking, no cookies, and no keys or passwords stored anywhere.
 
-## Books and Games
+## What's on the site
 
-The site has two halves, switched with the **Books | Games** tabs at the top:
+The site has two halves, switched with the **Books | Games** tabs at the top.
 
-- **Books by Spec** (`/reads/`): books (and shows, for now).
-- **Tech by Spec** (`/reads/games/`): games, with the Tech by Spec logo and colours.
+| | Books by Spec | Tech by Spec |
+|---|---|---|
+| Address | `/reads/` | `/reads/games/` |
+| What's in it | books (and shows, for now) | games |
+| Logo and colours | book logo, pink → violet → teal | Tech logo, deep purple → blue |
+| Top box | Currently reading | Currently playing |
+| RSS feed | `/reads/feed.xml` | `/reads/games/feed.xml` |
 
-Each half has its own Latest page, Logs list, Search and RSS feed (`/feed.xml` and `/games/feed.xml`). A log goes in whichever half matches its `type:`. Names, logos and which types go where are all in `_data/sections.yml`.
+Each half has its own **Latest** page (newest entries first), **Logs** list (filter by status) and **Search**. A log goes in whichever half matches its `type:`. On the Games side, `status: reading` shows as "Playing".
+
+- **Each log** has its own page, oldest entry first, so it reads like the journey.
+- **Tap an entry's timestamp** to get a link to that one entry, to share it.
+- **The look:** always dark, whatever the phone's setting. Each half wears its logo's colours: a gradient band behind the header, a soft glow at the top, a gradient border round the Currently box, and its own link and tag colour.
+
+Names, logos, which types go where, and words like "reading/playing" are all in `_data/sections.yml`. Colours are in `assets/css/reads.css` (`.theme-books` and `.theme-games`). The heading font is Bebas Neue, stored in the repo (free licence in `assets/fonts/OFL.txt`).
 
 ## Post from your phone
 
-Open **https://iamspecious.github.io/reads/new/** (add it to your home screen). It's one page:
+Open **/reads/new/** (add it to your home screen). It's one page:
 
-1. **What are you reading?** Tap the book. Books marked `reading` are at the top.
+1. **What are you reading or playing?** Tap the book or game. Ones marked `reading` are at the top.
 2. Not there? Tap **Something else…** and pick another log, or **Start a new book, game or show**.
-3. Write your reaction. The chapter is filled in with the last one you logged.
+3. Write. The chapter is filled in with the last one you logged.
 4. Tap **Post**. GitHub opens with the file filled in. Tap **Commit changes**. It's on the site a minute or two later.
 
 You need to be signed in to GitHub in that browser or the GitHub app.
 
-- **New book:** fill in the title, author and type, and tap *Save the new log on GitHub*. Tap **Commit changes**, then come back to `/new`. The write screen is ready for the first entry. That's two quick Commits, only when you start something new.
-- **Finished a book?** On the write screen, the *Finished this one?* link opens the book's file on GitHub. Change `status: reading` to `status: finished`, fill in `finished:` with the date, and commit.
-- **Lost a post?** If GitHub didn't save it (lost signal, tapped away), `/new` shows *Didn't commit it? Bring it back* for a day after you post.
+- **Starting something new:** fill in the title, author/studio and type (and the Bluesky thread link if you're posting it there), and tap *Save the new log on GitHub*. Commit, then come back to `/new`: the write screen is ready for the first entry. Two quick commits, only when you start something.
+- **Finished?** On the write screen, *Finished this one?* opens the log's file on GitHub. Change `status: reading` to `status: finished`, fill in `finished:` with the date, and commit. Syncing from Bluesky stops for it.
+- **Lost a post?** If the commit didn't go through (lost signal, tapped away), `/new` shows *Didn't commit it? Bring it back* for a day.
+- **Sync from Bluesky** (bottom of `/new`): opens the sync on GitHub. Tap **Run workflow** twice and new Bluesky posts appear a minute or two later.
 
-The page stores no keys or passwords. Saving always happens on GitHub, with your own login.
-
-## Security, in short
-
-- **Only you can change the site.** You're the only person with write access to the repo. Anyone else who taps Post just gets GitHub's "fork this repository" screen, and their changes go nowhere unless you merge them.
-- **No keys or passwords anywhere on the site.** Posting always goes through GitHub's own screen, with your own login and two-factor sign-in.
-- **`/new` has a strict browser safety rule:** only this site's own scripts can run there, and the page can't send data anywhere by itself.
-- **Every change is in the git history** and can be undone.
-- **Every push is checked.** The *Check* action tests the importer and validates every log and entry file. A red X on the Actions tab means a file needs fixing, and it says which one.
-- **Keep two-factor sign-in on** for your GitHub account. Your account is the only key to the site.
+The page stores no keys or passwords. (A version that saved straight from the page with a stored key was built and then removed on purpose; see the top of `assets/js/new-entry.js`.)
 
 ## Bluesky sync
 
-If a book's log has a `bluesky_thread:` line (a link to the first post of your thread), new posts you add to that thread are copied to the site automatically, checked every 30 minutes (at :17 and :47 past the hour). Only books marked `status: reading` are synced. Once you mark a book finished, syncing stops.
+If a log has a `bluesky_thread:` line (a link to the **first post** of the thread) and is `status: reading`, new posts in that thread are copied to the site automatically.
 
-- **Starting a book on Bluesky:** paste the first post's link in the *Bluesky thread* box when you start the log on `/new`, or add `bluesky_thread: <link>` to the log file.
-- **Want it now?** On `/new`, tap **Sync from Bluesky** (or go to Actions → *Sync Bluesky threads*), then **Run workflow**.
-- **Posting in both places?** If you post the same thing on Bluesky *and* on `/new`, it will show up twice. Pick one place per post.
-- If the Actions tab ever says the timed workflow was paused (GitHub does that after 60 days without any activity), press the button there to turn it back on.
+- **When:** a timed job is set to run at :17 and :47 past every hour. **GitHub's timer is unreliable** and skips many runs, sometimes for hours, so for posts to appear straight away use **Sync from Bluesky** on `/new` (or Actions → *Sync Bluesky threads* → **Run workflow**). Nothing is ever missed: each sync picks up everything new since the last one.
+- **What it takes:** every post *you* wrote in that thread, on **every branch**. It doesn't matter which of your own posts you hit reply on. Other people's replies are skipped. Posts are put in time order.
+- **Pictures, GIFs and videos are copied onto the site**, not linked, so they keep working if Bluesky changes:
+  - photos are saved as they are;
+  - GIFs from Bluesky's GIF button (from Klipy, or Tenor) are saved as Klipy's small MP4 copy and play like a GIF: on their own, looping, silent;
+  - uploaded videos and uploaded GIFs are saved up to 30 MB (GIF-style ones loop silently; real videos get play controls);
+  - anything too big stays on Bluesky, and the entry's *Bluesky* link still gets you to it.
+- **Older entries get their media back:** if an entry is missing a GIF or picture its post has, the next sync adds it. The text is never changed.
+- **Safe to re-run:** posts already on the site are skipped (matched by the post's ID).
+- **Posting in both places?** The same thing posted on Bluesky *and* on `/new` shows up twice. Pick one place per post.
+- **Paused?** GitHub pauses timed jobs after 60 days with no activity in the repo. If the Actions tab says so, press the button there to turn it back on.
 
-## Import a Bluesky thread
+### Chapter tags
 
-1. On GitHub, go to **Actions → Import Bluesky thread → Run workflow**.
-2. Pick the branch (normally `main`).
-3. Paste the link to the **first post** of your thread, and type the **log slug** (the file name in `_logs/` without `.md`, e.g. `a-court-of-silver-flames`).
-4. Tick **Dry run** if you just want to see the count first.
-5. Press **Run workflow**. When it finishes, open the run: the summary shows how many posts were found, how many were imported, and the text of the first and last new post.
+A post gets a chapter tag when it starts with or mentions one of these:
 
-What it does: it follows only *your own* replies to yourself, in order, and skips everyone else's. It saves images into `assets/images/entries/` instead of linking to Bluesky. It fills in `chapter` when a post says "Ch 12" or "Chapter 12". It's safe to run again on the same thread: posts that are already imported are skipped, so only new ones get added.
+- `Ch 12`, `Ch. 12`, `ch12`, `Chapter 12`
+- ranges: `Chapter 7 - 9`, `Chapters 12-14`, `Ch 7 to 9` → tagged `7-9`
+- a bare number and a colon at the very start: `31: kiss of life…`, `34-37:`
 
-The script is `scripts/import_bluesky.py` (Python, no extra packages). Its tests run on every push (`python -m unittest discover -s tests`).
+Anything else, like "Just finished the second chapter" or a follow-up post with no number, is left untagged on purpose.
 
-## Start a new log
+### Import a thread by hand
 
-The easy way is **Start a new book** on `/new`. To do it by hand, add a file to `_logs/`. The file name becomes the slug and the web address (`/reads/logs/<slug>/`). You can do this on github.com: open `_logs`, tap **Add file → Create new file**, name it e.g. `hades-ii.md`, and paste:
+For a thread that isn't synced (say, a finished book):
+
+1. On GitHub: **Actions → Import Bluesky thread → Run workflow**, branch `main`.
+2. Paste the link to the **first post** of the thread, and type the **log slug** (the log's file name without `.md`, e.g. `a-court-of-silver-flames`).
+3. Tick **Dry run** to just see the count first.
+4. When it finishes, open the run: the summary shows how many posts were found and imported, and the first and last new post.
+
+### Starting a log's Bluesky posts from fresh
+
+To re-import a whole thread from scratch: delete that log's entries that have a `source_url:` line (keep any posted from `/new`), delete their files in `assets/images/entries/`, commit, then run **Sync from Bluesky**.
+
+## Start a new log by hand
+
+The easy way is *Start a new book, game or show* on `/new`. By hand: in `_logs/`, **Add file → Create new file**, name it e.g. `hades-ii.md` (the name becomes its web address), and paste:
 
 ```yaml
 ---
-title: Hades II
-creator: Supergiant Games
+title: "Hades II"
+creator: "Supergiant Games"
 type: game          # book, game or show
 status: reading     # reading, finished or dropped
 started: 2026-11-20
 finished:
-tags: [roguelike]
+tags: ["roguelike"]
+bluesky_thread: https://bsky.app/profile/booksbyspec.bsky.social/post/3abc…   # optional
 ---
 ```
 
-Anything you write under the second `---` shows as a note at the top of the log page. When you finish, set `status: finished` and fill in `finished:`.
+Anything under the second `---` shows as a note at the top of the log page.
 
-## Entry files
+## The files
 
-Entries live in `_entries/`, one `.txt` file each. They're `.txt` so the text shows exactly as written (Markdown would turn `#hashtags` into headings).
+**Entries** live in `_entries/`, one `.txt` file each. They're `.txt` so the text shows exactly as written (Markdown would turn `#hashtags` into headings).
 
 ```yaml
 ---
@@ -95,11 +114,42 @@ date: 2026-11-10 21:14:03 +0100
 log: a-court-of-silver-flames
 chapter: 12
 source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3m…
+images:                       # only if the post has pictures or GIF-button GIFs
+  - src: "/assets/images/entries/3m…-1.jpg"
+    alt: "description"
+videos:                       # only if it has a video or a GIF saved as video
+  - src: "/assets/images/entries/3m…-1.mp4"
+    alt: "description"
+    gif: true                 # true = loop silently like a GIF
 ---
-The reaction text, unchanged.
+The text, exactly as written.
 ```
 
-`chapter` and `source_url` can be blank. Imported posts with pictures also get an `images:` list.
+`chapter` and `source_url` can be blank. If a post contains `{{` or `{%`, its text is wrapped in `{% raw %}…{% endraw %}` so it can't break the site build; the site removes the wrapper when showing it.
+
+**Logs** live in `_logs/` (see above). **Media** lives in `assets/images/entries/`, named after the Bluesky post ID.
+
+## Security, in short
+
+- **Only you can change the site.** You're the only person with write access to the repo. Anyone else who taps Post just gets GitHub's "fork this repository" screen, and nothing changes unless you merge it.
+- **No keys or passwords anywhere on the site.** Posting goes through GitHub's own screen, with your own login and two-factor sign-in. Keep two-factor on.
+- **`/new` has a strict browser safety rule:** only this site's own scripts can run there, and the page can't send data anywhere by itself.
+- **The importer only trusts known places:** Bluesky's servers, Klipy and Tenor for GIFs. Ordinary links in posts are never downloaded, and it refuses anything that isn't a real image or video.
+- **Every change is in the git history** and can be undone.
+
+## Checks
+
+The **Check** action runs on every push, including every post from `/new` and every sync. It tests the importer against a pretend Bluesky, and validates every log and entry file: the log exists, the date has a time zone, media files are in the repo, template code is safely wrapped. A red X on the Actions tab names the file that needs fixing. Run it yourself with `python -m unittest discover -s tests`.
+
+## If something looks wrong
+
+- **Synced but nothing new appears:** open the sync run on the Actions tab and read its summary. It says how many of your posts it found in the thread and why any were skipped.
+- **GIFs stop appearing:** Bluesky may have changed GIF service again. The trusted list is `GIF_HOSTS` in `scripts/import_bluesky.py`.
+- **The site doesn't update after a commit:** check *pages build and deployment* on the Actions tab. If it's red, the Check action usually names the file causing it.
+
+## Cost
+
+Nothing. GitHub Actions and Pages are free for public repos, and Bluesky's public API needs no account or key.
 
 ## Turning the site on
 
