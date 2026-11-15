@@ -1,0 +1,27 @@
+{%- comment -%}
+  section-entries.html — the logs and entries that belong to this half.
+  Include section.html first. After this, these are set:
+    sec_logs      this half's logs, most recently started first
+    sec_entries   this half's entries, newest first
+
+  Entries don't say whether they're about a book or a game; only their log
+  does. So we first collect this half's log names into one string like
+  "|a-court-of-silver-flames|disco-elysium-final-cut|", then keep the
+  entries whose log is in it. The "|" on both sides stops one name
+  matching part of a longer one.
+{%- endcomment -%}
+{%- assign sec_logs = "" | split: "" -%}
+{%- assign sec_slugs = "|" -%}
+{%- assign all_logs = site.logs | sort: "started" | reverse -%}
+{%- for l in all_logs -%}
+  {%- if sec.types contains l.type -%}
+    {%- assign sec_logs = sec_logs | push: l -%}
+    {%- assign sec_slugs = sec_slugs | append: l.slug | append: "|" -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign sec_entries = "" | split: "" -%}
+{%- assign all_entries = site.entries | sort: "date" | reverse -%}
+{%- for e in all_entries -%}
+  {%- assign key = "|" | append: e.log | append: "|" -%}
+  {%- if sec_slugs contains key -%}{%- assign sec_entries = sec_entries | push: e -%}{%- endif -%}
+{%- endfor -%}

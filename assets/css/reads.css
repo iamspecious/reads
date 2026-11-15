@@ -293,3 +293,30 @@ mark { background: color-mix(in srgb, #e06a95 25%, transparent); color: inherit;
   .log-head h1 { font-size: 2.4rem; }
   .brand-name { font-size: 2.1rem; }
 }
+
+/* ── Books | Games tabs ──
+   A two-way switch next to the name: the half you're in is filled in dark,
+   the other is plain. Pill-shaped and at least 34px tall, easy to tap. */
+.section-tabs { display: inline-flex; padding: 3px; gap: 2px; background: var(--quiet-bg); border-radius: 999px; }
+.section-tabs a { padding: 6px 14px; border-radius: 999px; font-size: 0.88rem; font-weight: 600; color: var(--muted); text-decoration: none; }
+.section-tabs a[aria-current="true"] { background: var(--ink); color: var(--bg); }
+.site-header .site-nav { padding-bottom: 2px; }
+
+/* ── Tech by Spec colours (the Games half) ──
+   Taken from the Tech by Spec logo: deep purple (#530b8b), bright violet
+   (#7f2bbe) and soft blue (#6f9bd6). Only the accents change: the strip at
+   the top, the edge of the "Currently playing" box, links and chips.
+   Everything else stays the same, so both halves feel like one site. */
+.theme-games {
+  --gradient: linear-gradient(90deg, #530b8b, #7f2bbe 50%, #6f9bd6);
+  --accent: #6a22ad;
+  --chip-bg: #efe7fa;
+  --chip-ink: #55198f;
+}
+@media (prefers-color-scheme: dark) {
+  .theme-games {
+    --accent: #b896f2;
+    --chip-bg: #2a1f45;
+    --chip-ink: #cdb6f6;
+  }
+}

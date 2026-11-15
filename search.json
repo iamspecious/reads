@@ -18,7 +18,8 @@ sitemap: false
     k = kind ("e" entry or "l" log)   u = link
     x = text                          c = chapter
     g = log title                     d = date
-    a = creator                       y = type
+    a = creator                       y = type (entries carry their log's type,
+                                          so each half can show only its own)
     s = status                        tg = tags
 
   jsonify turns any value into safe JSON (quotes, line breaks and all).
@@ -34,6 +35,6 @@ sitemap: false
 {%- assign parent = site.logs | where: "slug", e.log | first -%}
 {%- capture text -%}{% include entry-text.html entry=e %}{%- endcapture -%}
 {%- assign anchor = e.path | split: "/" | last | split: "." | first | prepend: "e-" -%}
-{"k":"e","u":{{ parent.url | append: "#" | append: anchor | relative_url | jsonify }},"g":{{ parent.title | default: e.log | jsonify }},"c":{{ e.chapter | jsonify }},"d":{{ e.date | date: "%-d %b %Y" | jsonify }},"x":{{ text | jsonify }}}{% unless forloop.last %},{% endunless %}
+{"k":"e","u":{{ parent.url | append: "#" | append: anchor | relative_url | jsonify }},"g":{{ parent.title | default: e.log | jsonify }},"y":{{ parent.type | jsonify }},"c":{{ e.chapter | jsonify }},"d":{{ e.date | date: "%-d %b %Y" | jsonify }},"x":{{ text | jsonify }}}{% unless forloop.last %},{% endunless %}
 {%- endfor -%}
 ]

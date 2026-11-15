@@ -1,0 +1,8 @@
+---
+layout: null
+sitemap: false
+section: games
+permalink: /games/feed.xml
+---
+{%- comment -%} The Games feed. Everything is in _includes/feed.xml, shared with Books. {%- endcomment -%}
+{%- include feed.xml -%}

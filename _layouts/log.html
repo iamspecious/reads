@@ -20,7 +20,7 @@ layout: default
     which is why it's used instead of loose text.
   {% endcomment %}
   <dl class="log-facts">
-    <div><dt>Status</dt><dd><span class="status status-{{ page.status }}">{{ page.status | capitalize }}</span></dd></div>
+    <div><dt>Status</dt><dd><span class="status status-{{ page.status }}">{% include section.html %}{% include status-label.html status=page.status %}</span></dd></div>
     {% if page.started %}<div><dt>Started</dt><dd><time datetime="{{ page.started | date: '%Y-%m-%d' }}">{{ page.started | date: "%-d %b %Y" }}</time></dd></div>{% endif %}
     {% if page.finished %}<div><dt>Finished</dt><dd><time datetime="{{ page.finished | date: '%Y-%m-%d' }}">{{ page.finished | date: "%-d %b %Y" }}</time></dd></div>{% endif %}
     <div><dt>Entries</dt><dd>{{ log_entries.size }}</dd></div>

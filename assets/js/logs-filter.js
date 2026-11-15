@@ -25,7 +25,11 @@
   });
 
   function apply() {
-    var type = form.elements.type.value;
+    // The Games list has no Type buttons (games are the only type there),
+    // so "type" may not exist. Treat a missing row as "All".
+    // Tripped me up: without this check the whole script stopped on the
+    // Games page, and the Status buttons never appeared.
+    var type = form.elements.type ? form.elements.type.value : '';
     var status = form.elements.status.value;
     var shown = 0;
 
