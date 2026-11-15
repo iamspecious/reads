@@ -1,0 +1,11 @@
+---
+date: 2026-11-15 00:00:37 +0100
+log: a-court-of-silver-flames
+chapter: 54
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2cm3opckc2x
+videos:
+  - src: "/assets/images/entries/3n2cm3opckc2x-1.mp4"
+    alt: ""
+    gif: true
+---
+Chapter 54:
