@@ -18,6 +18,9 @@
 (function () {
   'use strict';
 
+  // Which index to load and which types this page shows (Books or Games).
+  // Set by _includes/search-page.html.
+  var config = JSON.parse(document.getElementById('search-config').textContent);
   var input = document.getElementById('q');
   var status = document.getElementById('search-status');
   var out = document.getElementById('search-results');
@@ -106,11 +109,13 @@
   input.addEventListener('input', onInput);
 
   status.textContent = 'Loading…';
-  fetch(window.READS_INDEX)
+  fetch(config.index)
     .then(function (r) { return r.json(); })
     .then(function (data) {
       // Pre-build one folded "haystack" string per item, once, so every
       // keystroke only does cheap indexOf checks.
+      // Keep only this half's logs and entries.
+      data = data.filter(function (it) { return config.types.indexOf(it.y) !== -1; });
       items = data.map(function (it) {
         it._hay = fold([it.g, it.a, it.y, it.s, (it.tg || []).join(' '), it.c ? 'ch ' + it.c + ' chapter ' + it.c : '', it.x].join(' '));
         return it;

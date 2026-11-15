@@ -5,6 +5,8 @@
 # The description is only used behind the scenes (search engines, link
 # previews, the feed). It's kept short and plain on purpose; replace it with
 # your own words any time.
+# title is the site-wide name. Each half (Books by Spec, Games by Spec) has
+# its own name in _data/sections.yml, which is what pages actually show.
 title: Books by Spec
 description: Chapter-by-chapter reading logs by Spec.
 author: Spec
@@ -32,8 +34,8 @@ timezone: Europe/Berlin
 
 # Only plugins that GitHub Pages allows. Anything else would be ignored
 # by GitHub's build, so we stick to these three.
-#  - jekyll-feed: adds the feed link tag to every page (see feed.xml for why
-#    the feed file itself is hand-written).
+#  - jekyll-feed: kept on, but each half's feed is hand-written (see
+#    _includes/feed.xml for why) and so is the feed link in head.html.
 #  - jekyll-seo-tag: writes the page title, description and preview tags.
 #  - jekyll-sitemap: writes sitemap.xml so search engines find every page.
 plugins:

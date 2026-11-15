@@ -2,10 +2,12 @@
   footer.html — the bottom of every page.
   Kept to the name and two links. No slogans: any words on this site
   should be Spec's own, so the footer doesn't add any.
+  The RSS link goes to this half's own feed.
 {% endcomment %}
+{% assign feed_url = sec.home | append: "feed.xml" %}
 <footer class="site-footer">
   <div class="wrap footer-row">
-    <span>{{ site.title }}</span>
-    <span><a href="{{ '/feed.xml' | relative_url }}">RSS</a> · <a href="https://bsky.app/profile/{{ site.bluesky }}" rel="me noopener">Bluesky</a></span>
+    <span>{{ sec.name }}</span>
+    <span><a href="{{ feed_url | relative_url }}">RSS</a> · <a href="https://bsky.app/profile/{{ site.bluesky }}" rel="me noopener">Bluesky</a></span>
   </div>
 </footer>

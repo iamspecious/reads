@@ -1,0 +1,22 @@
+{%- comment -%}
+  section.html — works out which half of the site this page belongs to.
+
+  After including it, these are set for the rest of the page:
+    sec_key   "books" or "games"
+    sec       that half's settings from _data/sections.yml
+
+  How it decides, in order:
+    1. A page can say so itself with "section: games" in its front matter.
+    2. A log page belongs to the half that lists its type (game -> games).
+    3. Anything else (search index, /new) counts as books.
+  Why an include and not a plugin: GitHub Pages won't run custom plugins,
+  and in Jekyll an "assign" inside an include stays set for the page that
+  included it, so this works like a small shared helper.
+{%- endcomment -%}
+{%- assign sec_key = page.section | default: "books" -%}
+{%- if page.collection == "logs" -%}
+  {%- for s in site.data.sections -%}
+    {%- if s[1].types contains page.type -%}{%- assign sec_key = s[0] -%}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- assign sec = site.data.sections[sec_key] -%}

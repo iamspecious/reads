@@ -11,6 +11,15 @@ Live site: **https://iamspecious.github.io/reads/**
 
 It's a plain Jekyll site built by GitHub Pages. No server, no paid services, no tokens stored anywhere.
 
+## Books and Games
+
+The site has two halves, switched with the **Books | Games** tabs at the top:
+
+- **Books by Spec** (`/reads/`): books (and shows, for now).
+- **Tech by Spec** (`/reads/games/`): games, with the Tech by Spec logo and colours.
+
+Each half has its own Latest page, Logs list, Search and RSS feed (`/feed.xml` and `/games/feed.xml`). A log goes in whichever half matches its `type:`. Names, logos and which types go where are all in `_data/sections.yml`.
+
 ## Post from your phone
 
 Open **https://iamspecious.github.io/reads/new/** (add it to your home screen). It's one page:

@@ -1,0 +1,37 @@
+# sections.yml — the site's two halves: Books by Spec and Games by Spec.
+#
+# Why this file exists: every page needs to know which half it belongs to,
+# so it can show the right name, links and logs. Keeping that in one place
+# means adding a third half later (say, "Shows by Spec") is a matter of
+# adding a block here and a few small pages, not editing every template.
+#
+# What each setting means:
+#   name     the big name in the header, page titles and feed
+#   home     where its tab and "Latest" link go
+#   types    which log types belong here (the "type:" line in each log)
+#   doing    the word for "reading" in this half ("Currently playing")
+#   logo     the picture beside the name; leave blank for none
+#   about    one plain line for search engines and link previews
+#   tab      the word on its Books | Games tab
+#
+# Shows sit with books for now, because there's no Shows half yet.
+books:
+  name: Books by Spec
+  home: /
+  types: [book, show]
+  doing: reading
+  logo: /assets/images/logo-160.jpg
+  about: Chapter-by-chapter reading logs by Spec.
+  tab: Books
+# The games half wears Spec's existing "Tech by Spec" brand (the name
+# used for all gaming and tech that isn't LoreBySpec), with its logo and
+# purple-to-blue colours. The tab still says "Games", because that's what's
+# in it. To call it "Games by Spec" instead, change name: below.
+games:
+  name: Tech by Spec
+  home: /games/
+  types: [game]
+  doing: playing
+  logo: /assets/images/logo-tech-160.jpg
+  about: Play-by-play gaming logs by Spec.
+  tab: Games

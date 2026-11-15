@@ -1,0 +1,45 @@
+{% comment %}
+  home.html — the front page of one half (Books or Games).
+  Used by index.html (Books) and games/index.html (Games).
+  1. "Currently reading/playing": every log in this half marked
+     status: reading, so the first thing you see is what's on the go.
+  2. "Latest": this half's newest entries, newest first.
+
+  Why only 50 entries: the page stays small and quick on a phone. Older
+  entries are never lost, they live on their log pages.
+{% endcomment %}
+{% include section.html %}
+{% include section-entries.html %}
+{% assign now_on = sec_logs | where: "status", "reading" %}
+{% if now_on.size > 0 %}
+<section class="now-box" aria-labelledby="now-h">
+  <h2 class="label" id="now-h">Currently {{ sec.doing }}</h2>
+  {% for l in now_on %}
+    {% assign le = site.entries | where: "log", l.slug | sort: "date" %}
+    {% assign last_ch = nil %}
+    {% for x in le reversed %}{% if x.chapter %}{% assign last_ch = x.chapter %}{% break %}{% endif %}{% endfor %}
+    <a class="now-item" href="{{ l.url | relative_url }}">
+      <span class="now-title">{{ l.title }}</span>
+      <span class="now-creator">{{ l.creator }}</span>
+      <span class="now-meta">
+        {% if last_ch %}<span class="chip">Ch {{ last_ch }}</span>{% endif %}
+        <span>{{ le.size }} {% if le.size == 1 %}entry{% else %}entries{% endif %}</span>
+        {% if l.started %}<span>Since {{ l.started | date: "%-d %b" }}</span>{% endif %}
+      </span>
+    </a>
+  {% endfor %}
+</section>
+{% endif %}
+
+<h2 class="label">Latest</h2>
+<section class="feed" aria-label="Latest entries, newest first">
+  {% for entry in sec_entries limit: 50 %}
+    {% include entry-card.html entry=entry show_log=true %}
+  {% else %}
+    <p class="empty">No entries yet.</p>
+  {% endfor %}
+</section>
+{% if sec_entries.size > 50 %}
+  {% assign logs_url = sec.home | append: "logs/" %}
+  <p class="more"><a href="{{ logs_url | relative_url }}">Older entries are on each log page →</a></p>
+{% endif %}

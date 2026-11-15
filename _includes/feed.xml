@@ -1,0 +1,52 @@
+{%- comment -%}
+  feed.xml (include) — the Atom feed for one half. Feed readers check it
+  for new entries. Used by feed.xml (Books) and games/feed.xml (Games),
+  so each half has its own feed and Books readers never get game posts.
+
+  Why it's hand-written even though jekyll-feed is turned on:
+  jekyll-feed names each item after its "title". Our entries don't have a
+  title (they're short posts), so jekyll-feed would invent one from the file
+  name, like "143210 3mzxieaiuys2i". Not useful. jekyll-feed never
+  overwrites a feed.xml that already exists, so this one wins.
+
+  Item titles here are "Log title · Ch 12" (or the time, when there's no
+  chapter), and each item links to the entry's anchor on its log page.
+
+  Why only the latest 30: feed readers fetch this file often. Keeping it short
+  keeps it quick. Readers remember what they've already seen.
+
+  Why absolute_url instead of relative_url: feed readers aren't on our site,
+  so every link has to include the full https://iamspecious.github.io/reads.
+{%- endcomment -%}
+{%- include section.html -%}
+{%- include section-entries.html -%}
+{%- assign feed_url = sec.home | append: "feed.xml" -%}
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ sec.name | xml_escape }}</title>
+  <subtitle>{{ sec.about | xml_escape }}</subtitle>
+  <link href="{{ feed_url | absolute_url }}" rel="self" type="application/atom+xml"/>
+  <link href="{{ sec.home | absolute_url }}" rel="alternate" type="text/html"/>
+  <id>{{ sec.home | absolute_url }}</id>
+  <author><name>{{ site.author | xml_escape }}</name></author>
+  <updated>{% if sec_entries.size > 0 %}{{ sec_entries.first.date | date_to_xmlschema }}{% else %}{{ site.time | date_to_xmlschema }}{% endif %}</updated>
+  {%- for e in sec_entries limit: 30 %}
+  {%- assign parent = site.logs | where: "slug", e.log | first %}
+  {%- assign anchor = e.path | split: "/" | last | split: "." | first | prepend: "e-" %}
+  {%- assign link = parent.url | append: "#" | append: anchor | absolute_url %}
+  <entry>
+    <title>{{ parent.title | default: e.log | xml_escape }} · {% if e.chapter %}Ch {{ e.chapter }}{% else %}{{ e.date | date: "%-d %b %Y %H:%M" }}{% endif %}</title>
+    <link href="{{ link }}" rel="alternate" type="text/html"/>
+    <id>{{ link }}</id>
+    <published>{{ e.date | date_to_xmlschema }}</published>
+    <updated>{{ e.date | date_to_xmlschema }}</updated>
+    {%- comment -%}
+      The post text is escaped twice on purpose: once to turn "<" into "&lt;" so
+      it's safe HTML, and type="html" tells the reader to show that HTML.
+      Images are added with full links so they show up in the reader too.
+    {%- endcomment %}
+    {%- capture text %}{% include entry-text.html entry=e %}{% endcapture %}
+    <content type="html">{{ text | escape | newline_to_br | xml_escape }}{% for img in e.images %}{% assign img_url = img.src | absolute_url %}{% assign img_alt = img.alt | escape %}{{ '<p><img src="' | append: img_url | append: '" alt="' | append: img_alt | append: '"></p>' | xml_escape }}{% endfor %}</content>
+  </entry>
+  {%- endfor %}
+</feed>

@@ -1,26 +1,38 @@
 {% comment %}
-  header.html — the top of every page: logo, name, and three links.
+  header.html — the top of every page: the name of this half, the
+  Books | Games tabs, and this half's three links.
 
-  Why it looks like this: the logo and the tall "BOOKS BY SPEC" lettering
-  (Bebas Neue, the same style as the logo) say whose site this is. Kept on
-  a plain white background so it feels clean and different from the
-  portfolio's dark header. The thin colour strip above it is the logo's
-  pink-to-teal gradient, used once so it's an accent and not a theme.
+  Why it looks like this: the tall lettering (Bebas Neue, the same style as
+  the logo) says whose site this is and which half you're in: BOOKS BY SPEC
+  or GAMES BY SPEC. The tabs switch halves. They look like a two-way switch,
+  because you're always in exactly one of them.
+  The thin colour strip above is the logo's pink-to-teal gradient, used
+  once so it's an accent and not a theme.
 
   "New" isn't in the menu on purpose: it's a tool just for posting, opened
   from the home screen icon. Readers don't need it.
+  section.html is included by the layout before this, so sec is set.
 {% endcomment %}
+{% assign logs_url = sec.home | append: "logs/" %}
+{% assign search_url = sec.home | append: "search/" %}
 <div class="brand-strip" aria-hidden="true"></div>
 <header class="site-header">
   <div class="wrap header-row">
-    <a class="brand" href="{{ '/' | relative_url }}">
-      <img class="brand-logo" src="{{ '/assets/images/logo-160.jpg' | relative_url }}" alt="" width="44" height="44">
-      <span class="brand-name">{{ site.title }}</span>
+    <a class="brand" href="{{ sec.home | relative_url }}">
+      {% if sec.logo %}<img class="brand-logo" src="{{ sec.logo | relative_url }}" alt="" width="44" height="44">{% endif %}
+      <span class="brand-name">{{ sec.name }}</span>
     </a>
-    <nav class="site-nav" aria-label="Main">
-      <a href="{{ '/' | relative_url }}"{% if page.url == "/" %} aria-current="page"{% endif %}>Latest</a>
-      <a href="{{ '/logs/' | relative_url }}"{% if page.url == "/logs/" or page.collection == "logs" %} aria-current="page"{% endif %}>Logs</a>
-      <a href="{{ '/search/' | relative_url }}"{% if page.url == "/search/" %} aria-current="page"{% endif %}>Search</a>
+    <nav class="section-tabs" aria-label="Books or games">
+      {% for s in site.data.sections %}
+        <a href="{{ s[1].home | relative_url }}"{% if s[0] == sec_key %} aria-current="true"{% endif %}>{{ s[1].tab }}</a>
+      {% endfor %}
+    </nav>
+  </div>
+  <div class="wrap">
+    <nav class="site-nav" aria-label="{{ sec.name }}">
+      <a href="{{ sec.home | relative_url }}"{% if page.url == sec.home %} aria-current="page"{% endif %}>Latest</a>
+      <a href="{{ logs_url | relative_url }}"{% if page.url == logs_url or page.collection == "logs" %} aria-current="page"{% endif %}>Logs</a>
+      <a href="{{ search_url | relative_url }}"{% if page.url == search_url %} aria-current="page"{% endif %}>Search</a>
     </nav>
   </div>
 </header>

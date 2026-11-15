@@ -2,12 +2,18 @@
   default.html — the frame every page sits in: head, header, content, footer.
   Why one frame: change the header once and every page follows.
 {% endcomment %}
+{% comment %}
+  Which half of the site (Books or Games) this page is in. Worked out once
+  here so the head, header and footer all agree. See _includes/section.html.
+{% endcomment %}
+{% include section.html %}
 <!doctype html>
 <html lang="en">
 <head>
 {% include head.html %}
 </head>
-<body>
+{% comment %} The theme class lets each half use its own logo colours (see the end of reads.css). {% endcomment %}
+<body class="theme-{{ sec_key }}">
 {% include header.html %}
 <main class="wrap" id="main">
 {{ content }}

@@ -167,7 +167,7 @@
     $('reading-list').hidden = none;
     $('show-others').hidden = none;
     $('others').hidden = !none;
-    if (none) $('others').querySelector('.step-q').textContent = 'What are you reading?';
+    if (none) $('others').querySelector('.step-q').textContent = 'What are you reading or playing?';
     renderLastSent();
     show('step-pick');
   }

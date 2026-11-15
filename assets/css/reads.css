@@ -1,10 +1,13 @@
-/* reads.css — the whole look of Books by Spec in one small file.
+/* reads.css — the whole look of Books by Spec and Tech by Spec in one small file.
 
-   The idea: a clean, quiet page where the writing is the main thing.
-   - White (or near-black in dark mode), lots of space, one column.
+   The idea: a dark, clean page where the writing is the main thing, and
+   each half is easy to tell apart at a glance.
+   - Always dark (Spec prefers dark themes), lots of space, one column.
    - The logo's tall lettering (Bebas Neue) for the site name and small labels.
-   - The logo's pink → violet → teal gradient, used sparingly as an accent:
-     the thin strip at the very top and the edge of the "Currently reading" box.
+   - Each half wears its own logo's colours: a gradient band behind the
+     header, a soft glow at the top of the page, a gradient border around
+     the "Currently reading/playing" box, and its own link and tag colour.
+     Books: pink → violet → teal. Tech: deep purple → violet → blue.
    - Everything else is the phone's own font, so text appears instantly
      and reads the way the phone's other apps do.
    It's meant to look clearly different from the portfolio (dark grey header,
@@ -14,7 +17,8 @@
    wider screens near the bottom only adds a bit of room.
 
    Colours are written once as "variables" (the --names below) and reused.
-   Dark mode just swaps the variables, so every rule works in both.
+   Each half (.theme-books / .theme-games on <body>) only swaps a few of
+   them, so every rule works for both.
 */
 
 /* The logo font, stored in this repo (see assets/fonts/OFL.txt for its free licence).
@@ -29,44 +33,53 @@
 }
 
 :root {
-  --bg: #fbfafc;
-  --surface: #ffffff;
-  --ink: #1d1b22;
-  --ink-soft: #3b3843;
-  --muted: #6e6a78;
-  --line: #ebe8f0;
-  --accent: #7b45c4;          /* a deeper version of the logo's violet, dark enough to read as link text */
-  --chip-bg: #f2ecfb;
-  --chip-ink: #5e3399;
-  --quiet-bg: #f1f0f4;
+  --bg: #121016;
+  --surface: #1b1820;
+  --ink: #efedf4;
+  --ink-soft: #d8d5e0;
+  --muted: #a6a2b3;
+  --line: #2c2834;
+  --accent: #c39af0;
+  --chip-bg: #2b2340;
+  --chip-ink: #d6bdf7;
+  --quiet-bg: #26232d;
   --gradient: linear-gradient(90deg, #e06a95, #a463d6 50%, #3fa9c4);
-  --shadow: 0 1px 2px rgba(29, 27, 34, 0.04), 0 2px 8px rgba(29, 27, 34, 0.04);
-  --reading: #1f7a52;  --reading-bg: #e6f4ed;
-  --finished: #2b5ea8; --finished-bg: #e7eefa;
-  --dropped: #9a3b3b;  --dropped-bg: #f8e9e9;
+  /* The same colours, see-through, for the header band and the page glow. */
+  --band: linear-gradient(120deg, rgba(224, 106, 149, 0.30), rgba(164, 99, 214, 0.24) 50%, rgba(63, 169, 196, 0.28));
+  --glow: radial-gradient(120% 60% at 50% 0%, rgba(164, 99, 214, 0.14), transparent 70%);
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 6px 18px rgba(0, 0, 0, 0.25);
+  --reading: #7fd3a8;  --reading-bg: #1d3329;
+  --finished: #9dbcf0; --finished-bg: #1e2a40;
+  --dropped: #eaa0a0;  --dropped-bg: #3a2222;
   --display: "Bebas Neue", "Arial Narrow", "Helvetica Neue", sans-serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-  color-scheme: light dark;   /* lets the browser draw form controls to match */
+  /* Tells the browser the page is dark, so scrollbars and form boxes match.
+     Tripped me up: this used to say "light dark", which let a phone in
+     light mode draw white form boxes on the dark page. */
+  color-scheme: dark;
 }
 
-/* Dark mode follows the phone's own setting. Only the colours change. */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #131218;
-    --surface: #1b1a21;
-    --ink: #ecebf2;
-    --ink-soft: #d4d2dc;
-    --muted: #a19eae;
-    --line: #2a2832;
-    --accent: #c39af0;
-    --chip-bg: #2b2340;
-    --chip-ink: #d6bdf7;
-    --quiet-bg: #25242c;
-    --shadow: none;
-    --reading: #7fd3a8;  --reading-bg: #1d3329;
-    --finished: #9dbcf0; --finished-bg: #1e2a40;
-    --dropped: #eaa0a0;  --dropped-bg: #3a2222;
-  }
+/* Books by Spec: pink-violet links and tags, from the book logo. */
+.theme-books {
+  --accent: #eaa0d2;
+  --chip-bg: #3a2035;
+  --chip-ink: #f5c3df;
+}
+
+/* Tech by Spec (the Games half): from the Tech by Spec logo, deep purple
+   (#530b8b), bright violet (#7f2bbe) and soft blue (#6f9bd6). The page
+   itself is a touch more purple too, so the two halves feel different. */
+.theme-games {
+  --bg: #110c1a;
+  --surface: #1a1428;
+  --line: #2e2542;
+  --quiet-bg: #251d36;
+  --accent: #b896f2;
+  --chip-bg: #2a1f45;
+  --chip-ink: #cdb6f6;
+  --gradient: linear-gradient(90deg, #530b8b, #7f2bbe 50%, #6f9bd6);
+  --band: linear-gradient(120deg, rgba(83, 11, 139, 0.75), rgba(127, 43, 190, 0.45) 55%, rgba(111, 155, 214, 0.35));
+  --glow: radial-gradient(120% 60% at 50% 0%, rgba(127, 43, 190, 0.20), transparent 70%);
 }
 
 /* box-sizing: border-box means padding counts inside a box's width,
@@ -81,7 +94,8 @@
 
 body {
   margin: 0;
-  background: var(--bg);
+  /* The half's colour glow at the top of the page, fading into plain dark. */
+  background: var(--glow) no-repeat, var(--bg);
   color: var(--ink);
   font: 17px/1.6 var(--sans);
   /* Stops iPhones from bumping up text size on their own when turned sideways. */
@@ -111,7 +125,9 @@ a { color: var(--accent); text-underline-offset: 2px; }
 
 /* ── Header ── */
 .brand-strip { height: 4px; background: var(--gradient); }
-.site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
+/* The header sits on a band of the half's own colours, so you can tell
+   Books from Tech at a glance. */
+.site-header { background: var(--band), var(--surface); border-bottom: 1px solid var(--line); }
 /* Logo and name on the left, links on the right. On a narrow phone the
    links simply drop onto their own line underneath (flex-wrap). */
 .header-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; padding-top: 12px; padding-bottom: 10px; }
@@ -120,7 +136,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .brand-name { font: 400 1.9rem/1 var(--display); letter-spacing: 0.04em; padding-top: 4px; }
 .site-nav { display: flex; gap: 18px; font-size: 0.95rem; }
 /* Links are at least 40px tall so they're easy to tap. */
-.site-nav a { color: var(--muted); text-decoration: none; padding: 9px 0; border-bottom: 2px solid transparent; }
+.site-nav a { color: var(--ink-soft); text-decoration: none; padding: 9px 0; border-bottom: 2px solid transparent; }
 .site-nav a:hover { color: var(--ink); }
 .site-nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); }
 
@@ -129,15 +145,14 @@ main { padding-bottom: 40px; }
 /* ── Currently reading box ── */
 .now-box {
   margin-top: 20px;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  /* A gradient border all the way round: the box is painted twice, plain
+     inside the border line ("padding-box") and gradient under it
+     ("border-box"), and the transparent 2px border lets the gradient show. */
+  border: 2px solid transparent;
+  background: linear-gradient(var(--surface), var(--surface)) padding-box, var(--gradient) border-box;
   border-radius: 14px;
   box-shadow: var(--shadow);
   padding: 4px 16px 6px;
-  /* The logo gradient as a thin bar along the top edge of the box. */
-  background-image: var(--gradient);
-  background-size: 100% 3px;
-  background-repeat: no-repeat;
 }
 .now-box .label { margin: 14px 0 4px; }
 .now-item { display: flex; flex-direction: column; gap: 2px; padding: 10px 0 12px; text-decoration: none; color: var(--ink); }
@@ -267,7 +282,9 @@ mark { background: color-mix(in srgb, #e06a95 25%, transparent); color: inherit;
 .hint { font-weight: 400; color: var(--muted); font-size: 0.84rem; margin: 0; }
 .button { margin-top: 14px; padding: 13px 16px; font: 600 1rem var(--sans); color: #fff; background: var(--ink); border: 0; border-radius: 10px; cursor: pointer; }
 .button-quiet { margin-top: 4px; background: transparent; color: var(--muted); font-weight: 500; font-size: 0.9rem; }
-@media (prefers-color-scheme: dark) { .button { color: var(--bg); } .button-quiet { color: var(--muted); } }
+/* The page is dark, so the main button is light with dark text. */
+.button { color: var(--bg); }
+.button-quiet { color: var(--muted); }
 .link-button { background: none; border: 0; padding: 4px 0; font: inherit; font-size: 0.88rem; color: var(--accent); text-decoration: underline; cursor: pointer; }
 .when { margin-top: 10px; font-size: 0.88rem; color: var(--muted); }
 .when summary { cursor: pointer; padding: 4px 0; }
@@ -293,3 +310,11 @@ mark { background: color-mix(in srgb, #e06a95 25%, transparent); color: inherit;
   .log-head h1 { font-size: 2.4rem; }
   .brand-name { font-size: 2.1rem; }
 }
+
+/* ── Books | Games tabs ──
+   A two-way switch next to the name: the half you're in is filled in dark,
+   the other is plain. Pill-shaped and at least 34px tall, easy to tap. */
+.section-tabs { display: inline-flex; padding: 3px; gap: 2px; background: rgba(0, 0, 0, 0.35); border-radius: 999px; }
+.section-tabs a { padding: 6px 14px; border-radius: 999px; font-size: 0.88rem; font-weight: 600; color: var(--ink-soft); text-decoration: none; }
+.section-tabs a[aria-current="true"] { background: var(--ink); color: var(--bg); }
+.site-header .site-nav { padding-bottom: 2px; }

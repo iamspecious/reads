@@ -1,0 +1,8 @@
+{%- comment -%}
+  status-label.html — the word shown for a log's status.
+  Use: include status-label.html status=the_status
+  The files always say "reading" for something on the go (so every tool
+  agrees), but on the Games side that reads oddly, so it's shown as
+  "Playing" there. Needs section.html included first.
+{%- endcomment -%}
+{%- if include.status == "reading" -%}{{ sec.doing | capitalize }}{%- else -%}{{ include.status | capitalize }}{%- endif -%}
