@@ -1,0 +1,16 @@
+---
+date: 2026-11-04 17:22:00 +0100
+log: league-of-legends-wild-rift
+chapter: 23
+matches:
+  - result: win
+    champion: Lulu
+    kda: [0, 5, 31]
+    mode: Ranked
+    gold: 12047
+  - result: win
+    champion: Lulu
+    kda: [2, 6, 24]
+    mode: Ranked
+    gold: 15359
+---

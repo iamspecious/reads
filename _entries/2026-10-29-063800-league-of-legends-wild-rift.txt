@@ -1,0 +1,41 @@
+---
+date: 2026-10-29 06:38:00 +0100
+log: league-of-legends-wild-rift
+chapter: 23
+matches:
+  - result: win
+    champion: Cho'Gath
+    kda: [4, 1, 10]
+    mode: Ranked
+    gold: 12640
+  - result: win
+    champion: Yuumi
+    kda: [0, 1, 19]
+    mode: Ranked
+    gold: 11142
+  - result: loss
+    champion: Nami
+    kda: [0, 3, 1]
+    mode: Ranked
+    gold: 7719
+  - result: win
+    champion: Yuumi
+    kda: [1, 2, 19]
+    mode: Ranked
+    gold: 12759
+  - result: win
+    champion: Yuumi
+    kda: [0, 2, 13]
+    mode: Ranked
+    gold: 10115
+  - result: loss
+    champion: Malphite
+    kda: [1, 4, 2]
+    mode: Ranked
+    gold: 7484
+  - result: loss
+    champion: Yuumi
+    kda: [0, 5, 9]
+    mode: Ranked
+    gold: 8627
+---

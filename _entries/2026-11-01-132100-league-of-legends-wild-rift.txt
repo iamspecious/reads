@@ -1,0 +1,11 @@
+---
+date: 2026-11-01 13:21:00 +0100
+log: league-of-legends-wild-rift
+chapter: 23
+matches:
+  - result: loss
+    champion: Cho'Gath
+    kda: [1, 3, 4]
+    mode: Legendary Ranked
+    gold: 12825
+---
