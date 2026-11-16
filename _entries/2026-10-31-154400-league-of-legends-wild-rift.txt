@@ -1,0 +1,63 @@
+---
+date: 2026-10-31 15:44:00 +0100
+log: league-of-legends-wild-rift
+chapter: 23
+matches:
+  - result: loss
+    champion: Lulu
+    kda: [0, 7, 14]
+    mode: Ranked
+    gold: 8661
+  - result: loss
+    champion: Yuumi
+    kda: [1, 8, 16]
+    mode: Ranked
+    gold: 14816
+  - result: win
+    champion: Yuumi
+    kda: [4, 3, 16]
+    mode: Ranked
+    gold: 12192
+  - result: loss
+    champion: Yuumi
+    kda: [1, 2, 8]
+    mode: Ranked
+    gold: 11724
+  - result: win
+    champion: Cho'Gath
+    kda: [0, 0, 0]
+    mode: "Custom: Blind Pick"
+    gold: 778
+    badge: MVP
+  - result: loss
+    champion: Yuumi
+    kda: [1, 1, 11]
+    mode: Ranked
+    gold: 10099
+    badge: SVP
+  - result: loss
+    champion: Nami
+    kda: [1, 3, 10]
+    mode: Ranked
+    gold: 10897
+  - result: loss
+    champion: Yuumi
+    kda: [0, 2, 10]
+    mode: Ranked
+    gold: 8653
+  - result: win
+    champion: Yuumi
+    kda: [3, 2, 18]
+    mode: Ranked
+    gold: 10007
+  - result: loss
+    champion: Lulu
+    kda: [0, 4, 5]
+    mode: Ranked
+    gold: 8255
+  - result: loss
+    champion: Yuumi
+    kda: [0, 5, 24]
+    mode: Ranked
+    gold: 14532
+---
