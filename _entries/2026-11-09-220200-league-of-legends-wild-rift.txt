@@ -1,0 +1,16 @@
+---
+date: 2026-11-09 22:02:00 +0100
+log: league-of-legends-wild-rift
+chapter: 23
+matches:
+  - result: loss
+    champion: Lulu
+    kda: [0, 2, 7]
+    mode: Ranked
+    gold: 8415
+  - result: loss
+    champion: Yuumi
+    kda: [0, 4, 9]
+    mode: Ranked
+    gold: 9433
+---

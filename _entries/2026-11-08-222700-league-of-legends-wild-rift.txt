@@ -1,0 +1,17 @@
+---
+date: 2026-11-08 22:27:00 +0100
+log: league-of-legends-wild-rift
+chapter: 23
+matches:
+  - result: win
+    champion: Yuumi
+    kda: [2, 3, 17]
+    mode: Ranked
+    gold: 12574
+  - result: loss
+    champion: Yuumi
+    kda: [0, 4, 1]
+    mode: Ranked
+    gold: 6796
+    badge: SVP
+---
