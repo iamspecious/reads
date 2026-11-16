@@ -1,0 +1,29 @@
+---
+layout: null
+sitemap: false
+---
+{%- comment -%}
+  sitemap.xml: the list of pages that tells search engines what to read.
+
+  Why it's hand-written: the jekyll-sitemap plugin added a "last changed"
+  time to some pages, and that time ended in the site's time zone (like
+  "+01:00"). Spec doesn't want their time zone shown anywhere on the site.
+  So this file lists the same pages with no times at all. Search engines
+  are fine without them.
+
+  Which pages: every web page (not data files like search.json), skipping
+  any page that says "sitemap: false" and the 404 page. Then every log.
+{%- endcomment -%}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for p in site.html_pages %}
+{%- unless p.sitemap == false or p.url contains "404" %}
+<url><loc>{{ p.url | absolute_url | xml_escape }}</loc></url>
+{%- endunless %}
+{%- endfor %}
+{%- for l in site.logs %}
+{%- unless l.sitemap == false %}
+<url><loc>{{ l.url | absolute_url | xml_escape }}</loc></url>
+{%- endunless %}
+{%- endfor %}
+</urlset>

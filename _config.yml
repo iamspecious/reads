@@ -33,15 +33,16 @@ bluesky: booksbyspec.bsky.social
 timezone: Europe/Berlin
 
 # Only plugins that GitHub Pages allows. Anything else would be ignored
-# by GitHub's build, so we stick to these three.
+# by GitHub's build, so we stick to these two.
 #  - jekyll-feed: kept on, but each half's feed is hand-written (see
 #    _includes/feed.xml for why) and so is the feed link in head.html.
 #  - jekyll-seo-tag: writes the page title, description and preview tags.
-#  - jekyll-sitemap: writes sitemap.xml so search engines find every page.
+# jekyll-sitemap used to be here too. It was dropped because it stamped
+# pages with times that showed the time zone. sitemap.xml and robots.txt
+# are now hand-written instead (see the notes in sitemap.xml).
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
-  - jekyll-sitemap
 
 # Collections are groups of files that Jekyll treats as a set.
 collections:
