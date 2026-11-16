@@ -27,4 +27,4 @@
   through Liquid. type="application/json" means the browser never runs it.
 {% endcomment %}
 <script type="application/json" id="search-config">{"index": {{ '/search.json' | relative_url | jsonify }}, "types": {{ sec.types | jsonify }}}</script>
-<script src="{{ '/assets/js/search.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/search.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>

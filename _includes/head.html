@@ -94,7 +94,15 @@
   without it the browser downloads the font twice.
 {% endcomment %}
 <link rel="preload" href="{{ '/assets/fonts/bebas-neue-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{{ '/assets/css/reads.css' | relative_url }}">
+{% comment %}
+  The "?v=" number is the time the site was built. Every rebuild gives the
+  stylesheet (and the page scripts, which do the same) a new address, so
+  phones fetch the new version straight away instead of a saved old copy.
+  Tripped me up: GitHub Pages tells browsers they may keep files for 10
+  minutes. After an update, a phone showed the new page with the OLD
+  stylesheet: new widgets and tabs appeared as plain unstyled text.
+{% endcomment %}
+<link rel="stylesheet" href="{{ '/assets/css/reads.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 {% comment %} The logo as the browser-tab icon and the phone home-screen icon. {% endcomment %}
 <link rel="icon" type="image/png" href="{{ '/favicon.png' | relative_url }}">
 <link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | relative_url }}">
