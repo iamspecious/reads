@@ -68,7 +68,7 @@ seasons:
     year: 2024
     year_name: Crown
     rank: Emerald IV
-    mains: [Yuumi, Seraphine, Malphite]
+    mains: [Lulu, Seraphine, Malphite]
     matches: 149
     win_rate: 52
   - season: 14
