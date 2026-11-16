@@ -408,3 +408,43 @@ mark { background: color-mix(in srgb, #e06a95 25%, transparent); color: inherit;
 .rj-now { fill: var(--accent); }
 .rj-season { fill: var(--muted); font-size: 10px; font-family: var(--sans); }
 .rank-journey figcaption { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+
+/* ── Season log: mini widgets ──
+   Small cards in a two-column grid (four across on wider screens), each
+   answering one question at a glance. */
+.widgets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 18px; }
+.widget { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.widget p { margin: 0; }
+.widget-label { font: 400 0.95rem/1.1 var(--display); letter-spacing: 0.06em; color: var(--muted); }
+.widget-big { font-size: 1.15rem; font-weight: 700; margin-top: 4px !important; color: var(--ink); }
+.widget:first-child .widget-big { color: var(--accent); }
+.widget-small { font-size: 0.78rem; color: var(--muted); margin-top: 2px !important; }
+.widget-champ { margin-top: 6px !important; }
+.widget-champ .champ { font-weight: 700; color: var(--ink); }
+.widget-portraits { display: flex; gap: 6px; margin-top: 8px !important; }
+.widget-portraits .champ img { width: 36px; height: 36px; }
+.widget-portraits .champ img + span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.form-mini { margin-top: 6px; }
+.form-mini .fg { width: 18px; height: 18px; font-size: 0.7rem; }
+@media (min-width: 640px) { .widgets { grid-template-columns: repeat(4, 1fr); } }
+
+/* ── Tabs ──
+   Radio buttons, hidden, with their labels styled as a pill-shaped tab bar.
+   The checked radio decides which panel shows ("~" means "a later sibling").
+   Why radio buttons: tabs that work without JavaScript, and only one can
+   be open at a time, which is exactly what radio buttons already do. */
+.tabs > input { position: absolute; opacity: 0; pointer-events: none; }
+.tab-labels { display: flex; gap: 4px; padding: 4px; margin-bottom: 14px; border-radius: 999px; background: var(--quiet-bg); overflow-x: auto; }
+.tab-labels label { flex: 1 0 auto; text-align: center; padding: 8px 12px; border-radius: 999px; font-size: 0.88rem; font-weight: 600; color: var(--ink-soft); cursor: pointer; white-space: nowrap; }
+.tab-panel { display: none; }
+#tab-journal:checked ~ .panel-journal,
+#tab-season:checked ~ .panel-season,
+#tab-player:checked ~ .panel-player,
+#tab-history:checked ~ .panel-history { display: block; }
+#tab-journal:checked ~ .tab-labels label[for="tab-journal"],
+#tab-season:checked ~ .tab-labels label[for="tab-season"],
+#tab-player:checked ~ .tab-labels label[for="tab-player"],
+#tab-history:checked ~ .tab-labels label[for="tab-history"] { background: var(--ink); color: var(--bg); }
+.tabs > input:focus-visible ~ .tab-labels { outline: 2px solid var(--accent); outline-offset: 2px; }
+.panel-season > .season-card, .panel-history .season-card { margin: 0 0 12px; background: linear-gradient(var(--surface), var(--surface)) padding-box, var(--gradient) border-box; border: 2px solid transparent; }
+.panel-player .player-card > .label:first-child { display: none; }   /* the tab already says "Player" */

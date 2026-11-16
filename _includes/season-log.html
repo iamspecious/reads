@@ -1,0 +1,113 @@
+{% comment %}
+  season-log.html — the page body for a game played in seasons (Wild Rift).
+  Used by _layouts/log.html when the log has "seasons:".
+
+  Why it's laid out like this (it used to be all charts first, then each
+  season's notes, which was hard to find your way around):
+  1. Mini widgets: the four things you want at a glance. Current season and
+     rank, how this season is going (from logged sessions), top champion
+     this season, and mains.
+  2. Four tabs, each with one job:
+       Journal      every note and session, newest first (opens first)
+       This season  the current season's banner and dashboard
+       Player       you across every season (player card)
+       History      every past season's banner and stats
+  The tabs are radio buttons styled as tabs, so they work without
+  JavaScript. assets/js/tabs.js only adds nice extras: links like
+  .../#player open that tab, and the address bar follows the tab you pick.
+  Shared links to one entry (#e-...) still work, because Journal is the
+  tab that's open when the page loads.
+
+  Needs: log_entries (sorted oldest first) from log.html.
+{% endcomment %}
+{% assign seasons = page.seasons | sort: "season" | reverse %}
+{% assign cur = seasons | first %}
+{% assign cur_key = cur.season | append: "" %}
+
+{% comment %} This season's logged matches, oldest first, for the widgets. {% endcomment %}
+{% assign cur_matches = "" | split: "" %}
+{% for e in log_entries %}
+  {% assign ch = e.chapter | append: "" %}
+  {% if ch == cur_key and e.matches %}{% assign cur_matches = cur_matches | concat: e.matches %}{% endif %}
+{% endfor %}
+
+<section class="widgets" aria-label="At a glance">
+  <div class="widget">
+    <p class="widget-label">Season {{ cur.season }}</p>
+    <p class="widget-big">{{ cur.rank | default: "Unranked" }}</p>
+    <p class="widget-small">{% if cur.finished %}Ended {{ cur.finished | date: "%-d %b" }}{% elsif cur.ends %}Ends {{ cur.ends | date: "%-d %b %Y" }}{% elsif cur.started %}Since {{ cur.started | date: "%-d %b" }}{% endif %}</p>
+  </div>
+  <div class="widget">
+    <p class="widget-label">Logged this season</p>
+    {% if cur_matches.size > 0 %}
+      {% assign w_wins = cur_matches | where: "result", "win" | size %}
+      {% assign w_losses = cur_matches | where: "result", "loss" | size %}
+      <p class="widget-big"><span class="w">{{ w_wins }}W</span> <span class="l">{{ w_losses }}L</span></p>
+      {% assign off = cur_matches.size | minus: 5 %}{% if off < 0 %}{% assign off = 0 %}{% endif %}
+      <ol class="form-guide form-mini" aria-label="Last results, oldest first">{% for m in cur_matches offset: off %}<li class="fg fg-{{ m.result }}">{% if m.result == "win" %}W{% else %}L{% endif %}</li>{% endfor %}</ol>
+    {% else %}
+      <p class="widget-big">–</p>
+      <p class="widget-small">No sessions logged yet</p>
+    {% endif %}
+  </div>
+  {% if cur.champion_stats %}
+    {% assign top = cur.champion_stats | sort: "games" | last %}
+    <div class="widget">
+      <p class="widget-label">Most played</p>
+      <p class="widget-champ">{% include champion.html name=top.champion %}</p>
+      <p class="widget-small">{{ top.games }} games · {{ top.win_rate }}% wins</p>
+    </div>
+  {% endif %}
+  {% if cur.mains.size > 0 %}
+    <div class="widget">
+      <p class="widget-label">Mains</p>
+      <p class="widget-portraits">{% for m in cur.mains %}{% include champion.html name=m %}{% endfor %}</p>
+    </div>
+  {% endif %}
+</section>
+
+<div class="tabs">
+  <input type="radio" name="log-tab" id="tab-journal" data-tab="journal" checked>
+  <input type="radio" name="log-tab" id="tab-season" data-tab="season">
+  {% if page.profile %}<input type="radio" name="log-tab" id="tab-player" data-tab="player">{% endif %}
+  <input type="radio" name="log-tab" id="tab-history" data-tab="history">
+  <div class="tab-labels" role="tablist">
+    <label for="tab-journal">Journal</label>
+    <label for="tab-season">This season</label>
+    {% if page.profile %}<label for="tab-player">Player</label>{% endif %}
+    <label for="tab-history">History</label>
+  </div>
+
+  <div class="tab-panel panel-journal" aria-label="Journal, newest first">
+    <section class="feed">
+      {% for entry in log_entries reversed %}
+        {% include entry-card.html entry=entry show_log=false %}
+      {% else %}
+        <p class="empty">No entries yet.</p>
+      {% endfor %}
+    </section>
+  </div>
+
+  <div class="tab-panel panel-season" aria-label="This season">
+    {% include season-card.html season=cur %}
+    {% include season-dashboard.html season=cur entries=log_entries %}
+  </div>
+
+  {% if page.profile %}
+  <div class="tab-panel panel-player" aria-label="Player">
+    {% include player-card.html profile=page.profile seasons=page.seasons %}
+  </div>
+  {% endif %}
+
+  <div class="tab-panel panel-history" aria-label="Past seasons, newest first">
+    {% for sn in seasons offset: 1 %}
+      <section class="season-block" id="season-{{ sn.season }}">
+        {% include season-card.html season=sn %}
+        {% include season-dashboard.html season=sn entries=log_entries %}
+      </section>
+    {% else %}
+      <p class="empty">No past seasons yet.</p>
+    {% endfor %}
+  </div>
+</div>
+<script src="{{ '/assets/js/tabs.js' | relative_url }}" defer></script>

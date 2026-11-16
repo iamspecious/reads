@@ -60,7 +60,16 @@ seasons:
 
 Send the season *Detailed information* screens (Average / Best) or the Profile champion tiles too, and it updates the season or player-card stats.
 
-**What it builds on the Wild Rift log page:**
+**The Wild Rift log page** opens with four mini widgets (current season and rank, your logged record and recent form, most-played champion this season, mains), then four tabs:
+
+- **Journal** (opens first): every note and session, newest first.
+- **This season:** the current season's banner and dashboard.
+- **Player:** your player card across every season.
+- **History:** every past season.
+
+Links like `.../league-of-legends-wild-rift/#player` open that tab directly. Links to a single entry still work.
+
+**What's in those tabs:**
 
 - **Player card:** your signature champions as portrait tiles (games, win rate, best score, Top 200 badges), a **rank journey** line through every played season, and an all-seasons Average | Best table.
 - **Season dashboard** under each season's banner:
