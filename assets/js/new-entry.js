@@ -29,7 +29,7 @@
    WHAT THE FILES LOOK LIKE (same as the Bluesky importer makes)
      _entries/2026-11-11-143210-a-court-of-silver-flames.txt
        ---
-       date: 2026-11-11 14:32:10 +0100
+       date: 2026-11-11 14:32:10 +0000
        log: a-court-of-silver-flames
        chapter: 12
        ---
@@ -73,8 +73,8 @@
   function ymd(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
   function hms(d) { return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()); }
 
-  // The phone's offset from UTC, like "+0100", so Jekyll puts the post on the right day.
-  // Tripped me up: getTimezoneOffset() is backwards (Berlin in winter is -60), so we flip it.
+  // The phone's offset from UTC, like "+0530", so Jekyll puts the post on the right day.
+  // Tripped me up: getTimezoneOffset() is backwards (one hour ahead of UTC gives -60), so we flip it.
   function offsetFor(d) {
     var m = -d.getTimezoneOffset(), sign = m >= 0 ? '+' : '-';
     m = Math.abs(m);

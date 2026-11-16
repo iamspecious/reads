@@ -29,7 +29,13 @@
   <link href="{{ sec.home | absolute_url }}" rel="alternate" type="text/html"/>
   <id>{{ sec.home | absolute_url }}</id>
   <author><name>{{ site.author | xml_escape }}</name></author>
-  <updated>{% if sec_entries.size > 0 %}{{ sec_entries.first.date | date_to_xmlschema }}{% else %}{{ site.time | date_to_xmlschema }}{% endif %}</updated>
+  {%- comment -%}
+    Feed times must end in a time zone, but Spec doesn't want theirs shown.
+    So we write the clock time as it was and mark it "Z" (the standard
+    zone that gives nothing away). Feed readers may show the time an hour
+    or two off. That's the price of keeping the zone private.
+  {%- endcomment %}
+  <updated>{% if sec_entries.size > 0 %}{{ sec_entries.first.date | date: "%Y-%m-%dT%H:%M:%SZ" }}{% else %}{{ site.time | date: "%Y-%m-%dT%H:%M:%SZ" }}{% endif %}</updated>
   {%- for e in sec_entries limit: 30 %}
   {%- assign parent = site.logs | where: "slug", e.log | first %}
   {%- assign anchor = e.path | split: "/" | last | split: "." | first | prepend: "e-" %}
@@ -38,8 +44,8 @@
     <title>{{ parent.title | default: e.log | xml_escape }} · {% if e.chapter %}{% if parent.progress == "season" %}Season {{ e.chapter }}{% else %}Ch {{ e.chapter }}{% endif %}{% else %}{{ e.date | date: "%-d %b %Y %H:%M" }}{% endif %}</title>
     <link href="{{ link }}" rel="alternate" type="text/html"/>
     <id>{{ link }}</id>
-    <published>{{ e.date | date_to_xmlschema }}</published>
-    <updated>{{ e.date | date_to_xmlschema }}</updated>
+    <published>{{ e.date | date: "%Y-%m-%dT%H:%M:%SZ" }}</published>
+    <updated>{{ e.date | date: "%Y-%m-%dT%H:%M:%SZ" }}</updated>
     {%- comment -%}
       The post text is escaped twice on purpose: once to turn "<" into "&lt;" so
       it's safe HTML, and type="html" tells the reader to show that HTML.

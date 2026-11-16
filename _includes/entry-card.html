@@ -36,9 +36,14 @@
       on its log page, so you can copy the address bar and send it.
       <time> carries the full machine date so search engines and feed tools
       can read it, while people see the short version.
+      It leaves out the time zone on purpose: Spec doesn't want their time
+      zone shown anywhere on the site. A date and time with no zone is still
+      a valid machine date.
+      Tripped me up: Jekyll's xmlschema filter adds "+01:00" to the end,
+      which gives the time zone away, so we spell the format out by hand.
     {% endcomment %}
     <a class="entry-time" href="{{ entry_link }}" title="Link to this entry">
-      <time datetime="{{ e.date | date_to_xmlschema }}">{{ e.date | date: "%-d %b %Y · %H:%M" }}</time>
+      <time datetime="{{ e.date | date: '%Y-%m-%dT%H:%M' }}">{{ e.date | date: "%-d %b %Y · %H:%M" }}</time>
     </a>
     {% if include.show_log and parent %}
       <a class="entry-log" href="{{ parent.url | relative_url }}">{{ parent.title }}</a>

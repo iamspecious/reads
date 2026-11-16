@@ -1,0 +1,15 @@
+---
+date: 2026-11-16 16:26:00 +0100
+log: league-of-legends-wild-rift
+chapter: 23
+matches:
+  - result: loss
+    champion: Yuumi
+    kda: [1, 4, 8]
+    mode: Ranked
+    duration: "14:23"
+    gold: 8966
+    score: 460
+    badge: SVP
+---
+Played with Rohan, who's at challenger. So a good tier or two ahead of me. Overall, I think laning phase wise we did well. This is my first game in a while, so I am experiencing a little bit of rust, but my Yuumi felt fine. Comp and actions I felt went well. Any of the deaths that I encountered, I don't really can attribute anything to being my fault. They were normally the results of extra ganks that we couldn't move away from because we were being too dived on, or circumstances that personally, as my run as support, isn't able to facilitate, changing the outcome of those ganks. The single kill was due to Rohan dying and me getting the last hit under tower, but we got ganked continuously, so there wasn't a lot that we could really do ultimately to change the outcome. Ultimately, the game ended in a surrender.
