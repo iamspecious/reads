@@ -1,0 +1,80 @@
+{% comment %}
+  player-card.html — "you as a player", across every season.
+  Shown at the top of a log that has a "profile:" section (Wild Rift).
+
+  Three parts, each only if its data is there:
+  1. Signature champions: tall portrait tiles like the in-game Champion
+     page, with games, win rate and highest score, and a "Top 200" badge
+     where you've earned one.
+  2. Rank journey: a line through every season's rank, oldest on the left,
+     so the climb is visible at a glance. Drawn as a small inline picture
+     (SVG), so it needs no chart library and loads instantly.
+  3. All-time champion stats: the same Average | Best table as a season's.
+{% endcomment %}
+{% assign prof = include.profile %}
+<section class="player-card" aria-label="Player card">
+  <h2 class="label">Player card</h2>
+
+  {% if prof.signature %}
+  <div class="sig-tiles">
+    {% for c in prof.signature %}
+      {% assign champ_slug = c.champion | downcase | remove: " " | remove: "'" | remove: "." | remove: "&" %}
+      {% assign champ_path = "/assets/images/champions/" | append: champ_slug | append: ".png" %}
+      {% assign champ_file = site.static_files | where: "path", champ_path | first %}
+      <div class="sig-tile">
+        {% if champ_file %}<img src="{{ champ_path | relative_url }}" alt="" loading="lazy">{% endif %}
+        {% if c.top %}<span class="sig-top">Top {{ c.top }}</span>{% endif %}
+        <span class="sig-name">{{ c.champion }}</span>
+        <span class="sig-meta">{{ c.games }} games · {{ c.win_rate }}%</span>
+        {% if c.highest_score %}<span class="sig-meta">Best score {{ c.highest_score }}</span>{% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% comment %}
+    Rank journey. Each rank becomes a number so it can be drawn as a height:
+    tier x 4, plus 0-3 for the division (IV lowest, I highest). So
+    Platinum III = 4x4+1 = 17 and Grandmaster II = 8x4+2 = 34.
+    The tiers, lowest first, are Wild Rift's own.
+    The line is scaled to the lowest and highest rank you've had, so the
+    shape of your own climb fills the picture.
+    Seasons with no matches played are left out.
+    Tripped me up: Season 17 was unplayed but still has a placement rank
+    (Gold III), which drew a big false dip in the middle of the climb.
+  {% endcomment %}
+  {% assign tiers = "iron,bronze,silver,gold,platinum,emerald,diamond,master,grandmaster,challenger,sovereign" | split: "," %}
+  {% assign journey = include.seasons | sort: "season" %}
+  {% assign vals = "" %}{% assign lo = 99 %}{% assign hi = 0 %}{% assign count = 0 %}
+  {% for sn in journey %}{% if sn.rank and sn.matches > 0 %}
+    {% assign parts = sn.rank | downcase | split: " " %}
+    {% assign t = 0 %}{% for name in tiers %}{% if name == parts[0] %}{% assign t = forloop.index0 %}{% endif %}{% endfor %}
+    {% case parts[1] %}{% when "i" %}{% assign dv = 3 %}{% when "ii" %}{% assign dv = 2 %}{% when "iii" %}{% assign dv = 1 %}{% else %}{% assign dv = 0 %}{% endcase %}
+    {% assign v = t | times: 4 | plus: dv %}
+    {% if v < lo %}{% assign lo = v %}{% endif %}{% if v > hi %}{% assign hi = v %}{% endif %}
+    {% assign vals = vals | append: v | append: "," %}{% assign count = count | plus: 1 %}
+  {% endif %}{% endfor %}
+  {% if count > 1 %}
+    {% assign vals = vals | split: "," %}
+    {% assign span = hi | minus: lo %}{% if span == 0 %}{% assign span = 1 %}{% endif %}
+    {% comment %} Space the points evenly from x=20 to x=300. {% endcomment %}
+    {% assign gap = 280.0 | divided_by: count | minus: 0 %}{% assign last_i = count | minus: 1 %}{% assign gap = 280.0 | divided_by: last_i %}
+    <figure class="rank-journey">
+      <svg viewBox="0 0 320 130" role="img" aria-label="Rank by season, from {{ journey.first.rank }} in season {{ journey.first.season }} to {{ journey.last.rank }} in season {{ journey.last.season }}">
+        {% capture pts %}{% assign j = 0 %}{% for sn in journey %}{% if sn.rank and sn.matches > 0 %}{% assign x = gap | times: j | plus: 20 %}{% assign v = vals[j] | plus: 0 %}{% assign y = v | minus: lo | times: 80.0 | divided_by: span %}{% assign y = 95 | minus: y %}{{ x | round: 1 }},{{ y | round: 1 }} {% assign j = j | plus: 1 %}{% endif %}{% endfor %}{% endcapture %}
+        <polyline class="rj-line" points="{{ pts | strip }}" fill="none"/>
+        {% assign j = 0 %}
+        {% for sn in journey %}{% if sn.rank and sn.matches > 0 %}{% assign x = gap | times: j | plus: 20 %}{% assign v = vals[j] | plus: 0 %}{% assign y = v | minus: lo | times: 80.0 | divided_by: span %}{% assign y = 95 | minus: y %}{% assign j = j | plus: 1 %}
+          <circle class="rj-dot{% if j == count %} rj-now{% endif %}" cx="{{ x | round: 1 }}" cy="{{ y | round: 1 }}" r="{% if j == count %}5{% else %}3.5{% endif %}"><title>Season {{ sn.season }}: {{ sn.rank }}</title></circle>
+          <text class="rj-season" x="{{ x | round: 1 }}" y="122" text-anchor="middle">{{ sn.season }}</text>
+        {% endif %}{% endfor %}
+      </svg>
+      <figcaption>Rank journey: <strong>{{ journey.first.rank }}</strong> (S{{ journey.first.season }}) → <strong>{{ journey.last.rank }}</strong> (S{{ journey.last.season }}){% if count < journey.size %} · unplayed seasons left out{% endif %}</figcaption>
+    </figure>
+  {% endif %}
+
+  {% if prof.champion_stats %}
+    <h3 class="label">All seasons</h3>
+    {% include champ-stats.html stats=prof.champion_stats id="all" %}
+  {% endif %}
+</section>

@@ -3,8 +3,9 @@
 fetch_champions.py: download portraits of your mains into the site.
 
 WHAT IT DOES
- 1. Reads every log in _logs/ and collects the champion names listed under
-    "mains:" in its seasons (for example: mains: [Yuumi, Lulu, Nami]).
+ 1. Reads every log and entry and collects every champion named: under
+    "mains:" in a log's seasons (for example: mains: [Yuumi, Lulu, Nami]),
+    in its stats tables, and in the matches of a Wild Rift session.
  2. Asks Riot's official image service ("Data Dragon", the public home of
     League's champion pictures) for its newest list of champions.
  3. For each main that doesn't have a portrait yet, downloads the square
@@ -45,6 +46,11 @@ USER_AGENT = "reads-champion-portraits/1.0 (+static site)"
 
 # Finds "mains: [Yuumi, Lulu, Nami]" lines in a log's front matter.
 MAINS_RE = re.compile(r"^\s*mains:\s*\[(.*?)\]\s*$", re.MULTILINE)
+# Finds single champions, in any of the ways they're written: a stats row
+# ("- champion: Milio"), a tile ("{champion: Lulu, ...}") or a match in a
+# session entry. Tripped me up: at first only "mains:" was read, so a
+# champion you'd only played a couple of times (Milio) had no portrait.
+CHAMPION_RE = re.compile(r"champion:\s*\"?([^,}\"\n]+?)\"?\s*(?:[,}]|$)", re.MULTILINE)
 
 
 def slug(name):
@@ -59,14 +65,25 @@ def get(url):
 
 
 def wanted_mains(repo):
-    """Every champion named under mains: in any log, without repeats."""
+    """Every champion named in any log or entry, without repeats."""
     names = []
-    for path in sorted((repo / "_logs").glob("*.md")):
-        for m in MAINS_RE.finditer(path.read_text(encoding="utf-8")):
+
+    def add(raw):
+        name = raw.strip().strip("\"'")
+        if name and name not in names:
+            names.append(name)
+
+    files = sorted((repo / "_logs").glob("*.md")) + sorted((repo / "_entries").glob("*.txt"))
+    for path in files:
+        text = path.read_text(encoding="utf-8")
+        # Only the front matter: a post's own words might say "champion:" too.
+        parts = text.split("---", 2)
+        fm = parts[1] if len(parts) == 3 else ""
+        for m in MAINS_RE.finditer(fm):
             for raw in m.group(1).split(","):
-                name = raw.strip().strip("\"'")
-                if name and name not in names:
-                    names.append(name)
+                add(raw)
+        for m in CHAMPION_RE.finditer(fm):
+            add(m.group(1))
     return names
 
 

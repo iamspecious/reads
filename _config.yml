@@ -75,6 +75,7 @@ markdown: kramdown
 # The scripts and tests are tools for making the site, not part of it.
 exclude:
   - README.md
+  - CLAUDE.md
   - scripts/
   - tests/
   - Gemfile

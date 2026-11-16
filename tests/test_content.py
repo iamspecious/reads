@@ -85,8 +85,11 @@ class ContentTests(unittest.TestCase):
                 # as long as it has something to show.
                 # Tripped me up: this used to reject every empty text, and the
                 # first GIF-only post from Bluesky turned the Check run red.
-                has_media = re.search(r"^(images|videos):", path.read_text(encoding="utf-8"), re.MULTILINE)
-                self.assertTrue(text or has_media, "entry has no text and no pictures or GIFs")
+                raw = path.read_text(encoding="utf-8")
+                has_media = re.search(r"^(images|videos|matches):", raw, re.MULTILINE)
+                self.assertTrue(text or has_media, "entry has no text, no pictures or GIFs, and no matches")
+                if re.search(r"^matches:", raw, re.MULTILINE):
+                    self.check_matches(raw)
                 if "{{" in text or "{%" in text:
                     self.assertTrue(text.startswith(RAW_OPEN) and text.endswith(RAW_CLOSE),
                                     "contains template code; it must be wrapped in raw markers")
@@ -95,6 +98,22 @@ class ContentTests(unittest.TestCase):
                 # Every picture, GIF and video an entry lists must be in the repo.
                 for src in re.findall(r'src:\s*"([^"]+)"', path.read_text(encoding="utf-8")):
                     self.assertTrue((REPO / src.lstrip("/")).exists(), f"media file {src} is missing from the repo")
+
+    def check_matches(self, raw):
+        """A Wild Rift session: every match needs a result, a champion and a K/D/A.
+
+        Read by hand (no YAML library), so this relies on the fixed shape
+        that /log-wild-rift-session writes: one "- result:" line starting
+        each match, with its other fields indented under it.
+        """
+        fm = raw[4:].split("\n---\n", 1)[0]
+        block = fm.split("matches:", 1)[1]
+        matches = re.split(r"\n  - (?=result:)", "\n" + block)[1:]
+        self.assertTrue(matches, "matches: is empty")
+        for i, m in enumerate(matches, start=1):
+            self.assertRegex(m, r"^result: (win|loss)\b", f"match {i}: result must be win or loss")
+            self.assertRegex(m, r"\n    champion: \S", f"match {i}: needs a champion")
+            self.assertRegex(m, r"\n    kda: \[\d+, \d+, \d+\]", f"match {i}: kda must look like [1, 2, 14]")
 
     def test_no_template_code_in_template_comments(self):
         pattern = re.compile(r"\{%-?\s*comment\s*-?%\}(.*?)\{%-?\s*endcomment\s*-?%\}", re.S)

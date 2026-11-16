@@ -42,6 +42,7 @@ layout: default
   Notes without a season number go under "Other notes" at the end.
   Every other log is one list, oldest first, as before.
 {% endcomment %}
+{% if page.profile %}{% include player-card.html profile=page.profile seasons=page.seasons %}{% endif %}
 {% if page.seasons %}
   {% assign seasons = page.seasons | sort: "season" | reverse %}
   {% assign used = "|" %}
@@ -50,6 +51,7 @@ layout: default
     {% assign used = used | append: sn_key | append: "|" %}
     <section class="season-block" id="season-{{ sn_key }}" aria-label="Season {{ sn_key }}">
       {% include season-card.html season=sn %}
+      {% include season-dashboard.html season=sn entries=log_entries %}
       <div class="feed">
         {% for entry in log_entries %}
           {% assign ch = entry.chapter | append: "" %}

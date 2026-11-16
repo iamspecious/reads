@@ -54,6 +54,38 @@ seasons:
 - **Champion portraits** come from Riot's official images (Data Dragon). The *Fetch champion portraits* action downloads any new main's portrait by itself when a log file changes. Spell names as Riot does (`Kai'Sa`, `Wukong`). A name with no portrait just shows as text.
 - Rank and match history can't be fetched automatically: Riot has no public data service for Wild Rift, so they're typed in.
 
+## Wild Rift sessions, stats and player card
+
+**Logging a session (the easy way):** open a Claude Code session on this repo and type **`/log-wild-rift-session`**. Attach your Match History screenshot, then say or type how it went. Claude reads each match (win or loss, champion, K/D/A, and any other numbers it can see), shows you what it read, writes the session up in your own words, and asks "Post it?" before anything goes live. The instructions it follows are in `.claude/commands/log-wild-rift-session.md`. House rules for any Claude session are in `CLAUDE.md`.
+
+Send the season *Detailed information* screens (Average / Best) or the Profile champion tiles too, and it updates the season or player-card stats.
+
+**What it builds on the Wild Rift log page:**
+
+- **Player card:** your signature champions as portrait tiles (games, win rate, best score, Top 200 badges), a **rank journey** line through every played season, and an all-seasons Average | Best table.
+- **Season dashboard** under each season's banner:
+  - **from your sessions:** your record and win rate, a **form guide** (last 10 results as dots) and average K/D/A per champion, all updating by themselves;
+  - **in-game stats:** the per-champion Average | Best table typed in from the game.
+- **Session cards** in the timeline: one small card per match with a green or red edge, the champion's portrait, K/D/A and any MVP/SVP badge, plus your notes.
+
+A session entry looks like this (Claude writes it for you):
+
+```yaml
+---
+date: 2026-11-16 23:40:00 +0100
+log: league-of-legends-wild-rift
+chapter: 23
+matches:
+  - result: win          # win or loss
+    champion: Yuumi
+    kda: [1, 2, 14]
+    badge: MVP           # optional; also mode, duration, gold, score, note
+---
+Your notes.
+```
+
+Any champion that appears gets its portrait downloaded automatically. Numbers can't be pulled from the game directly (Wild Rift has no public data feed), which is why they come from screenshots.
+
 ## Post from your phone
 
 Open **/reads/new/** (add it to your home screen). It's one page:
