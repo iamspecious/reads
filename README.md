@@ -44,6 +44,7 @@ seasons:
     ends: 2027-01-08         # or finished: once it's over
     matches: 343
     win_rate: 50
+    note: Unplayed           # optional, shown with the dates
 ```
 
 - **Currently playing** shows the newest season: number, year, rank, mains with portraits, dates and record.

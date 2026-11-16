@@ -4,7 +4,8 @@
   Use: include season-card.html season=s heading_tag="h2"
 
   Every part is optional except the season number, so an old season with
-  only a rank still looks tidy. The season data lives in the log's file,
+  only a rank still looks tidy. "note:" adds a short word of your own,
+  like "Unplayed". The season data lives in the log's file,
   under "seasons:" (see _logs/league-of-legends-wild-rift.md).
 {% endcomment %}
 {% assign s = include.season %}
@@ -21,6 +22,8 @@
   {% endif %}
   <p class="season-meta">
     {% if s.started %}<span>{{ s.started | date: "%-d %b %Y" }}{% if s.finished %} – {{ s.finished | date: "%-d %b %Y" }}{% elsif s.ends %} – ends {{ s.ends | date: "%-d %b %Y" }}{% endif %}</span>{% endif %}
+    {% comment %} An optional short note, like "Unplayed" for a season that was skipped. {% endcomment %}
+    {% if s.note %}<span>{{ s.note }}</span>{% endif %}
     {% if s.matches != nil %}<span>{{ s.matches }} {% if s.matches == 1 %}match{% else %}matches{% endif %}</span>{% endif %}
     {% if s.win_rate != nil %}<span>{{ s.win_rate }}% wins</span>{% endif %}
   </p>
