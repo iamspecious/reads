@@ -1,0 +1,70 @@
+{% comment %}
+  season-dashboard.html — the numbers for one season, under its banner.
+  Use: include season-dashboard.html season=sn entries=log_entries
+
+  Two parts:
+  1. "From your sessions": worked out at build time from every logged
+     session in this season, so it updates by itself each time you post:
+       record (wins-losses and win rate), a form guide (the last 10 results
+       as dots, oldest on the left), and average K/D/A per champion.
+  2. "In-game stats": the per-champion table typed in from the game's
+     screens, if the season has champion_stats.
+
+  Why the maths is done in Liquid: GitHub Pages can't run plugins, and
+  doing it here means the page works without JavaScript. Liquid has no
+  dictionaries, so per-champion totals are found by looping over the
+  matches once per champion. It's a few hundred steps at most.
+{% endcomment %}
+{% assign s = include.season %}
+{% assign s_key = s.season | append: "" %}
+{% assign all = "" | split: "" %}
+{% for e in include.entries %}
+  {% assign ch = e.chapter | append: "" %}
+  {% if ch == s_key and e.matches %}{% assign all = all | concat: e.matches %}{% endif %}
+{% endfor %}
+
+{% if all.size > 0 or s.champion_stats %}
+<div class="dashboard">
+  {% if all.size > 0 %}
+    {% assign d_wins = all | where: "result", "win" | size %}
+    {% assign d_losses = all | where: "result", "loss" | size %}
+    {% assign d_rate = d_wins | times: 100.0 | divided_by: all.size | round %}
+    <h3 class="label">From your sessions</h3>
+    <div class="dash-row">
+      <p class="dash-record"><span class="w">{{ d_wins }}W</span> <span class="l">{{ d_losses }}L</span> <span class="dash-rate">{{ d_rate }}%</span></p>
+      {% comment %}
+        Form guide: the last 10 results. Liquid's for-loop applies "offset"
+        before anything else, so we skip ahead to the 10th-from-last match.
+      {% endcomment %}
+      {% assign off = all.size | minus: 10 %}{% if off < 0 %}{% assign off = 0 %}{% endif %}
+      <ol class="form-guide" aria-label="Last {{ all.size | at_most: 10 }} results, oldest first">
+        {% for m in all offset: off %}<li class="fg fg-{{ m.result }}" title="{{ m.champion }} {{ m.kda | join: '/' }}">{% if m.result == "win" %}W{% else %}L{% endif %}</li>{% endfor %}
+      </ol>
+    </div>
+    {% assign names = "|" %}
+    {% for m in all %}{% assign k = "|" | append: m.champion | append: "|" %}{% unless names contains k %}{% assign names = names | append: m.champion | append: "|" %}{% endunless %}{% endfor %}
+    {% assign names = names | split: "|" %}
+    <table class="dash-champs">
+      <thead><tr><th scope="col">Champion</th><th scope="col">Played</th><th scope="col">W/L</th><th scope="col">Avg K/D/A</th></tr></thead>
+      <tbody>
+      {% for n in names %}{% if n != "" %}
+        {% assign cm = all | where: "champion", n %}
+        {% assign kk = 0 %}{% assign dd = 0 %}{% assign aa = 0 %}
+        {% for m in cm %}{% assign kk = kk | plus: m.kda[0] %}{% assign dd = dd | plus: m.kda[1] %}{% assign aa = aa | plus: m.kda[2] %}{% endfor %}
+        {% assign cw = cm | where: "result", "win" | size %}
+        <tr>
+          <th scope="row">{% include champion.html name=n %}</th>
+          <td>{{ cm.size }}</td>
+          <td>{{ cw }}/{{ cm.size | minus: cw }}</td>
+          <td>{{ kk | times: 1.0 | divided_by: cm.size | round: 1 }}/{{ dd | times: 1.0 | divided_by: cm.size | round: 1 }}/{{ aa | times: 1.0 | divided_by: cm.size | round: 1 }}</td>
+        </tr>
+      {% endif %}{% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+  {% if s.champion_stats %}
+    <h3 class="label">In-game stats</h3>
+    {% include champ-stats.html stats=s.champion_stats id=s_key %}
+  {% endif %}
+</div>
+{% endif %}

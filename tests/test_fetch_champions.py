@@ -49,6 +49,15 @@ class FetchTests(unittest.TestCase):
     def test_reads_mains_once_each(self):
         self.assertEqual(fc.wanted_mains(self.repo), ["Yuumi", "Lulu", "Wukong", "Kai'Sa", "Notachamp"])
 
+    def test_reads_champions_from_stats_tiles_and_sessions(self):
+        (self.repo / "_logs" / "wr.md").write_text(
+            "---\nprofile:\n  signature:\n    - {champion: Lulu, games: 5}\nseasons:\n  - season: 23\n"
+            "    champion_stats:\n      - champion: Milio\n        games: 2\n---\nchampion: NotInFrontMatter\n")
+        (self.repo / "_entries").mkdir()
+        (self.repo / "_entries" / "s.txt").write_text(
+            "---\nmatches:\n  - result: win\n    champion: \"Cho'Gath\"\n    kda: [1, 2, 3]\n---\nhi\n")
+        self.assertEqual(fc.wanted_mains(self.repo), ["Lulu", "Milio", "Cho'Gath"])
+
     def test_downloads_by_display_name_with_tidy_file_names(self):
         fc.main()
         for f in ["yuumi.png", "lulu.png", "wukong.png", "kaisa.png"]:

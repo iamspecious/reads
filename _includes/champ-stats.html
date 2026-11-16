@@ -1,0 +1,42 @@
+{% comment %}
+  champ-stats.html — a per-champion stats table, like the in-game
+  "Detailed information" screen, with an Average | Best switch.
+  Use: include champ-stats.html stats=list id="s23"
+
+  The switch is two radio buttons and a little CSS: no JavaScript, so it
+  works everywhere. "id" keeps two tables on one page from switching each
+  other. Numbers are typed in from the game's screens (Wild Rift has no
+  public data feed), so they're a snapshot from when they were entered.
+
+  Columns, matching the game's icons:
+    games · win rate · W/L (Average) or MVPs (Best) · K/D/A ·
+    gold per minute · damage dealt · damage taken
+{% endcomment %}
+{% assign tid = include.id %}
+<div class="champ-stats">
+  <div class="cs-switch" role="radiogroup" aria-label="Average or best">
+    <input type="radio" name="cs-{{ tid }}" id="cs-{{ tid }}-avg" checked><label for="cs-{{ tid }}-avg">Average</label>
+    <input type="radio" name="cs-{{ tid }}" id="cs-{{ tid }}-best"><label for="cs-{{ tid }}-best">Best</label>
+    {% comment %} The tables come straight after the radios, so CSS can show one or the other. {% endcomment %}
+    <div class="cs-table cs-avg">
+      <table>
+        <thead><tr><th scope="col">Champion</th><th scope="col">Games</th><th scope="col">Win</th><th scope="col">W/L</th><th scope="col">K/D/A</th><th scope="col">Gold/min</th><th scope="col">Dealt</th><th scope="col">Taken</th></tr></thead>
+        <tbody>
+        {% for c in include.stats %}
+          <tr><th scope="row">{% include champion.html name=c.champion %}</th><td>{{ c.games }}</td><td>{{ c.win_rate }}%</td><td>{{ c.wins }}/{{ c.losses }}</td><td>{{ c.kda[0] }}/{{ c.kda[1] }}/{{ c.kda[2] }}</td><td>{{ c.gold_per_min }}</td><td>{{ c.damage_dealt }}</td><td>{{ c.damage_taken }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="cs-table cs-best">
+      <table>
+        <thead><tr><th scope="col">Champion</th><th scope="col">Games</th><th scope="col">Win</th><th scope="col">MVPs</th><th scope="col">Best K/D/A</th><th scope="col">Gold/min</th><th scope="col">Dealt</th><th scope="col">Taken</th></tr></thead>
+        <tbody>
+        {% for c in include.stats %}
+          <tr><th scope="row">{% include champion.html name=c.champion %}</th><td>{{ c.games }}</td><td>{{ c.win_rate }}%</td><td>{{ c.best.mvps }}</td><td>{{ c.best.kda[0] }}/{{ c.best.kda[1] }}/{{ c.best.kda[2] }}</td><td>{{ c.best.gold_per_min }}</td><td>{{ c.best.damage_dealt }}</td><td>{{ c.best.damage_taken }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

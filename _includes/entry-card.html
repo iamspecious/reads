@@ -61,6 +61,9 @@
   {% assign trimmed = text | strip %}
   {% if trimmed != "" %}<div class="entry-text">{{ text | escape | newline_to_br }}</div>{% endif %}
 
+  {% comment %} A Wild Rift play session: its matches as a strip of result cards. {% endcomment %}
+  {% if e.matches %}{% include session.html matches=e.matches %}{% endif %}
+
   {% if e.images %}
     <div class="entry-images">
       {% for img in e.images %}

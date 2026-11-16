@@ -1,8 +1,9 @@
 # fetch-champions.yml — downloads portraits of the mains listed in your
 # logs (see scripts/fetch_champions.py for how and why).
 #
-# Runs by itself whenever a log file changes on main (so adding a new main
-# gets its portrait within a minute or two), or with the Run workflow button.
+# Runs by itself whenever a log or entry changes on main (so a new main, or
+# a champion first played in a logged session, gets its portrait within a
+# minute or two), or with the Run workflow button.
 # Portraits already in the repo are never downloaded again.
 
 name: Fetch champion portraits
@@ -10,7 +11,7 @@ name: Fetch champion portraits
 on:
   push:
     branches: [main]
-    paths: ["_logs/**"]
+    paths: ["_logs/**", "_entries/**"]
   workflow_dispatch:
 
 # Write access to commit the portraits, and pages: write to ask for a rebuild.

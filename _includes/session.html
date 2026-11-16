@@ -1,0 +1,39 @@
+{% comment %}
+  session.html — the matches in one play session, drawn as a strip of
+  little result cards. Used inside entry-card.html when an entry has a
+  "matches:" list (see "Wild Rift sessions" in the README).
+
+  Each match shows: a green or red edge for a win or a loss, the
+  champion's portrait, the K/D/A, and an MVP/SVP badge if earned. Gold,
+  score and length show in small print when they were recorded.
+  Why a strip and not a table: on a phone a row of small cards reads at a
+  glance ("W W L W") and wraps neatly onto more lines when it's long.
+{% endcomment %}
+{% assign ms = include.matches %}
+{% assign s_wins = ms | where: "result", "win" | size %}
+{% assign s_losses = ms | where: "result", "loss" | size %}
+<div class="session">
+  <p class="session-sum">{{ ms.size }} {% if ms.size == 1 %}match{% else %}matches{% endif %} · <span class="w">{{ s_wins }}W</span> <span class="l">{{ s_losses }}L</span></p>
+  <ol class="matches">
+    {% for m in ms %}
+      <li class="match match-{{ m.result }}">
+        <span class="match-res">{% if m.result == "win" %}W{% else %}L{% endif %}</span>
+        {% include champion.html name=m.champion %}
+        <span class="match-kda">{{ m.kda[0] }}/{{ m.kda[1] }}/{{ m.kda[2] }}</span>
+        {% if m.badge %}<span class="match-badge">{{ m.badge }}</span>{% endif %}
+        {% comment %}
+          The optional extras, joined with dots. Built as a list first so
+          there's never a stray dot at the start.
+          Tripped me up: writing " · " before each part left "· 17:02" when
+          only the length was recorded.
+        {% endcomment %}
+        {% assign extras = "" | split: "" %}
+        {% if m.score %}{% assign part = "Score " | append: m.score %}{% assign extras = extras | push: part %}{% endif %}
+        {% if m.gold %}{% assign part = m.gold | append: " gold" %}{% assign extras = extras | push: part %}{% endif %}
+        {% if m.duration %}{% assign extras = extras | push: m.duration %}{% endif %}
+        {% if extras.size > 0 %}<span class="match-extra">{{ extras | join: " · " }}</span>{% endif %}
+        {% if m.note %}<span class="match-note">{{ m.note | escape }}</span>{% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+</div>

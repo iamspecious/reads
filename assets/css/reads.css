@@ -337,3 +337,74 @@ mark { background: color-mix(in srgb, #e06a95 25%, transparent); color: inherit;
 .season-block { margin-bottom: 26px; }
 .season-block > .season-card { margin: 0 0 12px; background: var(--surface); border: 2px solid transparent; background: linear-gradient(var(--surface), var(--surface)) padding-box, var(--gradient) border-box; }
 .now-item .season-card { margin-top: 10px; }
+
+/* ── Wild Rift sessions: a strip of match results ──
+   Each match is a small card with a coloured left edge: green for a win,
+   red for a loss, so a session reads at a glance. */
+.session { margin-top: 10px; }
+.session-sum { margin: 0 0 6px; font-size: 0.82rem; color: var(--muted); }
+.w { color: var(--reading); font-weight: 700; }
+.l { color: var(--dropped); font-weight: 700; }
+.matches { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.match { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; padding: 6px 10px; border-radius: 10px; background: var(--quiet-bg); border-left: 4px solid var(--line); font-size: 0.85rem; }
+.match-win { border-left-color: var(--reading); }
+.match-loss { border-left-color: var(--dropped); }
+.match-res { font: 400 1.05rem/1 var(--display); letter-spacing: 0.05em; }
+.match-win .match-res { color: var(--reading); }
+.match-loss .match-res { color: var(--dropped); }
+.match .champ img { width: 24px; height: 24px; border-width: 1px; }
+/* In a match card the portrait stands for the champion (if there is one); the name is kept
+   for screen readers but hidden on screen to keep the strip compact. */
+.match .champ img + span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.match-kda { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); }
+.match-badge { padding: 0 6px; border-radius: 999px; background: var(--chip-bg); color: var(--chip-ink); font-size: 0.7rem; font-weight: 700; }
+.match-extra, .match-note { flex-basis: 100%; font-size: 0.75rem; color: var(--muted); }
+
+/* ── Season dashboard ── */
+.dashboard { margin: 0 0 14px; padding: 4px 14px 12px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); }
+.dashboard .label { margin: 14px 0 8px; font-size: 1rem; }
+.dash-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.dash-record { margin: 0; font-size: 1.15rem; }
+.dash-rate { color: var(--muted); font-size: 0.9rem; margin-left: 4px; }
+/* Form guide: one round dot per match, like a football league table. */
+.form-guide { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; }
+.fg { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 400 0.8rem/1 var(--display); color: #fff; }
+.fg-win { background: #2f9e6a; }
+.fg-loss { background: #c0504d; }
+
+/* Tables (dashboard and in-game stats): wide tables scroll sideways inside
+   their own box on a phone, instead of making the whole page scroll. */
+.dash-champs, .cs-table table { width: 100%; border-collapse: collapse; font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.dash-champs th, .dash-champs td, .cs-table th, .cs-table td { padding: 6px 8px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.dash-champs th:first-child, .cs-table th:first-child { text-align: left; }
+.dash-champs thead th, .cs-table thead th { color: var(--muted); font-weight: 600; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.dash-champs .champ img, .cs-table .champ img { width: 24px; height: 24px; border-width: 1px; }
+.cs-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* The Average | Best switch: two hidden radio buttons styled as a pill.
+   Whichever is checked decides which table shows (the "~" rule below). */
+.cs-switch input { position: absolute; opacity: 0; }
+.cs-switch label { display: inline-block; padding: 5px 13px; margin: 0 2px 8px 0; border-radius: 999px; border: 1px solid var(--line); font-size: 0.8rem; cursor: pointer; color: var(--ink-soft); }
+.cs-switch input:checked + label { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.cs-switch input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cs-best { display: none; }
+.cs-switch input[id$="-best"]:checked ~ .cs-avg { display: none; }
+.cs-switch input[id$="-best"]:checked ~ .cs-best { display: block; }
+
+/* ── Player card ── */
+.player-card { margin-bottom: 28px; }
+/* Tall portrait tiles in a row that scrolls sideways on a phone. */
+.sig-tiles { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+.sig-tile { position: relative; flex: 0 0 120px; border-radius: 12px; overflow: hidden; background: var(--surface); border: 2px solid transparent; background: linear-gradient(var(--surface), var(--surface)) padding-box, var(--gradient) border-box; display: flex; flex-direction: column; }
+.sig-tile img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+.sig-name { font: 400 1.15rem/1 var(--display); letter-spacing: 0.05em; padding: 8px 8px 2px; }
+.sig-meta { font-size: 0.72rem; color: var(--muted); padding: 0 8px; }
+.sig-meta:last-child { padding-bottom: 8px; }
+.sig-top { position: absolute; top: 6px; left: 6px; padding: 1px 7px; border-radius: 999px; background: #c9a84c; color: #1b1405; font-size: 0.68rem; font-weight: 800; }
+.rank-journey { margin: 16px 0 0; padding: 10px 12px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); }
+.rank-journey svg { width: 100%; height: auto; display: block; }
+.rj-line { stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.rj-dot { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
+.rj-now { fill: var(--accent); }
+.rj-season { fill: var(--muted); font-size: 10px; font-family: var(--sans); }
+.rank-journey figcaption { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
