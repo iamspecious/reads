@@ -81,7 +81,12 @@ class ContentTests(unittest.TestCase):
                 if f.get("source_url"):
                     self.assertRegex(f["source_url"], r"^https://bsky\.app/profile/[^/]+/post/[A-Za-z0-9]+$")
                 text = body.strip()
-                self.assertTrue(text, "entry text is empty")
+                # A post can be just a GIF or picture, with no words. That's fine,
+                # as long as it has something to show.
+                # Tripped me up: this used to reject every empty text, and the
+                # first GIF-only post from Bluesky turned the Check run red.
+                has_media = re.search(r"^(images|videos):", path.read_text(encoding="utf-8"), re.MULTILINE)
+                self.assertTrue(text or has_media, "entry has no text and no pictures or GIFs")
                 if "{{" in text or "{%" in text:
                     self.assertTrue(text.startswith(RAW_OPEN) and text.endswith(RAW_CLOSE),
                                     "contains template code; it must be wrapped in raw markers")

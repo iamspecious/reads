@@ -116,6 +116,9 @@
       '?filename=' + encodeURIComponent(filename) + '&value=' + encodeURIComponent(content);
   }
 
+  // What goes before a chapter number: "S23" for seasons, "Ch 12" otherwise.
+  function label(l) { return l.progress === 'season' ? 'S' : 'Ch '; }
+
   function show(id) {
     steps.forEach(function (s) { $(s).hidden = s !== id; });
     window.scrollTo(0, 0);
@@ -146,7 +149,7 @@
     s.textContent = l.creator + ' · ' + l.type +
       (l.pending ? ' · new, waiting for the site to update' : '') +
       (l.count ? ' · ' + l.count + (l.count === 1 ? ' entry' : ' entries') : '') +
-      (l.lastChapter ? ' · last: Ch ' + l.lastChapter : '');
+      (l.lastChapter ? ' · last: ' + label(l) + l.lastChapter : '');
     b.appendChild(t); b.appendChild(s);
     b.addEventListener('click', function () { chooseLog(l); });
     return b;
@@ -201,9 +204,12 @@
 
   function chooseLog(l) {
     current = l;
+    // The number box is "Season" for games played in seasons (Wild Rift
+    // ranked), "Chapter" for everything else. Same box, same file field.
+    $('chapter-label').textContent = l.progress === 'season' ? 'Season' : 'Chapter';
     $('w-title').textContent = l.title + ' — ' + l.creator;
     $('w-last').textContent = l.pending ? 'New log. If you tapped Commit for it on GitHub, you’re all set to write the first entry.'
-      : l.count ? 'Last entry ' + l.lastDate + (l.lastChapter ? ', Ch ' + l.lastChapter : '') + ': “' + l.lastText + '”'
+      : l.count ? 'Last entry ' + l.lastDate + (l.lastChapter ? ', ' + label(l) + l.lastChapter : '') + ': “' + l.lastText + '”'
       : 'No entries yet.';
     // Fill in the chapter you were last on. Usually you're still on it,
     // and if not it's one quick edit.
@@ -212,7 +218,10 @@
       $('chapter').value = draft.chapter || '';
       $('text').value = draft.text || '';
     } else {
-      $('chapter').value = l.lastChapter != null ? String(l.lastChapter) : '';
+      // Games played in seasons start on the current season; everything
+      // else starts on the last chapter you logged.
+      var start = l.progress === 'season' && l.currentSeason != null ? l.currentSeason : l.lastChapter;
+      $('chapter').value = start != null ? String(start) : '';
       $('text').value = '';
     }
     $('when').value = '';

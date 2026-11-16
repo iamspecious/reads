@@ -16,6 +16,7 @@ sitemap: false
   Why the keys are short ("k", "x"...): this file grows with every entry,
   and short keys keep it small for phones on slow data.
     k = kind ("e" entry or "l" log)   u = link
+    cl = what goes before the chapter number: "Ch " or "S" (season)
     x = text                          c = chapter
     g = log title                     d = date
     a = creator                       y = type (entries carry their log's type,
@@ -35,6 +36,6 @@ sitemap: false
 {%- assign parent = site.logs | where: "slug", e.log | first -%}
 {%- capture text -%}{% include entry-text.html entry=e %}{%- endcapture -%}
 {%- assign anchor = e.path | split: "/" | last | split: "." | first | prepend: "e-" -%}
-{"k":"e","u":{{ parent.url | append: "#" | append: anchor | relative_url | jsonify }},"g":{{ parent.title | default: e.log | jsonify }},"y":{{ parent.type | jsonify }},"c":{{ e.chapter | jsonify }},"d":{{ e.date | date: "%-d %b %Y" | jsonify }},"x":{{ text | jsonify }}}{% unless forloop.last %},{% endunless %}
+{"k":"e","u":{{ parent.url | append: "#" | append: anchor | relative_url | jsonify }},"g":{{ parent.title | default: e.log | jsonify }},"y":{{ parent.type | jsonify }},"c":{{ e.chapter | jsonify }},"cl":{% if parent.progress == "season" %}"S"{% else %}"Ch "{% endif %},"d":{{ e.date | date: "%-d %b %Y" | jsonify }},"x":{{ text | jsonify }}}{% unless forloop.last %},{% endunless %}
 {%- endfor -%}
 ]

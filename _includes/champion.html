@@ -1,0 +1,17 @@
+{%- comment -%}
+  champion.html — one champion: their portrait (if we have it) and name.
+  Use: include champion.html name="Yuumi"
+
+  Portraits live in assets/images/champions/, named in lower case with
+  spaces and punctuation removed ("Kai'Sa" -> kaisa.png). They're fetched
+  from Riot's official images by scripts/fetch_champions.py, on GitHub.
+  If a portrait isn't there yet (say, a brand-new main before the fetch has
+  run), just the name shows, so nothing ever looks broken.
+
+  Why look the file up in site.static_files: it's the only way a template
+  can ask "does this file exist?" on GitHub Pages.
+{%- endcomment -%}
+{%- assign champ_slug = include.name | downcase | remove: " " | remove: "'" | remove: "." | remove: "&" -%}
+{%- assign champ_path = "/assets/images/champions/" | append: champ_slug | append: ".png" -%}
+{%- assign champ_file = site.static_files | where: "path", champ_path | first -%}
+<span class="champ">{% if champ_file %}<img src="{{ champ_path | relative_url }}" alt="" width="32" height="32" loading="lazy">{% endif %}<span>{{ include.name }}</span></span>

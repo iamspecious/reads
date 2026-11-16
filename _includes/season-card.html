@@ -1,0 +1,30 @@
+{% comment %}
+  season-card.html — the banner for one season of a game played in seasons
+  (like Wild Rift ranked): season number, year, rank, mains, dates, record.
+  Use: include season-card.html season=s heading_tag="h2"
+
+  Every part is optional except the season number, so an old season with
+  only a rank still looks tidy. "note:" adds a short word of your own,
+  like "Unplayed". The season data lives in the log's file,
+  under "seasons:" (see _logs/league-of-legends-wild-rift.md).
+{% endcomment %}
+{% assign s = include.season %}
+<div class="season-card">
+  <div class="season-top">
+    <span class="season-num">Season {{ s.season }}</span>
+    {% if s.year %}<span class="season-year">{{ s.year }}{% if s.year_name %} · {{ s.year_name }}{% endif %}</span>{% endif %}
+  </div>
+  {% if s.rank %}<p class="season-rank">{{ s.rank }}</p>{% endif %}
+  {% if s.mains.size > 0 %}
+    <div class="season-mains" aria-label="Mains">
+      {% for m in s.mains %}{% include champion.html name=m %}{% endfor %}
+    </div>
+  {% endif %}
+  <p class="season-meta">
+    {% if s.started %}<span>{{ s.started | date: "%-d %b %Y" }}{% if s.finished %} – {{ s.finished | date: "%-d %b %Y" }}{% elsif s.ends %} – ends {{ s.ends | date: "%-d %b %Y" }}{% endif %}</span>{% endif %}
+    {% comment %} An optional short note, like "Unplayed" for a season that was skipped. {% endcomment %}
+    {% if s.note %}<span>{{ s.note }}</span>{% endif %}
+    {% if s.matches != nil %}<span>{{ s.matches }} {% if s.matches == 1 %}match{% else %}matches{% endif %}</span>{% endif %}
+    {% if s.win_rate != nil %}<span>{{ s.win_rate }}% wins</span>{% endif %}
+  </p>
+</div>

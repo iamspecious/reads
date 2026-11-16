@@ -28,6 +28,32 @@ Each half has its own **Latest** page (newest entries first), **Logs** list (fil
 
 Names, logos, which types go where, and words like "reading/playing" are all in `_data/sections.yml`. Colours are in `assets/css/reads.css` (`.theme-books` and `.theme-games`). The heading font is Bebas Neue, stored in the repo (free licence in `assets/fonts/OFL.txt`).
 
+## Games played in seasons (Wild Rift)
+
+A game can be logged season by season instead of chapter by chapter. Add `progress: season` and a `seasons:` list to its log file (see `_logs/league-of-legends-wild-rift.md`):
+
+```yaml
+progress: season
+seasons:
+  - season: 23
+    year: 2026
+    year_name: Eminence      # the season year's name, optional
+    rank: Grandmaster II
+    mains: [Yuumi, Lulu, Nami]
+    started: 2026-09-23
+    ends: 2027-01-08         # or finished: once it's over
+    matches: 343
+    win_rate: 50
+    note: Unplayed           # optional, shown with the dates
+```
+
+- **Currently playing** shows the newest season: number, year, rank, mains with portraits, dates and record.
+- **The log page** has one block per season, newest first: the season's banner, then the notes for it.
+- **On `/new`** the number box becomes **Season** for these games and starts on the current one. Notes are tagged `S23`.
+- **New season or rank change:** edit the log file on GitHub. Put the new season at the top of the list and update `rank:` whenever it changes.
+- **Champion portraits** come from Riot's official images (Data Dragon). The *Fetch champion portraits* action downloads any new main's portrait by itself when a log file changes. Spell names as Riot does (`Kai'Sa`, `Wukong`). A name with no portrait just shows as text.
+- Rank and match history can't be fetched automatically: Riot has no public data service for Wild Rift, so they're typed in.
+
 ## Post from your phone
 
 Open **/reads/new/** (add it to your home screen). It's one page:
