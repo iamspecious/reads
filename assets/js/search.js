@@ -88,7 +88,7 @@
     });
     entries.slice(0, 100).forEach(function (e) {
       html += '<a class="result result-entry" href="' + esc(e.u) + '">' +
-        '<span class="result-sub">' + esc(e.d) + ' · ' + esc(e.g) + (e.c ? ' · Ch ' + esc(e.c) : '') + '</span>' +
+        '<span class="result-sub">' + esc(e.d) + ' · ' + esc(e.g) + (e.c ? ' · ' + esc(e.cl || 'Ch ') + esc(e.c) : '') + '</span>' +
         '<span class="result-text">' + highlight(e.x, words) + '</span></a>';
     });
     out.innerHTML = html;
@@ -117,7 +117,7 @@
       // Keep only this half's logs and entries.
       data = data.filter(function (it) { return config.types.indexOf(it.y) !== -1; });
       items = data.map(function (it) {
-        it._hay = fold([it.g, it.a, it.y, it.s, (it.tg || []).join(' '), it.c ? 'ch ' + it.c + ' chapter ' + it.c : '', it.x].join(' '));
+        it._hay = fold([it.g, it.a, it.y, it.s, (it.tg || []).join(' '), it.c ? 'ch ' + it.c + ' chapter ' + it.c + ' s' + it.c + ' season ' + it.c : '', it.x].join(' '));
         return it;
       });
       status.textContent = '';

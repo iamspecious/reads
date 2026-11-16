@@ -21,11 +21,20 @@
     <a class="now-item" href="{{ l.url | relative_url }}">
       <span class="now-title">{{ l.title }}</span>
       <span class="now-creator">{{ l.creator }}</span>
+      {% comment %}
+        A game played in seasons shows its current (newest) season here
+        instead of a chapter: season, rank, mains and dates.
+      {% endcomment %}
+      {% if l.seasons %}
+        {% assign cur = l.seasons | sort: "season" | last %}
+        {% include season-card.html season=cur %}
+      {% else %}
       <span class="now-meta">
         {% if last_ch %}<span class="chip">Ch {{ last_ch }}</span>{% endif %}
         <span>{{ le.size }} {% if le.size == 1 %}entry{% else %}entries{% endif %}</span>
         {% if l.started %}<span>Since {{ l.started | date: "%-d %b" }}</span>{% endif %}
       </span>
+      {% endif %}
     </a>
   {% endfor %}
 </section>

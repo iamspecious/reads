@@ -318,3 +318,22 @@ mark { background: color-mix(in srgb, #e06a95 25%, transparent); color: inherit;
 .section-tabs a { padding: 6px 14px; border-radius: 999px; font-size: 0.88rem; font-weight: 600; color: var(--ink-soft); text-decoration: none; }
 .section-tabs a[aria-current="true"] { background: var(--ink); color: var(--bg); }
 .site-header .site-nav { padding-bottom: 2px; }
+
+/* ── Seasons (games played in ranked seasons, like Wild Rift) ──
+   One card per season: big season number in the logo font, the rank as
+   the headline, mains with their portraits, then dates and record.
+   Inside the "Currently playing" box it sits flush; on the log page each
+   season's card heads that season's notes. */
+.season-card { margin-top: 10px; padding: 12px 14px; border-radius: 12px; background: var(--quiet-bg); border: 1px solid var(--line); }
+.season-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.season-num { font: 400 1.5rem/1 var(--display); letter-spacing: 0.05em; color: var(--ink); }
+.season-year { font-size: 0.82rem; color: var(--muted); }
+.season-rank { margin: 6px 0 0; font-size: 1.15rem; font-weight: 700; color: var(--accent); }
+.season-mains { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 10px; }
+.champ { display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--ink-soft); }
+/* Round portraits with a thin ring in the half's accent colour. */
+.champ img { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--accent); display: block; }
+.season-meta { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 10px 0 0; font-size: 0.82rem; color: var(--muted); }
+.season-block { margin-bottom: 26px; }
+.season-block > .season-card { margin: 0 0 12px; background: var(--surface); border: 2px solid transparent; background: linear-gradient(var(--surface), var(--surface)) padding-box, var(--gradient) border-box; }
+.now-item .season-card { margin-top: 10px; }

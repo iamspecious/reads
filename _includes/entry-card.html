@@ -46,7 +46,8 @@
       {% comment %} If the log file is missing we still show the slug, so the entry isn't silently orphaned. {% endcomment %}
       <span class="entry-log">{{ e.log }}</span>
     {% endif %}
-    {% if e.chapter %}<span class="chip">Ch {{ e.chapter }}</span>{% endif %}
+    {% comment %} "S23" for games played in seasons (progress: season), "Ch 12" for everything else. {% endcomment %}
+    {% if e.chapter %}<span class="chip">{% if parent.progress == "season" %}S{{ e.chapter }}{% else %}Ch {{ e.chapter }}{% endif %}</span>{% endif %}
   </header>
 
   {% comment %}
@@ -56,7 +57,9 @@
     but Markdown would turn it into a giant heading.
   {% endcomment %}
   {% capture text %}{% include entry-text.html entry=e %}{% endcapture %}
-  <div class="entry-text">{{ text | escape | newline_to_br }}</div>
+  {% comment %} A GIF-only post has no words, so skip the empty text line. {% endcomment %}
+  {% assign trimmed = text | strip %}
+  {% if trimmed != "" %}<div class="entry-text">{{ text | escape | newline_to_br }}</div>{% endif %}
 
   {% if e.images %}
     <div class="entry-images">

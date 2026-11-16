@@ -59,10 +59,11 @@ csp: true
   {%- for l in site.logs -%}
     {%- assign le = site.entries | where: "log", l.slug | sort: "date" -%}
     {%- assign last = le | last -%}
+    {%- if l.seasons -%}{%- assign cur_season = l.seasons | sort: "season" | last -%}{%- endif -%}
     {%- capture last_text -%}{% if last %}{% include entry-text.html entry=last %}{% endif %}{%- endcapture -%}
     {%- assign last_ch = nil -%}
     {%- for x in le reversed -%}{%- if x.chapter -%}{%- assign last_ch = x.chapter -%}{%- break -%}{%- endif -%}{%- endfor -%}
-    {"slug":{{ l.slug | jsonify }},"title":{{ l.title | jsonify }},"creator":{{ l.creator | jsonify }},"type":{{ l.type | jsonify }},"status":{{ l.status | jsonify }},"started":{{ l.started | date: "%Y-%m-%d" | jsonify }},"count":{{ le.size }},"lastChapter":{{ last_ch | jsonify }},"lastText":{{ last_text | truncate: 90 | jsonify }},"lastDate":{{ last.date | date: "%-d %b" | jsonify }}}{% unless forloop.last %},{% endunless %}
+    {"slug":{{ l.slug | jsonify }},"title":{{ l.title | jsonify }},"creator":{{ l.creator | jsonify }},"type":{{ l.type | jsonify }},"status":{{ l.status | jsonify }},"started":{{ l.started | date: "%Y-%m-%d" | jsonify }},"count":{{ le.size }},"lastChapter":{{ last_ch | jsonify }},"progress":{{ l.progress | default: "chapter" | jsonify }},"currentSeason":{% if l.seasons %}{{ cur_season.season | jsonify }}{% else %}null{% endif %},"lastText":{{ last_text | truncate: 90 | jsonify }},"lastDate":{{ last.date | date: "%-d %b" | jsonify }}}{% unless forloop.last %},{% endunless %}
   {%- endfor -%}
   ]
 }
@@ -140,7 +141,8 @@ csp: true
     <button type="button" class="link-button" data-back>Change</button>
   </div>
   <form id="entry-form" class="new-form">
-    <label for="chapter">Chapter <span class="hint">(optional)</span></label>
+    {% comment %} The script renames this box "Season" for games played in seasons. {% endcomment %}
+    <label for="chapter"><span id="chapter-label">Chapter</span> <span class="hint">(optional)</span></label>
     {% comment %} inputmode="numeric" brings up the number keypad on phones, but still allows "Prologue". {% endcomment %}
     <input id="chapter" type="text" inputmode="numeric" autocomplete="off">
 

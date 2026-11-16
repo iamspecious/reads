@@ -34,6 +34,40 @@ layout: default
   {% if note != "" %}<div class="log-note">{{ content }}</div>{% endif %}
 </section>
 
+{% comment %}
+  Games played in seasons (progress: season, like Wild Rift ranked) show
+  one block per season, newest season first: the season's banner, then the
+  notes posted for it, oldest first. A note belongs to a season through its
+  "chapter" number (on /new that box is labelled "Season" for these logs).
+  Notes without a season number go under "Other notes" at the end.
+  Every other log is one list, oldest first, as before.
+{% endcomment %}
+{% if page.seasons %}
+  {% assign seasons = page.seasons | sort: "season" | reverse %}
+  {% assign used = "|" %}
+  {% for sn in seasons %}
+    {% assign sn_key = sn.season | append: "" %}
+    {% assign used = used | append: sn_key | append: "|" %}
+    <section class="season-block" id="season-{{ sn_key }}" aria-label="Season {{ sn_key }}">
+      {% include season-card.html season=sn %}
+      <div class="feed">
+        {% for entry in log_entries %}
+          {% assign ch = entry.chapter | append: "" %}
+          {% if ch == sn_key %}{% include entry-card.html entry=entry show_log=false %}{% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+  {% assign others = "" | split: "" %}
+  {% for entry in log_entries %}
+    {% assign key = "|" | append: entry.chapter | append: "|" %}
+    {% unless used contains key %}{% assign others = others | push: entry %}{% endunless %}
+  {% endfor %}
+  {% if others.size > 0 %}
+    <h2 class="label">Other notes</h2>
+    <section class="feed">{% for entry in others %}{% include entry-card.html entry=entry show_log=false %}{% endfor %}</section>
+  {% endif %}
+{% else %}
 <section class="feed" aria-label="Entries, oldest first">
   {% for entry in log_entries %}
     {% include entry-card.html entry=entry show_log=false %}
@@ -41,3 +75,4 @@ layout: default
     <p class="empty">No entries yet.</p>
   {% endfor %}
 </section>
+{% endif %}
