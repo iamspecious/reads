@@ -1,0 +1,11 @@
+---
+date: 2026-11-16 04:59:03 +0100
+log: a-court-of-silver-flames
+chapter: 64
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2fnaap2pk2e
+videos:
+  - src: "/assets/images/entries/3n2fnaap2pk2e-1.mp4"
+    alt: "Welcome to the 76th Hunger Games: Jennifer Lawrence"
+    gif: true
+---
+Chapter 64:

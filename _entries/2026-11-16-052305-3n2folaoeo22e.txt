@@ -1,0 +1,11 @@
+---
+date: 2026-11-16 05:23:05 +0100
+log: a-court-of-silver-flames
+chapter: 65
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2folaoeo22e
+videos:
+  - src: "/assets/images/entries/3n2folaoeo22e-1.mp4"
+    alt: "Oh My: Man Spits Water, Screams \"OH, COME ON!\""
+    gif: true
+---
+Chapter 65: well, isn’t that just stupid for stupidity’s sake? That’s not even clever or endearing, Sarah. Come on.
