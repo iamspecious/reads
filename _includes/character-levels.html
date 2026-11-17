@@ -1,0 +1,69 @@
+{% comment %}
+  character-levels.html — snapshots of a character at different levels,
+  one tab each (newest first, open when the page loads): outfit picture,
+  HP/MP, item level, story quest, every stat, and the actions learned so
+  far plus the next ones coming. Used by character-card.html when the log's
+  character has a "levels:" list (oldest first, one item per snapshot).
+
+  Stats show how much they went up since the snapshot before, like "+12",
+  so you can see what changed as the character grows.
+
+  How the tabs work without JavaScript: each tab is a hidden radio button,
+  its label (the tab you tap) and its panel, side by side. Labels line up
+  in a row; panels are pushed onto their own line underneath (see
+  "Level tabs" in reads.css). The checked radio shows its own panel.
+  Tripped me up: the Wild Rift tabs name each tab in the CSS, which can't
+  work here because the number of levels keeps growing.
+{% endcomment %}
+{% assign snaps = include.levels %}
+{% assign last_i = snaps.size | minus: 1 %}
+<div class="lvl-tabs" aria-label="Level snapshots">
+  {% for i in (0..last_i) reversed %}
+    {% assign s = snaps[i] %}
+    {% assign prev_i = i | minus: 1 %}
+    {% if i > 0 %}{% assign prev = snaps[prev_i] %}{% else %}{% assign prev = nil %}{% endif %}
+    <input class="lvl-radio" type="radio" name="lvl-{{ include.slug }}" id="lvl-{{ include.slug }}-{{ i }}"{% if forloop.first %} checked{% endif %}>
+    <label class="lvl-label" for="lvl-{{ include.slug }}-{{ i }}">Lv {{ s.level }}</label>
+    <div class="lvl-panel">
+      <p class="lvl-head"><strong>Level {{ s.level }}{% if s.class %} {{ s.class }}{% endif %}</strong>{% if s.date %} · {{ s.date | date: "%-d %b %Y" }}{% endif %}</p>
+      <div class="lvl-top">
+        {% if s.picture %}<img class="lvl-pic" src="{{ s.picture | relative_url }}" alt="Outfit at level {{ s.level }}" loading="lazy">{% endif %}
+        <dl class="char-details lvl-facts">
+          {% if s.hp %}<div><dt>HP</dt><dd>{{ s.hp }}</dd></div>{% endif %}
+          {% if s.mp %}<div><dt>MP</dt><dd>{{ s.mp }}</dd></div>{% endif %}
+          {% if s.item_level %}<div><dt>Item level</dt><dd>{{ s.item_level }}</dd></div>{% endif %}
+          {% if s.quest %}<div><dt>Story quest</dt><dd>{{ s.quest }}</dd></div>{% endif %}
+        </dl>
+      </div>
+
+      {% if s.stats %}
+      <div class="lvl-stats">
+        {% for g in s.stats %}
+          <div class="lvl-group">
+            <p class="sheet-title">{{ g.group }}</p>
+            {% for r in g.rows %}
+              {% comment %} Find the same stat in the snapshot before, to show how much it went up. {% endcomment %}
+              {% assign was = nil %}
+              {% if prev %}{% for pg in prev.stats %}{% for pr in pg.rows %}{% if pr.name == r.name %}{% assign was = pr.value %}{% endif %}{% endfor %}{% endfor %}{% endif %}
+              <div class="lvl-stat"><span>{{ r.name }}</span><span class="lvl-val">{{ r.value }}{% if was %}{% assign diff = r.value | minus: was %}{% if diff > 0 %} <span class="lvl-up">+{{ diff }}</span>{% elsif diff < 0 %} <span class="lvl-down">{{ diff }}</span>{% endif %}{% endif %}</span></div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if s.learned %}
+        <p class="sheet-title lvl-sub">Actions learned</p>
+        <ul class="lvl-actions">
+          {% for a in s.learned %}<li><span class="chip">Lv {{ a.level }}</span> {{ a.name }}{% if a.role %} <span class="lvl-role">role</span>{% endif %}</li>{% endfor %}
+        </ul>
+      {% endif %}
+      {% if s.next %}
+        <p class="sheet-title lvl-sub">Coming up</p>
+        <ul class="lvl-actions lvl-next">
+          {% for a in s.next %}<li><span class="chip">Lv {{ a.level }}</span> {{ a.name }}{% if a.role %} <span class="lvl-role">role</span>{% endif %}</li>{% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>

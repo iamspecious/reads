@@ -12,6 +12,8 @@
     details       label/value pairs in order (Race, Job, World…)
     main          the job/class to highlight in the spec sheet
     sheet         groups (Tanks, Healers…) of rows, each a name and a level
+    levels        snapshots at different levels (outfit, stats, actions),
+                  shown as tabs: see character-levels.html
     sheet_max     the top level, so the bars know what "full" is (default 100)
 
   Why the portrait is found by file name and not written in the log: the
@@ -58,6 +60,9 @@
       {% endfor %}
     </div>
   {% endif %}
+
+  {% comment %} Snapshots at each level, as tabs (see character-levels.html). {% endcomment %}
+  {% if ch.levels.size > 0 %}{% include character-levels.html levels=ch.levels slug=include.slug %}{% endif %}
 
   {% assign credit = ch.portrait_page | default: ch.portrait_url %}
   {% if portrait and credit %}
