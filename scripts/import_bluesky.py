@@ -299,9 +299,30 @@ def already_imported(entries_dir):
 BARE_CHAPTER_RE = re.compile(r"^\s*(\d{1,3})\s*(?:[-–—]\s*(\d{1,3})\s*)?[:]")
 
 
+# A post that STARTS with a named part of the book and a colon:
+#   "Chapter Azriel: …", "Prelude: …", "Prologue: …", "Epilogue: …"
+# keeps that name, exactly as written, as its chapter ("Chapter Azriel").
+# Only at the very start and only with a colon, like the bare-number rule.
+# Tripped me up: A Court of Splintered Harmony has a letter, an Azriel
+# scene and a prelude before chapter 1, and those posts came in untagged.
+NAMED_CHAPTER_RE = re.compile(
+    r"^\s*((?:chapter|ch\.?)\s+[^\W\d][\w'’]*(?:\s+[\w'’]+){0,3}"
+    r"|(?:bonus\s+chapter|prelude|prologue|epilogue|interlude|foreword|afterword))\s*:",
+    re.IGNORECASE)
+
+
 def find_chapter(text):
-    """Return the chapter mentioned in the text: 12, or "7-9" for a range, or None."""
-    m = CHAPTER_RE.search(text) or BARE_CHAPTER_RE.match(text)
+    """Return the chapter: 12, "7-9" for a range, a name like "Prelude", or None.
+
+    A marker at the very start of the post wins over a chapter mentioned
+    later on, so "Prelude: … unlike chapter 3 …" is the prelude.
+    """
+    m = CHAPTER_RE.match(text.lstrip()) or BARE_CHAPTER_RE.match(text)
+    if not m:
+        named = NAMED_CHAPTER_RE.match(text)
+        if named:
+            return re.sub(r"\s+", " ", named.group(1)).strip()
+        m = CHAPTER_RE.search(text)
     if not m:
         return None
     start, end = m.group(1), m.group(2)

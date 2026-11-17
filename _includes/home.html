@@ -43,7 +43,7 @@
         {% include season-card.html season=cur %}
       {% else %}
       <span class="now-meta">
-        {% if last_ch %}<span class="chip">Ch {{ last_ch }}</span>{% endif %}
+        {% if last_ch %}<span class="chip">{% include chapter-label.html chapter=last_ch %}</span>{% endif %}
         <span>{{ le.size }} {% if le.size == 1 %}entry{% else %}entries{% endif %}</span>
         {% if l.started %}<span>Since {{ l.started | date: "%-d %b" }}</span>{% endif %}
       </span>

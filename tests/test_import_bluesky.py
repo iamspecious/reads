@@ -196,6 +196,14 @@ class ImportTests(unittest.TestCase):
         self.assertIsNone(imp.find_chapter("10 reasons Nesta is insufferable"))
         self.assertIsNone(imp.find_chapter("It was 3:00 when I finished"))
         self.assertIsNone(imp.find_chapter("no chapter number here"))
+        # Named parts at the start of a post (the real Splintered Harmony thread).
+        self.assertEqual(imp.find_chapter("Chapter 0 : Sarah’s letter in the beginning"), 0)
+        self.assertEqual(imp.find_chapter("Chapter Azriel: I got my answer"), "Chapter Azriel")
+        self.assertEqual(imp.find_chapter("Prelude: I like the Az intro"), "Prelude")
+        self.assertEqual(imp.find_chapter("Prelude: better than chapter 3"), "Prelude")
+        self.assertEqual(imp.find_chapter("epilogue:  wow"), "epilogue")
+        self.assertIsNone(imp.find_chapter("You see, this is where a contents page would be useful"))
+        self.assertIsNone(imp.find_chapter("The prelude was great: loved it"))
 
     def test_file_contents(self):
         self.run_import()

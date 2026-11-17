@@ -55,6 +55,18 @@ class DiscoverTests(unittest.TestCase):
         self.assertIn("started: 2026-11-18", text)
         self.assertIn("bluesky_thread: https://bsky.app/profile/booksbyspec.bsky.social/post/newroot", text)
 
+    def test_other_wordings_of_the_opener(self):
+        # The real Splintered Harmony opener said "read through", not "go through".
+        for i, line in enumerate([
+            "My thoughts as I read through A Court of Splintered Harmony by Sarah J Maas",
+            "My thoughts as I make my way through A Court of Splintered Harmony by Sarah J Maas",
+        ]):
+            m = db.OPENER_RE.match(line)
+            self.assertTrue(m, line)
+            self.assertEqual(m.group("title"), "A Court of Splintered Harmony")
+            self.assertEqual(m.group("author"), "Sarah J Maas")
+        self.assertIsNone(db.OPENER_RE.match("My thoughts as I finished A Court of Silver Flames by Sarah J Maas"))
+
     def test_ignores_everything_else(self):
         self.feed = [
             item("oldroot", "My thoughts as I go through A Court of Silver Flames by Sarah J Mass"),  # already linked

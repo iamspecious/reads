@@ -41,7 +41,7 @@
   {%- assign anchor = e.path | split: "/" | last | split: "." | first | prepend: "e-" %}
   {%- assign link = parent.url | append: "#" | append: anchor | absolute_url %}
   <entry>
-    <title>{{ parent.title | default: e.log | xml_escape }} · {% if e.chapter %}{% if parent.progress == "season" %}Season {{ e.chapter }}{% else %}Ch {{ e.chapter }}{% endif %}{% else %}{{ e.date | date: "%-d %b %Y %H:%M" }}{% endif %}</title>
+    <title>{{ parent.title | default: e.log | xml_escape }} · {% if e.chapter %}{% if parent.progress == "season" %}{% include chapter-label.html chapter=e.chapter season=true long=true %}{% else %}{% include chapter-label.html chapter=e.chapter %}{% endif %}{% else %}{{ e.date | date: "%-d %b %Y %H:%M" }}{% endif %}</title>
     <link href="{{ link }}" rel="alternate" type="text/html"/>
     <id>{{ link }}</id>
     <published>{{ e.date | date: "%Y-%m-%dT%H:%M:%SZ" }}</published>

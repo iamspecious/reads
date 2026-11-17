@@ -52,7 +52,7 @@
       <span class="entry-log">{{ e.log }}</span>
     {% endif %}
     {% comment %} "S23" for games played in seasons (progress: season), "Ch 12" for everything else. {% endcomment %}
-    {% if e.chapter %}<span class="chip">{% if parent.progress == "season" %}S{{ e.chapter }}{% else %}Ch {{ e.chapter }}{% endif %}</span>{% endif %}
+    {% if e.chapter %}<span class="chip">{% if parent.progress == "season" %}{% include chapter-label.html chapter=e.chapter season=true %}{% else %}{% include chapter-label.html chapter=e.chapter %}{% endif %}</span>{% endif %}
   </header>
 
   {% comment %}
