@@ -1,0 +1,11 @@
+---
+date: 2026-11-17 19:44:15 +0100
+log: a-court-of-splintered-harmony
+chapter:
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2jp63wudt2o
+videos:
+  - src: "/assets/images/entries/3n2jp63wudt2o-1.mp4"
+    alt: "Luxu and the Black Box - Kingdom Hearts χ Back Cover"
+    gif: true
+---
+Has Sarah been watching my Kingdom Hearts theories? What is this about a book and a box?

@@ -1,0 +1,11 @@
+---
+date: 2026-11-17 19:44:15 +0100
+log: a-court-of-splintered-harmony
+chapter: 1
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2jp62m46l2o
+videos:
+  - src: "/assets/images/entries/3n2jp62m46l2o-1.mp4"
+    alt: "Anxiety and Deep Dread"
+    gif: true
+---
+Chapter 1: immediate alarm bells of Az saying he doesn’t care about his wings. *immediate*
