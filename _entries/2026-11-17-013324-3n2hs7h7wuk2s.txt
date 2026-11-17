@@ -1,0 +1,11 @@
+---
+date: 2026-11-17 01:33:24 +0100
+log: a-court-of-silver-flames
+chapter: 70
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2hs7h7wuk2s
+videos:
+  - src: "/assets/images/entries/3n2hs7h7wuk2s-1.mp4"
+    alt: "Gondor Horn Call"
+    gif: true
+---
+Chapter 70:

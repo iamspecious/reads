@@ -1,0 +1,11 @@
+---
+date: 2026-11-17 02:35:41 +0100
+log: a-court-of-silver-flames
+chapter: 80
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2hvotgnts2k
+videos:
+  - src: "/assets/images/entries/3n2hvotgnts2k-1.mp4"
+    alt: "Rwby Rwby Volume 3"
+    gif: true
+---
+Chapter 80: well, that was a very rwby ending
