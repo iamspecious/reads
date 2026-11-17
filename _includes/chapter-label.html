@@ -1,0 +1,10 @@
+{% comment %}
+  chapter-label.html — the short label for an entry's chapter, used in the
+  little chip on each entry, the home page, the RSS feed and search.
+    a number or range (12, 7-9)  → "Ch 12"
+    a named part ("Prelude", "Chapter Azriel") → shown exactly as written
+    a game played in seasons      → "S23" (or "Season 23" with long=true)
+  How it tells them apart: words have letters, and letters change between
+  small and capital letters while numbers and dashes don't.
+  Tripped me up: "Ch Prelude" read oddly, so named parts skip the "Ch".
+{% endcomment %}{% assign cl_s = include.chapter | append: "" %}{% assign cl_lo = cl_s | downcase %}{% assign cl_up = cl_s | upcase %}{% if include.season %}{% if include.long %}Season {% else %}S{% endif %}{{ cl_s }}{% elsif cl_lo != cl_up %}{{ cl_s }}{% else %}Ch {{ cl_s }}{% endif %}

@@ -36,7 +36,7 @@ Entries are `.txt` (not Markdown) so text shows exactly as written. Text contain
 
 ## Starting a book from Bluesky
 
-Spec opens each reading thread with "My thoughts as I go through <title> by <author>". The sync starts that book's log by itself (see `scripts/discover_books.py`). If Spec asks why a new book didn't appear, check the first post really starts with that phrase and was made in the last 14 days, then read the *Sync Bluesky threads* run log.
+Spec opens each reading thread with "My thoughts as I go through <title> by <author>" (or "read through"; any short phrase before "through" works). The sync starts that book's log by itself (see `scripts/discover_books.py`). If Spec asks why a new book didn't appear, check the first post really starts with that phrase and was made in the last 14 days, then read the *Sync Bluesky threads* run log.
 
 ## Finishing a book or game
 

@@ -144,7 +144,7 @@ The page stores no keys or passwords. (A version that saved straight from the pa
 
 If a log has a `bluesky_thread:` line (a link to the **first post** of the thread) and is `status: reading`, new posts in that thread are copied to the site automatically.
 
-- **Starting a new book (automatic):** open its thread with a first post that starts **"My thoughts as I go through *[title]* by *[author]*"**. The next sync spots it and starts the book's log by itself (status reading, started that day, linked to the thread), then pulls the thread in.
+- **Starting a new book (automatic):** open its thread with a first post that starts **"My thoughts as I go through *[title]* by *[author]*"** ("read through" works too). The next sync spots it and starts the book's log by itself (status reading, started that day, linked to the thread), then pulls the thread in.
   - Only the first post needs that phrase. Replies like "Chapter 1: …" sync because they're in the thread.
   - If the author is close to one already on the site, the site's spelling is used ("Sarah J Mass" becomes Sarah J. Maas).
   - A new thread never finishes the previous book. You still do that yourself, with your rating.
@@ -170,6 +170,8 @@ A post gets a chapter tag when it starts with or mentions one of these:
 - `Ch 12`, `Ch. 12`, `ch12`, `Chapter 12`
 - ranges: `Chapter 7 - 9`, `Chapters 12-14`, `Ch 7 to 9` → tagged `7-9`
 - a bare number and a colon at the very start: `31: kiss of life…`, `34-37:`
+- a named part and a colon at the very start: `Chapter Azriel:`, `Prelude:`, `Prologue:`, `Epilogue:`, `Interlude:` → tagged exactly as written, and shown without "Ch" in front
+- `Chapter 0:` works too, for something before chapter 1 like an author's letter
 
 Anything else, like "Just finished the second chapter" or a follow-up post with no number, is left untagged on purpose.
 

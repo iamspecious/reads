@@ -87,8 +87,11 @@
         '<strong>' + highlight(l.g, words) + '</strong> <span class="result-sub">' + highlight(l.a, words) + ' · ' + esc(l.s) + '</span></a>';
     });
     entries.slice(0, 100).forEach(function (e) {
+      // Chapter 0 counts too (a book's opening letter), so check for "no
+      // chapter" by name instead of "is it zero". cl is "" for named parts.
+      var hasCh = e.c !== null && e.c !== undefined && e.c !== '';
       html += '<a class="result result-entry" href="' + esc(e.u) + '">' +
-        '<span class="result-sub">' + esc(e.d) + ' · ' + esc(e.g) + (e.c ? ' · ' + esc(e.cl || 'Ch ') + esc(e.c) : '') + '</span>' +
+        '<span class="result-sub">' + esc(e.d) + ' · ' + esc(e.g) + (hasCh ? ' · ' + esc(e.cl != null ? e.cl : 'Ch ') + esc(e.c) : '') + '</span>' +
         '<span class="result-text">' + highlight(e.x, words) + '</span></a>';
     });
     out.innerHTML = html;
