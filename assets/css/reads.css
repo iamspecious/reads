@@ -192,13 +192,18 @@ main { padding-bottom: 40px; }
 .chip {
   display: inline-block;
   padding: 1px 9px;
-  border-radius: 999px;
   background: var(--chip-bg);
   color: var(--chip-ink);
   font-size: 0.78rem;
   font-weight: 600;
   line-height: 1.6;
-  white-space: nowrap;
+  /* Short tags ("Ch 17") stay on one line on their own. A long one (a
+     chapter typed as a title) wraps onto more lines inside its pill.
+     Tripped me up: this used to say white-space: nowrap, so a long chapter
+     title ran straight off the edge of the card on a phone. */
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  border-radius: 12px;
 }
 .chip-quiet { background: var(--quiet-bg); color: var(--muted); font-weight: 500; }
 .status { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; line-height: 1.6; }
@@ -456,3 +461,27 @@ mark { background: color-mix(in srgb, #e06a95 25%, transparent); color: inherit;
 .stars { position: relative; display: inline-block; color: var(--line); letter-spacing: 1px; line-height: 1; }
 .stars-on { position: absolute; left: 0; top: 0; overflow: hidden; white-space: nowrap; color: #e3b341; }
 .rating-num { font-weight: 700; }
+
+/* ── Character card (a game's character: portrait, details, spec sheet) ── */
+.char-card { margin: 0 0 18px; padding: 14px; border-radius: 14px; border: 2px solid transparent; background: linear-gradient(var(--surface), var(--surface)) padding-box, var(--gradient) border-box; }
+.char-top { display: flex; gap: 14px; align-items: flex-start; }
+/* Tall portrait, like a character select screen. */
+.char-portrait { width: 110px; aspect-ratio: 3 / 4; object-fit: cover; object-position: top; border-radius: 10px; flex: none; background: var(--quiet-bg); }
+.char-id { min-width: 0; }
+.char-id p { margin: 0; }
+.char-name { font: 400 1.6rem/1.05 var(--display); letter-spacing: 0.04em; margin-top: 2px !important; overflow-wrap: anywhere; }
+.char-details { margin: 8px 0 0; display: grid; gap: 2px; font-size: 0.85rem; }
+.char-details div { display: flex; gap: 8px; }
+.char-details dt { color: var(--muted); min-width: 6.5em; }
+.char-details dd { margin: 0; font-weight: 600; }
+/* Spec sheet: one row per job, with its level as a bar out of sheet_max. */
+.char-sheet { margin-top: 12px; display: grid; gap: 10px; }
+.sheet-title { margin: 0 0 4px; font: 400 0.95rem/1 var(--display); letter-spacing: 0.06em; color: var(--muted); }
+.sheet-row { display: grid; grid-template-columns: minmax(7em, 1fr) 2fr 2.5em; gap: 8px; align-items: center; font-size: 0.85rem; padding: 2px 0; }
+.sheet-name { overflow-wrap: anywhere; }
+.sheet-bar { height: 6px; border-radius: 999px; background: var(--quiet-bg); overflow: hidden; }
+.sheet-bar span { display: block; height: 100%; background: var(--gradient); }
+.sheet-lvl { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.sheet-main .sheet-name { font-weight: 700; color: var(--accent); }
+.char-credit { margin: 10px 0 0; font-size: 0.72rem; color: var(--muted); }
+.char-credit a { color: var(--muted); }

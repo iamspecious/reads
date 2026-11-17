@@ -1,0 +1,70 @@
+{% comment %}
+  character-card.html — your character (or the game's hero) for a game log:
+  portrait, name, details and a spec sheet. Shown on the log page when the
+  log has a "character:" section with at least a name or a portrait.
+
+  Every part is optional, so a card can start with just a name and grow:
+    name          shown big, in the logo font
+    portrait      found automatically: scripts/fetch_portraits.py saves it
+                  as assets/images/characters/<log file name>.png (or .jpg…)
+    portrait_page / portrait_url
+                  where the portrait comes from; shown as a small credit link
+    details       label/value pairs in order (Race, Job, World…)
+    main          the job/class to highlight in the spec sheet
+    sheet         groups (Tanks, Healers…) of rows, each a name and a level
+    sheet_max     the top level, so the bars know what "full" is (default 100)
+
+  Why the portrait is found by file name and not written in the log: the
+  fetch script decides the file's type (png, jpg…) when it downloads it,
+  so the template looks for whichever one exists.
+{% endcomment %}
+{% assign ch = include.character %}
+{% assign pre = "/assets/images/characters/" | append: include.slug | append: "." %}
+{% assign portrait = nil %}
+{% for f in site.static_files %}{% assign starts = f.path | slice: 0, pre.size %}{% if starts == pre %}{% assign portrait = f.path %}{% endif %}{% endfor %}
+
+{% if ch.name or portrait %}
+<section class="char-card" aria-label="Character">
+  <div class="char-top">
+    {% if portrait %}<img class="char-portrait" src="{{ portrait | relative_url }}" alt="{{ ch.name | default: 'Character' | escape }}" loading="lazy">{% endif %}
+    <div class="char-id">
+      <p class="widget-label">Character</p>
+      {% if ch.name %}<p class="char-name">{{ ch.name }}</p>{% endif %}
+      {% if ch.details %}
+        <dl class="char-details">
+          {% for d in ch.details %}{% if d.value %}<div><dt>{{ d.label }}</dt><dd>{{ d.value }}</dd></div>{% endif %}{% endfor %}
+        </dl>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if ch.sheet %}
+    {% assign top = ch.sheet_max | default: 100 %}
+    <div class="char-sheet">
+      {% for g in ch.sheet %}
+        {% comment %} Tripped me up: an empty list ("rows: []") still counts as "yes" in Liquid, so count the rows instead. {% endcomment %}
+        {% if g.rows.size > 0 %}
+        <div class="sheet-group">
+          <p class="sheet-title">{{ g.group }}</p>
+          {% for r in g.rows %}
+            {% assign lvl = r.level | default: 0 %}
+            {% assign pct = lvl | times: 100.0 | divided_by: top | at_most: 100 %}
+            <div class="sheet-row{% if r.name == ch.main %} sheet-main{% endif %}">
+              <span class="sheet-name">{{ r.name }}{% if r.name == ch.main %} <span class="chip">Main</span>{% endif %}</span>
+              <span class="sheet-bar" aria-hidden="true"><span style="width: {{ pct }}%"></span></span>
+              <span class="sheet-lvl">{{ lvl }}</span>
+            </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% assign credit = ch.portrait_page | default: ch.portrait_url %}
+  {% if portrait and credit %}
+    {% assign host = credit | split: "/" %}
+    <p class="char-credit">Image: <a href="{{ credit }}" rel="noopener">{{ host[2] }}</a></p>
+  {% endif %}
+</section>
+{% endif %}

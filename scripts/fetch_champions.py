@@ -27,7 +27,7 @@ FILE NAMES
  "MonkeyKing"), so we match on the champion's display name, not the ID.
 
 HOW TO RUN IT
- It runs on GitHub (Actions -> "Fetch champion portraits"), by itself
+ It runs on GitHub (Actions -> "Fetch portraits"), by itself
  whenever a log file changes, or by pressing Run workflow.
  By hand: python scripts/fetch_champions.py
  It only uses Python's built-in tools, like the Bluesky importer.
