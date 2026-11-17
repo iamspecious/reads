@@ -21,7 +21,7 @@ jobs:
           import re, discover_books as d, import_bluesky as imp
           from datetime import datetime, timezone
           h = "booksbyspec.bsky.social"
-          feed = imp.xrpc("app.bsky.feed.getAuthorFeed", actor=h, filter="posts_no_replies", limit=10)
+          feed = imp.xrpc("app.bsky.feed.getAuthorFeed", actor=h, filter="posts_no_replies", limit=4)
           print("== Recent top-level posts (first line) ==")
           for it in feed.get("feed", []):
               r = it["post"]["record"]
@@ -29,7 +29,7 @@ jobs:
               print(r.get("createdAt"), "repost" if it.get("reason") else "", "| opener match:", bool(d.OPENER_RE.match(line)), "|", line[:100])
           print("== Dry-run discovery ==")
           print(d.discover(d.REPO, h, dry_run=True))
-          for title, author, post in d.recent_openers(h, datetime.now(timezone.utc)):
+          for title, author, post in d.recent_openers(h, datetime.now(timezone.utc))[:1]:
               print(f"== Thread: {title} / {author} ==")
               t = imp.xrpc("app.bsky.feed.getPostThread", uri=post["uri"], depth=1000)
               out = []

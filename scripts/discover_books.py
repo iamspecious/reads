@@ -6,6 +6,7 @@ Bluesky thread for it.
 THE MARKER
  Spec opens each reading thread with the same kind of first post:
      My thoughts as I go through A Court of Splintered Harmony by Sarah J Maas
+ ("read through", "make my way through" and so on work too.)
  Only that FIRST post needs the phrase. Everything after it is a reply in
  the thread ("Chapter 1: ...", a GIF, anything), and the normal sync picks
  those up because they're in the thread, whatever they say.
@@ -52,11 +53,15 @@ import import_bluesky as imp
 
 REPO = Path(__file__).resolve().parent.parent
 
-# The opening phrase. Case doesn't matter. The title is everything up to the
+# The opening phrase. Case doesn't matter. The word before "through" can be
+# any short phrase: "go through", "read through", "make my way through".
+# Tripped me up: the Splintered Harmony opener said "as I read through",
+# and the first version only knew "as I go through", so the book never started.
+# The title is everything up to the
 # LAST " by ", so a title with "by" in it still works ("Stand by Me by ...").
 # A full stop, colon or "..." at the end is ignored.
 OPENER_RE = re.compile(
-    r"^\s*my thoughts as i go through\s+(?P<title>.+)\s+by\s+(?P<author>.+?)\s*[.!:…]*\s*$",
+    r"^\s*my thoughts as i\s+(?:\w+\s+){1,3}?through\s+(?P<title>.+)\s+by\s+(?P<author>.+?)\s*[.!:…]*\s*$",
     re.IGNORECASE,
 )
 
