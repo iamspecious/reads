@@ -70,17 +70,20 @@ jobs:
       - name: Commit new entries
         id: commit
         run: |
-          git add _entries assets/images/entries
+          # _logs too: a new reading thread starts a new book's log.
+          git add _entries assets/images/entries _logs
           if git diff --cached --quiet; then
             echo "Nothing new."
             exit 0
           fi
           count=$(git diff --cached --name-only --diff-filter=A -- _entries | wc -l)
+          new_logs=$(git diff --cached --name-only --diff-filter=A -- _logs | wc -l)
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # No new posts but something changed means older entries were given
           # GIFs or pictures they were missing, so say that instead of "0 new".
           if [ "$count" -gt 0 ]; then msg="Sync ${count} new Bluesky post(s)"; else msg="Add missing GIFs/pictures to Bluesky entries"; fi
+          if [ "$new_logs" -gt 0 ]; then msg="Start ${new_logs} new book(s) from Bluesky; ${msg}"; fi
           git commit -m "$msg"
           for attempt in 1 2 3; do
             git pull --rebase --quiet origin "${GITHUB_REF_NAME}" && git push && echo "pushed=true" >> "$GITHUB_OUTPUT" && exit 0

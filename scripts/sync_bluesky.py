@@ -12,6 +12,11 @@ WHAT IT DOES
  .github/workflows/bluesky-sync.yml), so if you keep posting in your Bluesky
  thread, those posts show up on the site without you doing anything.
 
+NEW BOOKS START BY THEMSELVES
+ Before syncing, it looks for a new thread opened with "My thoughts as I go
+ through <title> by <author>" and starts that book's log (see
+ discover_books.py). Replies in the thread then sync as normal.
+
 WHY ONLY "reading" LOGS
  Once you mark a book finished (or dropped), there's nothing more to fetch,
  so it stops asking Bluesky about it. That keeps each run quick and polite
@@ -33,6 +38,7 @@ import re
 import sys
 from pathlib import Path
 
+import discover_books
 import import_bluesky
 
 REPO = Path(__file__).resolve().parent.parent
@@ -59,6 +65,17 @@ def main(argv=None):
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--repo", default=str(REPO), help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
+
+    # First, start a log for any new reading thread ("My thoughts as I go
+    # through <title> by <author>"), so this same run syncs it too.
+    # See discover_books.py. If Bluesky has a hiccup here, carry on: the
+    # books already linked should still sync.
+    try:
+        handle = re.search(r"^bluesky:\s*(\S+)", (Path(args.repo) / "_config.yml").read_text(encoding="utf-8"), re.MULTILINE).group(1)
+        for line in discover_books.discover(Path(args.repo), handle, dry_run=args.dry_run):
+            print(line)
+    except (SystemExit, Exception) as err:  # noqa: BLE001 (any problem here shouldn't stop the sync)
+        print(f"Couldn't check for new reading threads this time: {err}")
 
     todo = logs_to_sync(Path(args.repo))
     if not todo:
