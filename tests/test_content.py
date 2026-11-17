@@ -63,6 +63,10 @@ class ContentTests(unittest.TestCase):
                 if f.get("bluesky_thread"):
                     self.assertRegex(f["bluesky_thread"].strip('"'), r"^https://bsky\.app/profile/[A-Za-z0-9.:_-]+/post/[A-Za-z0-9]+$",
                                      "bluesky_thread must be a link to a Bluesky post")
+                if f.get("rating"):
+                    # A number from 0 to 5, decimals allowed (like 2.53).
+                    self.assertRegex(f["rating"], r"^\d(\.\d+)?$", "rating must be a number like 4 or 2.53")
+                    self.assertLessEqual(float(f["rating"]), 5, "rating is out of 5")
                 if f.get("status") == "finished":
                     self.assertRegex(f.get("finished", ""), r"^\d{4}-\d{2}-\d{2}$", "finished logs need a finished date")
 

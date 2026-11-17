@@ -107,7 +107,7 @@ Open **/reads/new/** (add it to your home screen). It's one page:
 You need to be signed in to GitHub in that browser or the GitHub app.
 
 - **Starting something new:** fill in the title, author/studio and type (and the Bluesky thread link if you're posting it there), and tap *Save the new log on GitHub*. Commit, then come back to `/new`: the write screen is ready for the first entry. Two quick commits, only when you start something.
-- **Finished?** On the write screen, *Finished this one?* opens the log's file on GitHub. Change `status: reading` to `status: finished`, fill in `finished:` with the date, and commit. Syncing from Bluesky stops for it.
+- **Finished?** First sync your last Bluesky posts in (**Sync from Bluesky**), because syncing stops once a book is finished. Then on the write screen, *Finished this one?* opens the log's file on GitHub. Change `status: reading` to `status: finished`, fill in `finished:` with the date, add `rating: 4` (out of 5; decimals like `2.53` are fine), and commit. Or just ask Claude to close it for you. The rating shows as stars on the book's page and in the Logs list.
 - **Lost a post?** If the commit didn't go through (lost signal, tapped away), `/new` shows *Didn't commit it? Bring it back* for a day.
 - **Sync from Bluesky** (bottom of `/new`): opens the sync on GitHub. Tap **Run workflow** twice and new Bluesky posts appear a minute or two later.
 
@@ -165,6 +165,7 @@ status: reading     # reading, finished or dropped
 started: 2026-11-20
 finished:
 tags: ["roguelike"]
+rating:             # out of 5, once you've finished, e.g. 2.53
 bluesky_thread: https://bsky.app/profile/booksbyspec.bsky.social/post/3abc…   # optional
 ---
 ```

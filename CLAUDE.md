@@ -32,6 +32,10 @@ This is **Books by Spec** and **Tech by Spec**: Spec's live reading and gaming l
 
 Entries are `.txt` (not Markdown) so text shows exactly as written. Text containing two curly braces or a curly brace followed by a percent sign is wrapped in raw markers (see `_includes/entry-text.html`).
 
+## Finishing a book or game
+
+Run **Sync Bluesky threads** first if the log has a `bluesky_thread`, because syncing stops once it's finished. Then in `_logs/<slug>.md`: `status: finished`, `finished: YYYY-MM-DD`, and `rating:` out of 5 if Spec gives one (decimals allowed, use their number exactly). Open a PR and ask before merging.
+
 ## Wild Rift sessions
 
 Use the `/log-wild-rift-session` command (`.claude/commands/log-wild-rift-session.md`). It has the exact file format.

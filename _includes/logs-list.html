@@ -47,6 +47,7 @@
       <span class="log-card-meta">
         <span class="status status-{{ log.status }}">{% include status-label.html status=log.status %}</span>
         {% if sec.types.size > 1 %}<span>{{ log.type | capitalize }}</span>{% endif %}
+        {% if log.rating %}{% include rating.html value=log.rating %}{% endif %}
         <span>{{ n }} {% if n == 1 %}entry{% else %}entries{% endif %}</span>
         {% if log.started %}<span>Since {{ log.started | date: "%b %Y" }}</span>{% endif %}
       </span>
