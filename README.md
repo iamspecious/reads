@@ -119,8 +119,9 @@ character:
 ```
 
 - **The portrait** downloads by itself: the *Fetch portraits* action asks the wiki (Fandom or Wikipedia) for the page's main picture and saves a copy as `assets/images/characters/<log file name>.png`. A small "Image:" credit links back to the wiki. To swap it, delete that file and change the link.
+- **Level snapshots:** send your character screen (stats), Actions & Traits and Classes/Jobs screenshots, and Claude adds a tab for that level (`levels:` in the log, oldest first). Each tab shows the outfit, HP/MP, item level, story quest, every stat with how much it went up since the last tab, and the actions learned and coming up.
 - **Your own character** (like Final Fantasy): send Claude your character screen and it fills in the name, details and levels. A screenshot of your character can be the portrait too.
-- **Final Fantasy Online** shows Liliah Proudfoot. Her home world, data centre and Free Company are left off on purpose, for privacy.
+- **Final Fantasy Online** shows Liliah Proudfoot. Her home world and Free Company are left off on purpose, for privacy.
 
 ## Post from your phone
 
