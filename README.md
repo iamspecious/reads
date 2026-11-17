@@ -120,7 +120,7 @@ character:
 
 - **The portrait** downloads by itself: the *Fetch portraits* action asks the wiki (Fandom or Wikipedia) for the page's main picture and saves a copy as `assets/images/characters/<log file name>.png`. A small "Image:" credit links back to the wiki. To swap it, delete that file and change the link.
 - **Your own character** (like Final Fantasy): send Claude your character screen and it fills in the name, details and levels. A screenshot of your character can be the portrait too.
-- **Final Fantasy Online** already has an empty card ready (Race, Clan, Job, World, Data centre, Grand Company, Free Company; Tanks, Healers, DPS, Crafters, Gatherers).
+- **Final Fantasy Online** shows Liliah Proudfoot. Her home world, data centre and Free Company are left off on purpose, for privacy.
 
 ## Post from your phone
 

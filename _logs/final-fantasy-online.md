@@ -16,10 +16,7 @@ character:
     - {label: Nameday, value: "10th Sun of the 4th Astral Moon"}
     - {label: Guardian, value: "Thaliak, the Scholar"}
     - {label: Class, value: "Conjurer (Gridania)"}
-    - {label: Home World, value: "Sagittarius"}
-    - {label: Data centre, value: }
     - {label: Grand Company, value: }
-    - {label: Free Company, value: }
   main:
   sheet_max: 100
   sheet:
