@@ -22,6 +22,19 @@
       <span class="now-title">{{ l.title }}</span>
       <span class="now-creator">{{ l.creator }}</span>
       {% comment %}
+        A game with a character card also shows that character here, small:
+        their portrait and name, so you can see who you're playing at a glance.
+      {% endcomment %}
+      {% if l.character %}
+        {% include character-portrait.html slug=l.slug %}
+        {% if l.character.name or portrait %}
+        <span class="now-char">
+          {% if portrait %}<img src="{{ portrait | relative_url }}" alt="" loading="lazy">{% endif %}
+          {% if l.character.name %}<span>{{ l.character.name }}</span>{% endif %}
+        </span>
+        {% endif %}
+      {% endif %}
+      {% comment %}
         A game played in seasons shows its current (newest) season here
         instead of a chapter: season, rank, mains and dates.
       {% endcomment %}

@@ -1,0 +1,13 @@
+{% comment %}
+  character-portrait.html — finds a log's character portrait, if there is one.
+  Give it slug=the log's file name. Afterwards "portrait" holds the picture's
+  path (like /assets/images/characters/final-fantasy-online.jpg), or nothing.
+
+  Why it looks through every file: the fetch script picks the file type
+  (png, jpg, webp…) when it downloads, so we search for whichever exists.
+  Used by the character card and by "Currently playing" on the home page,
+  so both always agree on which picture to show.
+{% endcomment %}
+{% assign pre = "/assets/images/characters/" | append: include.slug | append: "." %}
+{% assign portrait = nil %}
+{% for f in site.static_files %}{% assign starts = f.path | slice: 0, pre.size %}{% if starts == pre %}{% assign portrait = f.path %}{% endif %}{% endfor %}

@@ -19,9 +19,7 @@
   so the template looks for whichever one exists.
 {% endcomment %}
 {% assign ch = include.character %}
-{% assign pre = "/assets/images/characters/" | append: include.slug | append: "." %}
-{% assign portrait = nil %}
-{% for f in site.static_files %}{% assign starts = f.path | slice: 0, pre.size %}{% if starts == pre %}{% assign portrait = f.path %}{% endif %}{% endfor %}
+{% include character-portrait.html slug=include.slug %}
 
 {% if ch.name or portrait %}
 <section class="char-card" aria-label="Character">
