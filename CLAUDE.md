@@ -57,7 +57,7 @@ Spec keeps a reading list in a phone app (Read and Did Not Finish columns) and m
 
 ## Character cards
 
-A game log's `character:` section drives `_includes/character-card.html` (format in the README). Wiki pictures (Fandom, Wikipedia) are fine as portraits: use `portrait_page:` and the workflow downloads it. For Spec's own character, read their screenshots for name, details and levels, show them what you read, and only fill in what's visible. **Never put Spec's home world, data centre (server) or Free Company on the site**, even if a screenshot shows them: Spec asked for this, for privacy. A screenshot of their own character goes in directly as `assets/images/characters/<log slug>.jpg` (cropped to the character, about 600×800, with the photo's hidden details such as location removed).
+A game log's `character:` section drives `_includes/character-card.html` (format in the README). Wiki pictures (Fandom, Wikipedia) are fine as portraits: use `portrait_page:` and the workflow downloads it. For Spec's own character, read their screenshots for name, details and levels, show them what you read, and only fill in what's visible. **Never put Spec's home world (their own server, like the one shown at the top of the screen) or Free Company on the site**, even if a screenshot shows them: Spec asked for this, for privacy. A data centre name (Chaos, Light) in Spec's own words is fine: Spec says it's as broad as "the southern hemisphere". Crop screenshots so the home world doesn't show. A screenshot of their own character goes in directly as `assets/images/characters/<log slug>.jpg` (cropped to the character, about 600×800, with the photo's hidden details such as location removed).
 
 ## Wild Rift sessions
 
