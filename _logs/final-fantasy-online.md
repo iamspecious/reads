@@ -3,7 +3,7 @@ title: "Final Fantasy Online"
 creator: "Square Enix"
 type: game
 status: reading
-started: 2026-11-18
+started: 2026-11-17
 finished:
 tags: ["Fantasy","Online"]
 character:
