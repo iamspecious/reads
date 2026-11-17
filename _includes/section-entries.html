@@ -19,6 +19,15 @@
     {%- assign sec_slugs = sec_slugs | append: l.slug | append: "|" -%}
   {%- endif -%}
 {%- endfor -%}
+{%- comment -%}
+  Logs with a start date come first, newest first. Logs with no dates (the
+  back catalogue added from Spec's reading list) follow, A to Z.
+  Tripped me up: sorting by start date alone put the undated ones in
+  reverse alphabetical order, Women of Troy before Annihilation.
+{%- endcomment -%}
+{%- assign dated = sec_logs | where_exp: "l", "l.started" -%}
+{%- assign undated = sec_logs | where_exp: "l", "l.started == nil" | sort: "title" -%}
+{%- assign sec_logs = dated | concat: undated -%}
 {%- assign sec_entries = "" | split: "" -%}
 {%- assign all_entries = site.entries | sort: "date" | reverse -%}
 {%- for e in all_entries -%}

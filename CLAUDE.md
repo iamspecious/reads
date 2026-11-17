@@ -36,6 +36,19 @@ Entries are `.txt` (not Markdown) so text shows exactly as written. Text contain
 
 Run **Sync Bluesky threads** first if the log has a `bluesky_thread`, because syncing stops once it's finished. Then in `_logs/<slug>.md`: `status: finished`, `finished: YYYY-MM-DD`, and `rating:` out of 5 if Spec gives one (decimals allowed, use their number exactly). Open a PR and ask before merging.
 
+## Adding books from Spec's reading list
+
+Spec keeps a reading list in a phone app (Read and Did Not Finish columns) and may send screenshots of it.
+
+- One log per book: `type: book`, `status: finished` (Read) or `status: dropped` (Did Not Finish, shown on the site as "Did not finish").
+- `started:` and `finished:` stay blank unless Spec gives dates. Only `status: reading` logs need a start date.
+- `rating:` from the "3/5" at the start of a note (3.5/5 becomes `3.5`). No number means no rating line.
+- The note goes **word for word** as the log body, rating and "DNF -" included, curly apostrophes included. Never reword or tidy it.
+- **If a note is cut off** in the screenshot (ends in "…"), leave the note out and ask Spec for the full text. Never guess an ending.
+- Fix only **titles and author names** (Hero's → Heroes, Pat Baker → Pat Barker, R.F Chang → R.F. Kuang), and say which you fixed.
+- Genre hashtags become `tags:` ("#HistoricalFiction" → "Historical Fiction"). Leave out list-keeping tags: #Books, #Bought, #TBR, #DNF, #Currently.
+- Check a log with that slug doesn't already exist before adding it.
+
 ## Wild Rift sessions
 
 Use the `/log-wild-rift-session` command (`.claude/commands/log-wild-rift-session.md`). It has the exact file format.

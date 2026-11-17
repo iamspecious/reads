@@ -152,6 +152,14 @@ For a thread that isn't synced (say, a finished book):
 
 To re-import a whole thread from scratch: delete that log's entries that have a `source_url:` line (keep any posted from `/new`), delete their files in `assets/images/entries/`, commit, then run **Sync from Bluesky**.
 
+## Ratings, finished books and DNFs
+
+- **Ratings** are out of 5, decimals allowed (`rating: 2.53`). They show as stars, partly filled for exact values, on the book's page and in the Logs list.
+- **Did not finish:** set `status: dropped`. The site shows it as **Did not finish**, and the Logs list can filter for it.
+- **Books from before the site** (the reading-list back catalogue) can have **no dates at all**. Only something you're currently reading needs a `started:` date. Your note about the book goes under the second `---` in its log file and shows at the top of its page.
+- **The Logs list order:** dated logs come first, newest first, then undated ones A to Z.
+- **Adding more from your reading list:** send Claude screenshots of the list. It adds each book with your rating and your note, word for word. Titles and author names get correct spellings, but your notes are never changed. If a note is cut off in the screenshot, it asks you for the rest instead of guessing.
+
 ## Start a new log by hand
 
 The easy way is *Start a new book, game or show* on `/new`. By hand: in `_logs/`, **Add file → Create new file**, name it e.g. `hades-ii.md` (the name becomes its web address), and paste:

@@ -24,7 +24,7 @@ layout: default
     {% if page.started %}<div><dt>Started</dt><dd><time datetime="{{ page.started | date: '%Y-%m-%d' }}">{{ page.started | date: "%-d %b %Y" }}</time></dd></div>{% endif %}
     {% if page.finished %}<div><dt>Finished</dt><dd><time datetime="{{ page.finished | date: '%Y-%m-%d' }}">{{ page.finished | date: "%-d %b %Y" }}</time></dd></div>{% endif %}
     {% if page.rating %}<div><dt>Rating</dt><dd>{% include rating.html value=page.rating %}</dd></div>{% endif %}
-    <div><dt>Entries</dt><dd>{{ log_entries.size }}</dd></div>
+    {% if log_entries.size > 0 %}<div><dt>Entries</dt><dd>{{ log_entries.size }}</dd></div>{% endif %}
   </dl>
   {% if page.bluesky_thread %}<p class="log-thread"><a href="{{ page.bluesky_thread }}" rel="noopener">Thread on Bluesky ↗</a></p>{% endif %}
   {% if page.tags.size > 0 %}
@@ -47,7 +47,8 @@ layout: default
   {% for entry in log_entries %}
     {% include entry-card.html entry=entry show_log=false %}
   {% else %}
-    <p class="empty">No entries yet.</p>
+    {% comment %} Only worth saying for something on the go. A finished book from the reading list just has its note. {% endcomment %}
+    {% if page.status == "reading" %}<p class="empty">No entries yet.</p>{% endif %}
   {% endfor %}
 </section>
 {% endif %}
