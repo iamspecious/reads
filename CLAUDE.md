@@ -57,7 +57,7 @@ Spec keeps a reading list in a phone app (Read and Did Not Finish columns) and m
 
 ## Character cards
 
-A game log's `character:` section drives `_includes/character-card.html` (format in the README). Wiki pictures (Fandom, Wikipedia) are fine as portraits: use `portrait_page:` and the workflow downloads it. For Spec's own character, read their screenshots for name, details and levels, show them what you read, and only fill in what's visible. A screenshot of their own character goes in as `assets/images/characters/<log slug>.png` directly.
+A game log's `character:` section drives `_includes/character-card.html` (format in the README). Wiki pictures (Fandom, Wikipedia) are fine as portraits: use `portrait_page:` and the workflow downloads it. For Spec's own character, read their screenshots for name, details and levels, show them what you read, and only fill in what's visible. A screenshot of their own character goes in directly as `assets/images/characters/<log slug>.jpg` (cropped to the character, about 600×800, with the photo's hidden details such as location removed).
 
 ## Wild Rift sessions
 
