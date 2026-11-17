@@ -27,6 +27,7 @@ This is **Books by Spec** and **Tech by Spec**: Spec's live reading and gaming l
 | Entries (one per post or session) | `_entries/YYYY-MM-DD-HHMMSS-<slug-or-post-id>.txt` |
 | Pictures, GIFs, videos | `assets/images/entries/` |
 | Champion portraits | `assets/images/champions/<name>.png` (fetched by a workflow) |
+| Character portraits | `assets/images/characters/<log slug>.<ext>` (`scripts/fetch_portraits.py`, same workflow) |
 | Books / Tech halves | `_data/sections.yml` |
 | Bluesky import and sync | `scripts/import_bluesky.py`, `scripts/sync_bluesky.py` |
 | New books from Bluesky openers | `scripts/discover_books.py` (runs at the start of every sync) |
@@ -53,6 +54,10 @@ Spec keeps a reading list in a phone app (Read and Did Not Finish columns) and m
 - Fix only **titles and author names** (Hero's → Heroes, Pat Baker → Pat Barker, R.F Chang → R.F. Kuang), and say which you fixed.
 - Genre hashtags become `tags:` ("#HistoricalFiction" → "Historical Fiction"). Leave out list-keeping tags: #Books, #Bought, #TBR, #DNF, #Currently.
 - Check a log with that slug doesn't already exist before adding it.
+
+## Character cards
+
+A game log's `character:` section drives `_includes/character-card.html` (format in the README). Wiki pictures (Fandom, Wikipedia) are fine as portraits: use `portrait_page:` and the workflow downloads it. For Spec's own character, read their screenshots for name, details and levels, show them what you read, and only fill in what's visible. A screenshot of their own character goes in as `assets/images/characters/<log slug>.png` directly.
 
 ## Wild Rift sessions
 

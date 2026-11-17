@@ -73,6 +73,12 @@ class ContentTests(unittest.TestCase):
                 if f.get("bluesky_thread"):
                     self.assertRegex(f["bluesky_thread"].strip('"'), r"^https://bsky\.app/profile/[A-Za-z0-9.:_-]+/post/[A-Za-z0-9]+$",
                                      "bluesky_thread must be a link to a Bluesky post")
+                # A character card's picture links (see _includes/character-card.html)
+                # must be https, or scripts/fetch_portraits.py ignores them.
+                text = (REPO / "_logs" / f"{slug}.md").read_text(encoding="utf-8").split("---", 2)[1]
+                for key, val in re.findall(r"(?m)^\s+(portrait_page|portrait_url):[ \t]*(\S*)", text):
+                    if val:
+                        self.assertRegex(val.strip('"'), r"^https://", f"{key} must be an https:// link")
                 if f.get("rating"):
                     # A number from 0 to 5, decimals allowed (like 2.53).
                     self.assertRegex(f["rating"], r"^\d(\.\d+)?$", "rating must be a number like 4 or 2.53")

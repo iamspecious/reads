@@ -85,5 +85,5 @@ If Spec sends the season **Detailed information** screens (Average / Best, S23 t
 1. Run `python -m unittest discover -s tests`. Fix anything it flags.
 2. Commit on your working branch with a message like `Log Wild Rift session: 4 matches (3W 1L)`, push, and open a pull request.
 3. Give Spec a one-line summary and ask: "Post it?" Merge when they say yes.
-4. A champion with no portrait yet gets one automatically: the *Fetch champion portraits* action runs after the merge.
+4. A champion with no portrait yet gets one automatically: the *Fetch portraits* action runs after the merge.
 5. After about two minutes, check the session shows on https://iamspecious.github.io/reads/logs/league-of-legends-wild-rift/ and tell Spec it's live.

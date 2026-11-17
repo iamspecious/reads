@@ -51,7 +51,7 @@ seasons:
 - **The log page** has one block per season, newest first: the season's banner, then the notes for it.
 - **On `/new`** the number box becomes **Season** for these games and starts on the current one. Notes are tagged `S23`.
 - **New season or rank change:** edit the log file on GitHub. Put the new season at the top of the list and update `rank:` whenever it changes.
-- **Champion portraits** come from Riot's official images (Data Dragon). The *Fetch champion portraits* action downloads any new main's portrait by itself when a log file changes. Spell names as Riot does (`Kai'Sa`, `Wukong`). A name with no portrait just shows as text.
+- **Champion portraits** come from Riot's official images (Data Dragon). The *Fetch portraits* action downloads any new main's portrait by itself when a log file changes. Spell names as Riot does (`Kai'Sa`, `Wukong`). A name with no portrait just shows as text.
 - Rank and match history can't be fetched automatically: Riot has no public data service for Wild Rift, so they're typed in.
 
 ## Wild Rift sessions, stats and player card
@@ -94,6 +94,33 @@ Your notes.
 ```
 
 Any champion that appears gets its portrait downloaded automatically. Numbers can't be pulled from the game directly (Wild Rift has no public data feed), which is why they come from screenshots.
+
+## Character cards (any game)
+
+A game's log page can show a **character card**: a portrait, a name, details (race, job, world…) and a **spec sheet** of levels as bars. It's hidden until there's a name or a portrait, so an empty one never shows.
+
+Add a `character:` section to the log's front matter. Every line is optional:
+
+```yaml
+character:
+  name: Harrier "Harry" Du Bois
+  portrait_page: https://discoelysium.fandom.com/wiki/Harrier_Du_Bois   # a wiki page, or…
+  portrait_url:                                                       # …a direct picture link
+  details:                     # shown in this order; blank values are skipped
+    - {label: Race, value: Miqo'te}
+    - {label: Job, value: White Mage}
+  main: White Mage             # highlighted in the spec sheet
+  sheet_max: 100               # the top level, so the bars know what "full" is
+  sheet:
+    - group: Healers
+      rows:
+        - {name: White Mage, level: 90}
+        - {name: Scholar, level: 72}
+```
+
+- **The portrait** downloads by itself: the *Fetch portraits* action asks the wiki (Fandom or Wikipedia) for the page's main picture and saves a copy as `assets/images/characters/<log file name>.png`. A small "Image:" credit links back to the wiki. To swap it, delete that file and change the link.
+- **Your own character** (like Final Fantasy): send Claude your character screen and it fills in the name, details and levels. A screenshot of your character can be the portrait too.
+- **Final Fantasy Online** already has an empty card ready (Race, Clan, Job, World, Data centre, Grand Company, Free Company; Tanks, Healers, DPS, Crafters, Gatherers).
 
 ## Post from your phone
 

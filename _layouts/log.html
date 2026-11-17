@@ -35,6 +35,9 @@ layout: default
   {% if note != "" %}<div class="log-note">{{ content }}</div>{% endif %}
 </section>
 
+{% comment %} A game's character card (portrait, details, spec sheet), if the log has one. {% endcomment %}
+{% if page.character %}{% include character-card.html character=page.character slug=page.slug %}{% endif %}
+
 {% comment %}
   Games played in seasons (progress: season, like Wild Rift ranked) get
   their own layout with widgets and tabs: see _includes/season-log.html.
