@@ -107,7 +107,7 @@ Open **/reads/new/** (add it to your home screen). It's one page:
 You need to be signed in to GitHub in that browser or the GitHub app.
 
 - **Starting something new:** fill in the title, author/studio and type (and the Bluesky thread link if you're posting it there), and tap *Save the new log on GitHub*. Commit, then come back to `/new`: the write screen is ready for the first entry. Two quick commits, only when you start something.
-- **Finished?** On the write screen, *Finished this one?* opens the log's file on GitHub. Change `status: reading` to `status: finished`, fill in `finished:` with the date, and commit. Syncing from Bluesky stops for it.
+- **Finished?** First sync your last Bluesky posts in (**Sync from Bluesky**), because syncing stops once a book is finished. Then on the write screen, *Finished this one?* opens the log's file on GitHub. Change `status: reading` to `status: finished`, fill in `finished:` with the date, add `rating: 4` (out of 5; decimals like `2.53` are fine), and commit. Or just ask Claude to close it for you. The rating shows as stars on the book's page and in the Logs list.
 - **Lost a post?** If the commit didn't go through (lost signal, tapped away), `/new` shows *Didn't commit it? Bring it back* for a day.
 - **Sync from Bluesky** (bottom of `/new`): opens the sync on GitHub. Tap **Run workflow** twice and new Bluesky posts appear a minute or two later.
 
@@ -152,6 +152,14 @@ For a thread that isn't synced (say, a finished book):
 
 To re-import a whole thread from scratch: delete that log's entries that have a `source_url:` line (keep any posted from `/new`), delete their files in `assets/images/entries/`, commit, then run **Sync from Bluesky**.
 
+## Ratings, finished books and DNFs
+
+- **Ratings** are out of 5, decimals allowed (`rating: 2.53`). They show as stars, partly filled for exact values, on the book's page and in the Logs list.
+- **Did not finish:** set `status: dropped`. The site shows it as **Did not finish**, and the Logs list can filter for it.
+- **Books from before the site** (the reading-list back catalogue) can have **no dates at all**. Only something you're currently reading needs a `started:` date. Your note about the book goes under the second `---` in its log file and shows at the top of its page.
+- **The Logs list order:** dated logs come first, newest first, then undated ones A to Z.
+- **Adding more from your reading list:** send Claude screenshots of the list. It adds each book with your rating and your note, word for word. Titles and author names get correct spellings, but your notes are never changed. If a note is cut off in the screenshot, it asks you for the rest instead of guessing.
+
 ## Start a new log by hand
 
 The easy way is *Start a new book, game or show* on `/new`. By hand: in `_logs/`, **Add file → Create new file**, name it e.g. `hades-ii.md` (the name becomes its web address), and paste:
@@ -165,6 +173,7 @@ status: reading     # reading, finished or dropped
 started: 2026-11-20
 finished:
 tags: ["roguelike"]
+rating:             # out of 5, once you've finished, e.g. 2.53
 bluesky_thread: https://bsky.app/profile/booksbyspec.bsky.social/post/3abc…   # optional
 ---
 ```

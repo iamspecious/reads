@@ -1,0 +1,12 @@
+{%- comment -%}
+  rating.html — a rating out of 5, as stars plus the number.
+  Use: include rating.html value=page.rating
+
+  How the stars work: five grey stars, with five coloured stars laid on
+  top and cut off at the right width. 2.53 out of 5 is 50.6% wide, so
+  partly-filled stars show exact ratings like 2.53, not just whole stars.
+  The number is always shown too, and screen readers hear
+  "Rated 2.53 out of 5" instead of five star symbols.
+{%- endcomment -%}
+{%- assign pct = include.value | times: 20.0 | round: 1 -%}
+<span class="rating" aria-label="Rated {{ include.value }} out of 5"><span class="stars" aria-hidden="true"><span class="stars-on" style="width: {{ pct }}%">★★★★★</span>★★★★★</span> <span class="rating-num">{{ include.value }}</span></span>

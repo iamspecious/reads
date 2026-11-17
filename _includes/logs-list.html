@@ -19,11 +19,18 @@
 <h1 class="page-title">Logs</h1>
 
 <form class="filters" id="log-filters" hidden aria-label="Filter logs">
-  {% if sec.types.size > 1 %}
+  {% comment %}
+    Only types that actually have logs get a button, and the Type row only
+    appears when there are at least two. (Books holds books and shows, but
+    with no shows yet a "Shows" button would just show nothing.)
+  {% endcomment %}
+  {% assign present = "" | split: "" %}
+  {% for t in sec.types %}{% assign hits = sec_logs | where: "type", t %}{% if hits.size > 0 %}{% assign present = present | push: t %}{% endif %}{% endfor %}
+  {% if present.size > 1 %}
   <fieldset>
     <legend>Type</legend>
     <label><input type="radio" name="type" value="" checked> All</label>
-    {% for t in sec.types %}<label><input type="radio" name="type" value="{{ t }}"> {{ t | capitalize }}s</label>
+    {% for t in present %}<label><input type="radio" name="type" value="{{ t }}"> {{ t | capitalize }}s</label>
     {% endfor %}
   </fieldset>
   {% endif %}
@@ -32,7 +39,7 @@
     <label><input type="radio" name="status" value="" checked> All</label>
     <label><input type="radio" name="status" value="reading"> {{ sec.doing | capitalize }}</label>
     <label><input type="radio" name="status" value="finished"> Finished</label>
-    <label><input type="radio" name="status" value="dropped"> Dropped</label>
+    <label><input type="radio" name="status" value="dropped"> Did not finish</label>
   </fieldset>
 </form>
 {% comment %} aria-live makes screen readers read out the new count when a filter changes. {% endcomment %}
@@ -46,8 +53,10 @@
       <span class="log-card-creator">{{ log.creator }}</span>
       <span class="log-card-meta">
         <span class="status status-{{ log.status }}">{% include status-label.html status=log.status %}</span>
-        {% if sec.types.size > 1 %}<span>{{ log.type | capitalize }}</span>{% endif %}
-        <span>{{ n }} {% if n == 1 %}entry{% else %}entries{% endif %}</span>
+        {% if present.size > 1 %}<span>{{ log.type | capitalize }}</span>{% endif %}
+        {% if log.rating %}{% include rating.html value=log.rating %}{% endif %}
+        {% comment %} Books added from the reading list have no entries, so the count only shows when there's something to count. {% endcomment %}
+        {% if n > 0 %}<span>{{ n }} {% if n == 1 %}entry{% else %}entries{% endif %}</span>{% endif %}
         {% if log.started %}<span>Since {{ log.started | date: "%b %Y" }}</span>{% endif %}
       </span>
     </li>

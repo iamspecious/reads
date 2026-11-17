@@ -59,12 +59,24 @@ class ContentTests(unittest.TestCase):
                 self.assertTrue(f.get("creator"), "needs a creator")
                 self.assertIn(f.get("type"), TYPES)
                 self.assertIn(f.get("status"), STATUSES)
-                self.assertRegex(f.get("started", ""), r"^\d{4}-\d{2}-\d{2}$", "started must be YYYY-MM-DD")
+                # Dates are only required for something you're on right now.
+                # Books finished before the site existed (added from a
+                # reading list) may have no dates at all.
+                # Tripped me up: this used to insist on a start date (and a
+                # finish date for finished books), which turned the Check red
+                # for the whole back catalogue.
+                if f.get("status") == "reading":
+                    self.assertRegex(f.get("started", ""), r"^\d{4}-\d{2}-\d{2}$", "a log you're reading needs started: YYYY-MM-DD")
+                for key in ("started", "finished"):
+                    if f.get(key):
+                        self.assertRegex(f[key], r"^\d{4}-\d{2}-\d{2}$", f"{key} must be YYYY-MM-DD")
                 if f.get("bluesky_thread"):
                     self.assertRegex(f["bluesky_thread"].strip('"'), r"^https://bsky\.app/profile/[A-Za-z0-9.:_-]+/post/[A-Za-z0-9]+$",
                                      "bluesky_thread must be a link to a Bluesky post")
-                if f.get("status") == "finished":
-                    self.assertRegex(f.get("finished", ""), r"^\d{4}-\d{2}-\d{2}$", "finished logs need a finished date")
+                if f.get("rating"):
+                    # A number from 0 to 5, decimals allowed (like 2.53).
+                    self.assertRegex(f["rating"], r"^\d(\.\d+)?$", "rating must be a number like 4 or 2.53")
+                    self.assertLessEqual(float(f["rating"]), 5, "rating is out of 5")
 
     def test_entries_are_valid(self):
         logs = self.logs()
