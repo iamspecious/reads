@@ -1,0 +1,10 @@
+---
+date: 2026-11-17 19:16:44 +0100
+log: a-court-of-splintered-harmony
+chapter:
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2jnmtcdus2o
+images:
+  - src: "/assets/images/entries/3n2jnmtcdus2o-1.webp"
+    alt: ""
+---
+My thoughts as I read through A Court of Splintered Harmony by Sarah J Maas

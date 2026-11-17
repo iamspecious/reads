@@ -1,0 +1,13 @@
+---
+date: 2026-11-17 19:16:44 +0100
+log: a-court-of-splintered-harmony
+chapter: "Chapter Azriel"
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2jnmzmza32o
+videos:
+  - src: "/assets/images/entries/3n2jnmzmza32o-1.mp4"
+    alt: "James Wolpert Sings 'Mr. Brightside' on The Voice"
+    gif: true
+---
+Chapter Azriel: I got my answer about the Rhys commanding Az to stay away from Elain. 
+
+Interesting about giving the necklace to Gwyn. I’m not sure it *means* anything though. It’s no more a rash decision than Cass yeeting Nesta’s first solstice gift into the sea.
