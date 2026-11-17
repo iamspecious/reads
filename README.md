@@ -117,6 +117,13 @@ The page stores no keys or passwords. (A version that saved straight from the pa
 
 If a log has a `bluesky_thread:` line (a link to the **first post** of the thread) and is `status: reading`, new posts in that thread are copied to the site automatically.
 
+- **Starting a new book (automatic):** open its thread with a first post that starts **"My thoughts as I go through *[title]* by *[author]*"**. The next sync spots it and starts the book's log by itself (status reading, started that day, linked to the thread), then pulls the thread in.
+  - Only the first post needs that phrase. Replies like "Chapter 1: …" sync because they're in the thread.
+  - If the author is close to one already on the site, the site's spelling is used ("Sarah J Mass" becomes Sarah J. Maas).
+  - A new thread never finishes the previous book. You still do that yourself, with your rating.
+  - Only opening posts from the last 14 days count, so old threads can't come back by accident.
+- **Starting a book by hand instead:** paste the first post's link in the *Bluesky thread* box when you start the log on `/new`. If you start it on `/new` first and post the opener afterwards, the sync links the two instead of making a second log.
+
 - **When:** a timed job is set to run at :17 and :47 past every hour. **GitHub's timer is unreliable** and skips many runs, sometimes for hours, so for posts to appear straight away use **Sync from Bluesky** on `/new` (or Actions → *Sync Bluesky threads* → **Run workflow**). Nothing is ever missed: each sync picks up everything new since the last one.
 - **What it takes:** every post *you* wrote in that thread, on **every branch**. It doesn't matter which of your own posts you hit reply on. Other people's replies are skipped. Posts are put in time order.
 - **Pictures, GIFs and videos are copied onto the site**, not linked, so they keep working if Bluesky changes:
