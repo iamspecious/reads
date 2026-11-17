@@ -29,8 +29,13 @@ This is **Books by Spec** and **Tech by Spec**: Spec's live reading and gaming l
 | Champion portraits | `assets/images/champions/<name>.png` (fetched by a workflow) |
 | Books / Tech halves | `_data/sections.yml` |
 | Bluesky import and sync | `scripts/import_bluesky.py`, `scripts/sync_bluesky.py` |
+| New books from Bluesky openers | `scripts/discover_books.py` (runs at the start of every sync) |
 
 Entries are `.txt` (not Markdown) so text shows exactly as written. Text containing two curly braces or a curly brace followed by a percent sign is wrapped in raw markers (see `_includes/entry-text.html`).
+
+## Starting a book from Bluesky
+
+Spec opens each reading thread with "My thoughts as I go through <title> by <author>". The sync starts that book's log by itself (see `scripts/discover_books.py`). If Spec asks why a new book didn't appear, check the first post really starts with that phrase and was made in the last 14 days, then read the *Sync Bluesky threads* run log.
 
 ## Finishing a book or game
 
