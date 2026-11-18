@@ -519,3 +519,11 @@ mark { background: color-mix(in srgb, #e06a95 25%, transparent); color: inherit;
 .lvl-actions li { display: flex; align-items: center; gap: 6px; }
 .lvl-next { color: var(--muted); }
 .lvl-role { font-size: 0.72rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 0 6px; }
+/* Gear worn at that level: slot, name and item level on one line, the
+   bonuses underneath in smaller grey text. */
+.lvl-gear { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 0.85rem; }
+.lvl-gear li { display: grid; gap: 2px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.lvl-gear li:last-child { border-bottom: 0; padding-bottom: 0; }
+.gear-slot { display: inline-block; min-width: 5.5em; color: var(--muted); }
+.gear-bonus, .gear-note { color: var(--muted); font-size: 0.8rem; }
+.gear-note { font-style: italic; }
