@@ -18,6 +18,7 @@ The site has two halves, switched with the **Books | Games** tabs at the top.
 | What's in it | books (and shows, for now) | games |
 | Logo and colours | book logo, pink → violet → teal | Tech logo, deep purple → blue |
 | Top box | Currently reading | Currently playing |
+| Log pages open | oldest first (from chapter 1 down) | newest first (latest session on top) |
 | RSS feed | `/reads/feed.xml` | `/reads/games/feed.xml` |
 
 Each half has its own **Latest** page (newest entries first), **Logs** list (filter by status) and **Search**. A log goes in whichever half matches its `type:`. On the Games side, `status: reading` shows as "Playing".
@@ -63,6 +64,8 @@ Send the season *Detailed information* screens (Average / Best) or the Profile c
 **The Wild Rift log page** opens with four mini widgets (current season and rank, your logged record and recent form, most-played champion this season, mains), then four tabs:
 
 - **Journal** (opens first): every note and session, newest first.
+
+**Oldest first | Newest first:** every log page with more than one entry has these two buttons above its entries. Readers can flip the order to whichever way makes sense to them. Their browser remembers the choice, separately for books and games. Nothing is stored on the site.
 - **This season:** the current season's banner and dashboard.
 - **Player:** your player card across every season.
 - **History:** every past season.

@@ -78,7 +78,8 @@
     <label for="tab-history">History</label>
   </div>
 
-  <div class="tab-panel panel-journal" aria-label="Journal, newest first">
+  <div class="tab-panel panel-journal" aria-label="Journal">
+    {% include order-toggle.html order="newest" kind=page.type %}
     <section class="feed">
       {% for entry in log_entries reversed %}
         {% include entry-card.html entry=entry show_log=false %}
