@@ -1,0 +1,18 @@
+{% comment %}
+  order-toggle.html — two small buttons, "Oldest first | Newest first", that
+  flip the list of entries right below them. Give it order= the order the
+  list is built in ("oldest" or "newest") and kind= the log's type, so the
+  choice is remembered separately for books and for games.
+
+  Why it starts hidden: flipping needs JavaScript (assets/js/log-order.js).
+  Without it the buttons would do nothing, so they only appear once that
+  script is running, and the list simply stays in its normal order.
+  Tripped me up: the script tag used to sit between the buttons and the
+  list, so the script took itself for the list. It goes first now, because
+  the script flips whatever comes right after the buttons.
+{% endcomment %}
+<script src="{{ '/assets/js/log-order.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+<div class="order-toggle" role="group" aria-label="Order of entries" data-order="{{ include.order }}" data-kind="{{ include.kind }}" hidden>
+  <button type="button" data-want="oldest" aria-pressed="{% if include.order == 'oldest' %}true{% else %}false{% endif %}">Oldest first</button>
+  <button type="button" data-want="newest" aria-pressed="{% if include.order == 'newest' %}true{% else %}false{% endif %}">Newest first</button>
+</div>

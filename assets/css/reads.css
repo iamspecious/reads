@@ -527,3 +527,10 @@ mark { background: color-mix(in srgb, #e06a95 25%, transparent); color: inherit;
 .gear-slot { display: inline-block; min-width: 5.5em; color: var(--muted); }
 .gear-bonus, .gear-note { color: var(--muted); font-size: 0.8rem; }
 .gear-note { font-style: italic; }
+
+/* ── Oldest first | Newest first (log pages) ──
+   Two small pill buttons; the pressed one is filled in. */
+.order-toggle { display: inline-flex; gap: 2px; padding: 3px; margin: 0 0 12px; border-radius: 999px; background: var(--quiet-bg); }
+.order-toggle button { border: 0; background: none; padding: 5px 12px; border-radius: 999px; font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); cursor: pointer; }
+.order-toggle button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.order-toggle button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

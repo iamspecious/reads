@@ -4,10 +4,12 @@ layout: default
 {% comment %}
   log.html — the page for one book, game or show.
 
-  Why oldest first: a log page should read like the journey itself.
-  You start at chapter 1 and scroll forward in time, the way you read the book.
-  (The home page does the opposite, newest first, because there you want
-  to see what's new.)
+  Which order the entries come in:
+  - books (and shows): oldest first, so the page reads like the journey
+    itself, from chapter 1 forward, the way you read the book;
+  - games: newest first, because there you mostly want the latest session.
+  Either way, "Oldest first | Newest first" buttons above the list let each
+  reader flip it (see _includes/order-toggle.html).
 {% endcomment %}
 {% assign log_entries = site.entries | where: "log", page.slug | sort: "date" %}
 
@@ -46,8 +48,10 @@ layout: default
 {% if page.seasons %}
   {% include season-log.html %}
 {% else %}
-<section class="feed" aria-label="Entries, oldest first">
-  {% for entry in log_entries %}
+{% if page.type == "game" %}{% assign first = "newest" %}{% assign shown = log_entries | reverse %}{% else %}{% assign first = "oldest" %}{% assign shown = log_entries %}{% endif %}
+{% include order-toggle.html order=first kind=page.type %}
+<section class="feed" aria-label="Entries">
+  {% for entry in shown %}
     {% include entry-card.html entry=entry show_log=false %}
   {% else %}
     {% comment %} Only worth saying for something on the go. A finished book from the reading list just has its note. {% endcomment %}
