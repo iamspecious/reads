@@ -1,0 +1,21 @@
+---
+date: 2026-11-19 06:34:55 +0100
+log: league-of-legends-wild-rift
+chapter: 23
+matches:
+  - result: win
+    champion: Yuumi
+    kda: [2, 5, 21]
+    mode: Ranked
+    duration: "20:46"
+    gold: 11689
+    score: 531
+  - result: loss
+    champion: Lulu
+    kda: [0, 6, 1]
+    mode: Ranked
+    duration: "15:07"
+    gold: 6858
+    score: 178
+---
+Challenger lobbies are hard on your own.
