@@ -62,7 +62,7 @@
   {% endif %}
 
   {% comment %} Snapshots at each level, as tabs (see character-levels.html). {% endcomment %}
-  {% if ch.levels.size > 0 %}{% include character-levels.html levels=ch.levels slug=include.slug %}{% endif %}
+  {% if ch.levels.size > 0 %}{% include character-levels.html levels=ch.levels slug=include.slug main=ch.main %}{% endif %}
 
   {% assign credit = ch.portrait_page | default: ch.portrait_url %}
   {% if portrait and credit %}
