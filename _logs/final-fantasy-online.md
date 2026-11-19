@@ -24,13 +24,14 @@ character:
       rows: []
     - group: Healers
       rows:
-        - {name: Conjurer, level: 19}
+        - {name: Conjurer, level: 27}
     - group: DPS
       rows: []
     - group: Crafters
       rows: []
     - group: Gatherers
-      rows: []
+      rows:
+        - {name: Botanist, level: 5}
   levels:
     - level: 13
       class: Conjurer
@@ -148,4 +149,75 @@ character:
         - {name: Maim and Mend, level: 20, trait: true}
         - {name: Cure II, level: 30}
         - {name: Freecure, level: 32, trait: true}
+    - level: 5
+      class: Botanist
+      date: 2026-11-19
+      picture: /assets/images/characters/final-fantasy-online-btn5.jpg
+      item_level: 4
+      quest: The Gridanian Envoy
+      hp: 117
+      gp: 400
+      stats:
+        - group: Attributes
+          rows:
+            - {name: Strength, value: 26}
+            - {name: Dexterity, value: 32}
+            - {name: Vitality, value: 25}
+            - {name: Intelligence, value: 32}
+            - {name: Mind, value: 31}
+        - group: Offensive
+          rows:
+            - {name: Critical Hit, value: 66}
+            - {name: Determination, value: 26}
+            - {name: Direct Hit Rate, value: 65}
+        - group: Defensive
+          rows:
+            - {name: Defense, value: 43}
+            - {name: Magic Defense, value: 77}
+        - group: Physical
+          rows:
+            - {name: Attack Power, value: 26}
+            - {name: Skill Speed, value: 65}
+        - group: Gathering
+          rows:
+            - {name: Gathering, value: 35}
+            - {name: Perception, value: 0}
+    - level: 27
+      class: Conjurer
+      date: 2026-11-19
+      picture: /assets/images/characters/final-fantasy-online-lv27.jpg
+      item_level: 15
+      quest: The Gridanian Envoy
+      hp: 570
+      mp: 10000
+      stats:
+        - group: Attributes
+          rows:
+            - {name: Strength, value: 46}
+            - {name: Dexterity, value: 92}
+            - {name: Vitality, value: 99}
+            - {name: Intelligence, value: 105}
+            - {name: Mind, value: 115}
+        - group: Offensive
+          rows:
+            - {name: Critical Hit, value: 161}
+            - {name: Determination, value: 94}
+            - {name: Direct Hit Rate, value: 162}
+        - group: Defensive
+          rows:
+            - {name: Defense, value: 83}
+            - {name: Magic Defense, value: 144}
+        - group: Physical
+          rows:
+            - {name: Attack Power, value: 46}
+            - {name: Skill Speed, value: 155}
+        - group: Mental
+          rows:
+            - {name: Attack Magic Potency, value: 115}
+            - {name: Healing Magic Potency, value: 115}
+            - {name: Spell Speed, value: 155}
+        - group: Role
+          rows:
+            - {name: Tenacity, value: 155}
+            - {name: Piety, value: 85}
 ---

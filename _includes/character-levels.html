@@ -5,8 +5,16 @@
   actions (and traits) learned so far plus the next ones coming. Used by character-card.html when the log's
   character has a "levels:" list (oldest first, one item per snapshot).
 
-  Stats show how much they went up since the snapshot before, like "+12",
-  so you can see what changed as the character grows.
+  Stats show how much they went up since the last snapshot of the SAME
+  class, like "+12", so you can see what changed as the character grows.
+  Tripped me up: comparing with simply the snapshot before would have
+  compared a level 5 Botanist with a level 27 Conjurer, and every stat
+  would have looked like it dropped.
+
+  A snapshot of a class other than the character's main one gets the class
+  name on its tab ("Botanist Lv 5"), so tabs for different classes can't be
+  mixed up. Gatherers and crafters have GP/CP instead of MP: gp and cp show
+  when given.
 
   How the tabs work without JavaScript: each tab is a hidden radio button,
   its label (the tab you tap) and its panel, side by side. Labels line up
@@ -20,10 +28,10 @@
 <div class="lvl-tabs" aria-label="Level snapshots">
   {% for i in (0..last_i) reversed %}
     {% assign s = snaps[i] %}
-    {% assign prev_i = i | minus: 1 %}
-    {% if i > 0 %}{% assign prev = snaps[prev_i] %}{% else %}{% assign prev = nil %}{% endif %}
+    {% assign prev = nil %}
+    {% if i > 0 %}{% assign before = i | minus: 1 %}{% for j in (0..before) %}{% if snaps[j].class == s.class %}{% assign prev = snaps[j] %}{% endif %}{% endfor %}{% endif %}
     <input class="lvl-radio" type="radio" name="lvl-{{ include.slug }}" id="lvl-{{ include.slug }}-{{ i }}"{% if forloop.first %} checked{% endif %}>
-    <label class="lvl-label" for="lvl-{{ include.slug }}-{{ i }}">Lv {{ s.level }}</label>
+    <label class="lvl-label" for="lvl-{{ include.slug }}-{{ i }}">{% if include.main and s.class and s.class != include.main %}{{ s.class }} {% endif %}Lv {{ s.level }}</label>
     <div class="lvl-panel">
       <p class="lvl-head"><strong>Level {{ s.level }}{% if s.class %} {{ s.class }}{% endif %}</strong>{% if s.date %} · {{ s.date | date: "%-d %b %Y" }}{% endif %}</p>
       <div class="lvl-top">
@@ -31,6 +39,8 @@
         <dl class="char-details lvl-facts">
           {% if s.hp %}<div><dt>HP</dt><dd>{{ s.hp }}</dd></div>{% endif %}
           {% if s.mp %}<div><dt>MP</dt><dd>{{ s.mp }}</dd></div>{% endif %}
+          {% if s.gp %}<div><dt>GP</dt><dd>{{ s.gp }}</dd></div>{% endif %}
+          {% if s.cp %}<div><dt>CP</dt><dd>{{ s.cp }}</dd></div>{% endif %}
           {% if s.item_level %}<div><dt>Item level</dt><dd>{{ s.item_level }}</dd></div>{% endif %}
           {% if s.quest %}<div><dt>Story quest</dt><dd>{{ s.quest }}</dd></div>{% endif %}
         </dl>
