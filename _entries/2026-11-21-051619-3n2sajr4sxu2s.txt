@@ -1,0 +1,11 @@
+---
+date: 2026-11-21 05:16:19 +0100
+log: a-court-of-splintered-harmony
+chapter:
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2sajr4sxu2s
+videos:
+  - src: "/assets/images/entries/3n2sajr4sxu2s-1.mp4"
+    alt: "Dennis Reynolds Explains The Implication"
+    gif: true
+---
+It has *implications* for sure.
