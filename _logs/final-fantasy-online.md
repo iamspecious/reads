@@ -24,14 +24,15 @@ character:
       rows: []
     - group: Healers
       rows:
-        - {name: Conjurer, level: 27}
+        - {name: Conjurer, level: 34}
     - group: DPS
-      rows: []
+      rows:
+        - {name: Thaumaturge, level: 11}
     - group: Crafters
       rows: []
     - group: Gatherers
       rows:
-        - {name: Botanist, level: 5}
+        - {name: Botanist, level: 14}
   levels:
     - level: 13
       class: Conjurer
@@ -220,4 +221,42 @@ character:
           rows:
             - {name: Tenacity, value: 155}
             - {name: Piety, value: 85}
+    - level: 34
+      class: Conjurer
+      date: 2026-11-21
+      picture: /assets/images/characters/final-fantasy-online-lv34.jpg
+      item_level: 26
+      quest: Fire in the Gloom
+      hp: 917
+      mp: 10000
+      stats:
+        - group: Attributes
+          rows:
+            - {name: Strength, value: 59}
+            - {name: Dexterity, value: 120}
+            - {name: Vitality, value: 143}
+            - {name: Intelligence, value: 135}
+            - {name: Mind, value: 159}
+        - group: Offensive
+          rows:
+            - {name: Critical Hit, value: 202}
+            - {name: Determination, value: 128}
+            - {name: Direct Hit Rate, value: 219}
+        - group: Defensive
+          rows:
+            - {name: Defense, value: 104}
+            - {name: Magic Defense, value: 183}
+        - group: Physical
+          rows:
+            - {name: Attack Power, value: 59}
+            - {name: Skill Speed, value: 202}
+        - group: Mental
+          rows:
+            - {name: Attack Magic Potency, value: 159}
+            - {name: Healing Magic Potency, value: 159}
+            - {name: Spell Speed, value: 210}
+        - group: Role
+          rows:
+            - {name: Tenacity, value: 202}
+            - {name: Piety, value: 123}
 ---
