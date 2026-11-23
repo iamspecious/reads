@@ -1,7 +1,7 @@
 ---
 date: 2026-11-23 03:39:22 +0100
 log: divorcing
-chapter: 3
+chapter: "Part 1 Chapter 3"
 source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2x42abpwk25
 ---
 Part 1 Chapter 3: Have known many an Erza in my life sadly. But it doesn’t seem like she’s A solid in her foundations as she seems. 

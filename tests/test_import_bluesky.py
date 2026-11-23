@@ -196,6 +196,11 @@ class ImportTests(unittest.TestCase):
         self.assertIsNone(imp.find_chapter("10 reasons Nesta is insufferable"))
         self.assertIsNone(imp.find_chapter("It was 3:00 when I finished"))
         self.assertIsNone(imp.find_chapter("no chapter number here"))
+        # Part and chapter together (the real Divorcing thread), kept as written.
+        self.assertEqual(imp.find_chapter("Part 1 Chapter 2: So, is this letter"), "Part 1 Chapter 2")
+        self.assertEqual(imp.find_chapter("Chapter 1 Part 4: I understand"), "Chapter 1 Part 4")
+        self.assertEqual(imp.find_chapter("Chapter 7 - 9 : interesting"), "7-9")
+        self.assertEqual(imp.find_chapter("Chapter 12 part of me wants: more"), 12)
         # Named parts at the start of a post (the real Splintered Harmony thread).
         self.assertEqual(imp.find_chapter("Chapter 0 : Sarah’s letter in the beginning"), 0)
         self.assertEqual(imp.find_chapter("Chapter Azriel: I got my answer"), "Chapter Azriel")

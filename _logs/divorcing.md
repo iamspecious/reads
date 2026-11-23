@@ -2,7 +2,7 @@
 title: "Divorcing"
 creator: "Susan Taubes"
 type: book
-status: reading
+status: dropped
 started: 2026-11-23
 finished:
 tags: []

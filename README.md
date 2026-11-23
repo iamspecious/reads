@@ -175,6 +175,7 @@ A post gets a chapter tag when it starts with or mentions one of these:
 - ranges: `Chapter 7 - 9`, `Chapters 12-14`, `Ch 7 to 9` → tagged `7-9`
 - a bare number and a colon at the very start: `31: kiss of life…`, `34-37:`
 - a named part and a colon at the very start: `Chapter Azriel:`, `Prelude:`, `Prologue:`, `Epilogue:`, `Interlude:` → tagged exactly as written, and shown without "Ch" in front
+- two markers together at the very start: `Part 1 Chapter 2:`, `Chapter 1 Part 4:` → tagged exactly as written
 - `Chapter 0:` works too, for something before chapter 1 like an author's letter
 
 Anything else, like "Just finished the second chapter" or a follow-up post with no number, is left untagged on purpose.
