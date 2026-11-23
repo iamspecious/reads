@@ -311,12 +311,26 @@ NAMED_CHAPTER_RE = re.compile(
     re.IGNORECASE)
 
 
+# A post that STARTS with two markers together, like "Part 1 Chapter 2:" or
+# "Chapter 1 Part 4:", keeps the whole marker exactly as written, so the tag
+# says both. Only at the very start and only with a colon.
+# Tripped me up: in Divorcing (a book in parts and short scenes) "Part 1
+# Chapter 2" was tagged just "2", and "Chapter 1 Part 4" was tagged "1",
+# so two different posts both looked like chapter 1.
+TWO_PART_RE = re.compile(
+    r"^\s*((?:part|chapter|ch\.?)\s*[\w]+\s+(?:part|chapter|ch\.?)\s*[\w]+)\s*:",
+    re.IGNORECASE)
+
+
 def find_chapter(text):
     """Return the chapter: 12, "7-9" for a range, a name like "Prelude", or None.
 
     A marker at the very start of the post wins over a chapter mentioned
     later on, so "Prelude: … unlike chapter 3 …" is the prelude.
     """
+    two = TWO_PART_RE.match(text)
+    if two:
+        return re.sub(r"\s+", " ", two.group(1)).strip()
     m = CHAPTER_RE.match(text.lstrip()) or BARE_CHAPTER_RE.match(text)
     if not m:
         named = NAMED_CHAPTER_RE.match(text)
