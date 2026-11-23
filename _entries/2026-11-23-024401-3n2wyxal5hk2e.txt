@@ -1,0 +1,12 @@
+---
+date: 2026-11-23 02:44:01 +0100
+log: divorcing
+chapter:
+source_url: https://bsky.app/profile/booksbyspec.bsky.social/post/3n2wyxal5hk2e
+images:
+  - src: "/assets/images/entries/3n2wyxal5hk2e-1.webp"
+    alt: ""
+---
+My thoughts as I read through Divorcing by Susan Taubes
+
+(I don’t know why the photo is upside down but you do you bluesky)
